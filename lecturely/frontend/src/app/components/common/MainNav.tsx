@@ -8,8 +8,6 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from '../common/ToggleColorMode';
 import Link from 'next/link';
 

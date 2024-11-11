@@ -1,6 +1,5 @@
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import { ThemeOptions, alpha } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 import { PaletteMode } from '@mui/material';
 
 declare module '@mui/material/styles/createPalette' {
@@ -21,29 +20,29 @@ declare module '@mui/material/styles/createPalette' {
 }
 
 export const brand = {
-    50: '#F0F7FF',
-    100: '#CEE5FD',
-    200: '#9CCCFC',
-    300: '#55A6F6',
-    400: '#0A66C2',
-    500: '#0959AA',
-    600: '#064079',
-    700: '#02291c',
-    800: '#02291c',
-    900: '#02291c'
+    50: '#F6FEF6',
+    100: '#E3FBE3',
+    200: '#C7F7C7',
+    300: '#A1E8A1',
+    400: '#51BC51',
+    500: '#1F7A1F',
+    600: '#136C13',
+    700: '#0A470A',
+    800: '#042F04',
+    900: '#021D02',
 };
 
 export const secondary = {
-    50: '#F9F0FF',
-    100: '#E9CEFD',
-    200: '#D49CFC',
-    300: '#B355F6',
-    400: '#ffffff',
-    500: '#6709AA',
-    600: '#ffffff',
-    700: '#fff6f6',
-    800: '#02291c',
-    900: '#23023B',
+    50: '#F6FEF6',
+    100: '#E3FBE3',
+    200: '#C7F7C7',
+    300: '#A1E8A1',
+    400: '#51BC51',
+    500: '#1F7A1F',
+    600: '#136C13',
+    700: '#0A470A',
+    800: '#042F04',
+    900: '#021D02',
 };
 
 export const gray = {
@@ -72,6 +71,21 @@ export const green = {
     900: '#021D02',
 };
 
+export const red = {
+    50: '#FFEBEE',
+    100: '#FFCDD2',
+    200: '#EF9A9A',
+    300: '#E57373',
+    400: '#EF5350',
+    500: '#F44336',
+    600: '#E53935',
+    700: '#D32F2F',
+    800: '#C62828',
+    900: '#B71C1C',
+};
+
+
+
 const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
         mode,
@@ -82,7 +96,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
             contrastText: brand[50],
             ...(mode === 'dark' && {
                 contrastText: brand[100],
-                light: brand[300],
+                light: brand[500],
                 main: brand[400],
                 dark: brand[800],
             }),
@@ -318,13 +332,13 @@ export default function getLPTheme(mode: PaletteMode): ThemeOptions {
                             ownerState.color === 'primary' && {
                                 color: brand[50],
                                 background: brand[500],
-                                backgroundImage: `linear-gradient(to bottom, ${brand[400]}, ${brand[600]})`,
+                                backgroundImage: `linear-gradient(to bottom, ${brand[600]}, ${brand[700]})`,
                                 boxShadow: `inset 0 1px ${alpha(brand[300], 0.4)}`,
                                 outline: `1px solid ${brand[700]}`,
                                 '&:hover': {
-                                    background: brand[400],
+                                    background: brand[600],
                                     backgroundImage: 'none',
-                                    boxShadow: `0 0 0 1px  ${alpha(brand[300], 0.5)}`,
+                                    boxShadow: `0 0 0 1px  ${alpha(brand[400], 0.5)}`,
                                 },
                             }),
                         ...(ownerState.variant === 'outlined' && {
@@ -354,7 +368,7 @@ export default function getLPTheme(mode: PaletteMode): ThemeOptions {
                                 },
                             }),
                             ...(ownerState.variant === 'text' && {
-                                color: brand[300],
+                                color: brand[400],
                                 '&:hover': {
                                     backgroundColor: alpha(brand[600], 0.3),
                                     borderColor: brand[700],

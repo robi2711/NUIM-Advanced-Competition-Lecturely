@@ -54,7 +54,7 @@ export default function Hero() {
                         </Typography>
                     </Typography>
                     <Typography variant="body1" textAlign="center" color="text.secondary">
-                        You are what you eat - Both inside and out - Know the hidden details about the food you consume. <br />
+                        You are NOT what you eat - Both inside and out - Know the hidden details about the food you consume. <br />
                         Achieve your personal health goals using the best nutritional tool on the market today.
                     </Typography>
                     <Stack
