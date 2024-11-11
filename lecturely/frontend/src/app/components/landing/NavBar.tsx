@@ -129,7 +129,7 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 alignItems: 'center',
                             }}
                         >
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                            {/*<ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />*/}
                             <Link href="/SignIn" passHref>
                                 <Button
                                     color="primary"
@@ -178,6 +178,7 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                                         }}
                                     >
                                         <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+
                                     </Box>
                                     <MenuItem onClick={() => scrollToSection('features')}>
                                         Features
