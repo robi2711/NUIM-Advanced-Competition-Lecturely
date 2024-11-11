@@ -1,9 +1,9 @@
 'use client'
 import * as React from "react";
-import DashboardPage from "@/app/components/pages/Lecturely";
+import LecturelyPage from "@/app/components/pages/Lecturely";
 
-export default function LandingPage() {
+export default function MainPage() {
     return (
-        <DashboardPage/>
+        <LecturelyPage/>
     );
 }

@@ -22,10 +22,6 @@ export default function LandingPage() {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  const toggleCustomTheme = () => {
-    setShowCustomTheme((prev) => !prev);
-  };
-
   return (
       <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
           <CssBaseline />

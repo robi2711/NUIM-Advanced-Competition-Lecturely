@@ -92,7 +92,7 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                         >
                             <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                                 <MenuItem
-                                    onClick={() => window.location.href = '/'}
+                                    onClick={() => window.location.href = '/Lecturely'}
                                     sx={{py: '6px', px: '12px'}}
                                 >
                                     <img
@@ -134,7 +134,7 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 <Button
                                     color="primary"
                                     variant="text"
-                                    size="small"
+                                    size="medium"
                                 >
                                     Sign in
                                 </Button>
@@ -144,7 +144,7 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                                 <Button
                                     color="primary"
                                     variant="contained"
-                                    size="small"
+                                    size="medium"
                                 >
                                     Sign up
                                 </Button>
@@ -181,15 +181,6 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                                     </Box>
                                     <MenuItem onClick={() => scrollToSection('features')}>
                                         Features
-                                    </MenuItem>
-                                    <MenuItem onClick={() => scrollToSection('testimonials')}>
-                                        Testimonials
-                                    </MenuItem>
-                                    <MenuItem onClick={() => scrollToSection('highlights')}>
-                                        Highlights
-                                    </MenuItem>
-                                    <MenuItem onClick={() => scrollToSection('pricing')}>
-                                        Pricing
                                     </MenuItem>
                                     <MenuItem onClick={() => scrollToSection('faq')}>
                                         FAQ</MenuItem>
