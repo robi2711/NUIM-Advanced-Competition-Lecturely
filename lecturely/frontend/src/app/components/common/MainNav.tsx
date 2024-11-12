@@ -72,7 +72,7 @@ function NavBar({ mode, toggleColorMode }: AppAppBarProps) {
                         >
                             <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                                 <MenuItem
-                                    onClick={() => window.location.href = '/SignIn'}
+                                    onClick={() => window.location.href = '/Lecturely'}
                                     sx={{py: '6px', px: '12px'}}
                                 >
                                     <img
