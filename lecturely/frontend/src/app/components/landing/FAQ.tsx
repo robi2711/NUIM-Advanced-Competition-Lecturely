@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function FAQ() {
@@ -22,7 +21,7 @@ export default function FAQ() {
             id="faq"
             sx={{
                 pt: { xs: 4, sm: 12 },
-                pb: { xs: 8, sm: 16 },
+                pb: { xs: 8, sm: 12 },
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
