@@ -39,8 +39,6 @@ export const secondary = {
     300: '#A1E8A1',
     400: '#51BC51',
     500: '#1F7A1F',
-    600: '#136C13',
-    700: '#0A470A',
     800: '#042F04',
     900: '#021D02',
 };
@@ -58,31 +56,8 @@ export const gray = {
     900: '#090E10',
 };
 
-export const green = {
-    50: '#F6FEF6',
-    100: '#E3FBE3',
-    200: '#C7F7C7',
-    300: '#A1E8A1',
-    400: '#51BC51',
-    500: '#1F7A1F',
-    600: '#136C13',
-    700: '#0A470A',
-    800: '#042F04',
-    900: '#021D02',
-};
 
-export const red = {
-    50: '#FFEBEE',
-    100: '#FFCDD2',
-    200: '#EF9A9A',
-    300: '#E57373',
-    400: '#EF5350',
-    500: '#F44336',
-    600: '#E53935',
-    700: '#D32F2F',
-    800: '#C62828',
-    900: '#B71C1C',
-};
+
 
 
 
@@ -115,22 +90,6 @@ const getDesignTokens = (mode: PaletteMode) => ({
             main: '#F7B538',
             dark: '#F79F00',
             ...(mode === 'dark' && { main: '#F7B538', dark: '#F79F00' }),
-        },
-        error: {
-            light: red[50],
-            main: red[500],
-            dark: red[700],
-            ...(mode === 'dark' && { light: '#D32F2F', main: '#D32F2F', dark: '#B22A2A' }),
-        },
-        success: {
-            light: green[300],
-            main: green[400],
-            dark: green[800],
-            ...(mode === 'dark' && {
-                light: green[400],
-                main: green[500],
-                dark: green[700],
-            }),
         },
         grey: {
             50: gray[50],

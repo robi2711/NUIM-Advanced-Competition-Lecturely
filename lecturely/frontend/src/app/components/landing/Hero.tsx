@@ -11,12 +11,9 @@ export default function Hero() {
     return (
         <Box
             id="hero"
-            sx={(theme) => ({
+            sx={({
                 width: '100%',
-                backgroundImage:
-                    theme.palette.mode === 'light'
-                        ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
-                        : `linear-gradient(#021D02, ${alpha('#0A470A', 0.0)})`,
+                backgroundImage: `linear-gradient(#021D02, ${alpha('#0A470A', 0.0)})`,
                 backgroundSize: '100% 20%',
                 backgroundRepeat: 'no-repeat',
             })}
@@ -45,10 +42,7 @@ export default function Hero() {
                         <Typography
                             component="span"
                             variant="h1"
-                            sx={{
-                                color: (theme) =>
-                                    theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-                            }}
+                            sx={{color: 'primary.main'}}
                         >
                             ly
                         </Typography>
@@ -66,8 +60,7 @@ export default function Hero() {
                     >
                         <TextField
                             id="outlined-basic"
-                            hiddenLabel
-                            size="small"
+                            size="medium"
                             variant="outlined"
                             aria-label="Enter your email address"
                             placeholder="Your email address"
