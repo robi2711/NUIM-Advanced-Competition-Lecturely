@@ -73,11 +73,11 @@ export default function FAQ() {
                 >
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel2d-content"
-                        id="panel2d-header"
+                        aria-controls="panel3d-content"
+                        id="panel3d-header"
                     >
                         <Typography component="h3" variant="subtitle2">
-                            Can I return the product if it doesn&apos;t meet my expectations?
+                            What makes Lecturely stand out from others in the market?
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -86,39 +86,13 @@ export default function FAQ() {
                             gutterBottom
                             sx={{ maxWidth: { sm: '100%', md: '70%' } }}
                         >
-                            Absolutely! We offer a hassle-free return policy. If you&apos;re not
-                            completely satisfied, you can return the product within 5 days for a full refund or exchange.
+                            Lecturely is designed with inclusivity in mind, ensuring that both students with hearing impairments and those who prefer text-based learning benefit from the platform.
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion
                     expanded={expanded === 'panel3'}
                     onChange={handleChange('panel3')}
-                >
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel3d-content"
-                        id="panel3d-header"
-                    >
-                        <Typography component="h3" variant="subtitle2">
-                            What makes NutriScan stand out from others in the market?
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography
-                            variant="body2"
-                            gutterBottom
-                            sx={{ maxWidth: { sm: '100%', md: '70%' } }}
-                        >
-                            NutriScan distinguishes itself through its adaptability, durability,
-                            and innovative features. We prioritize user satisfaction and
-                            continually strive to exceed expectations in every aspect.
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion
-                    expanded={expanded === 'panel4'}
-                    onChange={handleChange('panel4')}
                 >
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}

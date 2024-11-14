@@ -14,16 +14,15 @@ const items = [
     {
         icon: <ViewQuiltRoundedIcon />,
         title: 'Dashboard',
-        description:
-            'Provides you with a full overview of your personal profile, from which you can access your logbook, favorite foods, recipes, and the famous NutriBarcode.',
+        description: 'Provides you with a full overview of your personal profile, where you can access your past lecture transcriptions, AI-generated summaries, and room history.',
         imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
         imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
     },
     {
         icon: <EdgesensorHighRoundedIcon />,
-        title: 'NutriBarcode',
+        title: 'Rooms',
         description:
-            'Our famous, all in one, fully integrated NutriBarcode. Allowing you to scan and add any food product to your logbook by simply scanning its barcode.',
+            'Our seamless real-time transcription system allows users to join rooms via QR code. As the speaker talks, the speech is converted into text and shared with all connected participants instantly.',
         imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
         imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
     },
