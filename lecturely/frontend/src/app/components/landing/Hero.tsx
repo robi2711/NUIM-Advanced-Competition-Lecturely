@@ -9,21 +9,13 @@ import Typography from '@mui/material/Typography';
 
 export default function Hero() {
     return (
-        <Box
-            id="hero"
-            sx={({
-                width: '100%',
-                backgroundImage: `linear-gradient(#021D02, ${alpha('#0A470A', 0.0)})`,
-                backgroundSize: '100% 20%',
-                backgroundRepeat: 'no-repeat',
-            })}
-        >
+        <Box>
             <Container
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    pt: { xs: 14, sm: 20 },
+                    pt: { xs: 14, sm: 18 },
                     pb: { xs: 8, sm: 12 },
                 }}
             >
@@ -48,8 +40,7 @@ export default function Hero() {
                         </Typography>
                     </Typography>
                     <Typography variant="body1" textAlign="center" color="text.secondary">
-                        You are NOT what you eat - Both inside and out - Know the hidden details about the food you consume. <br />
-                        Achieve your personal health goals using the best nutritional tool on the market today.
+                        Access real-time transcriptions of lectures and discussions, designed for students and individuals with hearing impairments. Summarize and review your sessions effortlessly with AI-powered tools.
                     </Typography>
                     <Stack
                         direction={{ xs: 'column', sm: 'row' }}

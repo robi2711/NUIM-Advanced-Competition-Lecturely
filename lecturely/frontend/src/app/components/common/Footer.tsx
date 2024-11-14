@@ -22,6 +22,8 @@ export default function Footer() {
     return (
         <Container
             sx={{
+                position: 'relative',
+                bottom: 0,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
