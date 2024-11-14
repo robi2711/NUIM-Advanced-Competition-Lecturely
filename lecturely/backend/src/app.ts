@@ -28,6 +28,7 @@ app.post('/addUser', async (req: Request, res: Response) => {
   }
 });
 
+// Route to retrieve a user from the database
 app.get('/getUser/:uid', async (req: Request, res: Response) => {
   const { uid } = req.params;
   try {
