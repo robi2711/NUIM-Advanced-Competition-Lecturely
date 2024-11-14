@@ -99,7 +99,7 @@ function NavBar() {
                         <Box
                             sx={{
                                 display: {xs: 'flex', md: 'flex'},
-                                gap: 0.0,
+                                gap: 1.0,
                                 alignItems: 'center',
                             }}
                         >
