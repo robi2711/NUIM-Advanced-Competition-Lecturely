@@ -11,7 +11,7 @@ import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 
 
-export default function SignUp(props: { disableCustomTheme?: boolean }) {
+export default function SignUp() {
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
