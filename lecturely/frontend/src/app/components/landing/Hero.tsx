@@ -9,21 +9,13 @@ import Typography from '@mui/material/Typography';
 
 export default function Hero() {
     return (
-        <Box
-            id="hero"
-            sx={({
-                width: '100%',
-                backgroundImage: `linear-gradient(#021D02, ${alpha('#0A470A', 0.0)})`,
-                backgroundSize: '100% 20%',
-                backgroundRepeat: 'no-repeat',
-            })}
-        >
+        <Box>
             <Container
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    pt: { xs: 14, sm: 20 },
+                    pt: { xs: 14, sm: 18 },
                     pb: { xs: 8, sm: 12 },
                 }}
             >

@@ -14,11 +14,7 @@ export default function LecturelyPage() {
         <CssBaseline>
             <NavBar />
             <Box sx={{ bgcolor: 'background.default' }}>
-                <TopGradiant />
-
-                <Footer />
             </Box>
-            <footer />
         </CssBaseline>
     );
 }

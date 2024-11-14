@@ -19,7 +19,6 @@ export default function LandingPage() {
           <Features />
           <Divider />
           <FAQ />
-          <Footer />
         </Box>
       </CssBaseline>
   );
