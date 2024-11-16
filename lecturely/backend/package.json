@@ -1,25 +1,26 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "node server.js"
+    "start": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.21.1"
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.9.0",
+    "express": "^4.21.1",
     "firebase": "^9.6.1",
     "firebase-admin": "^10.0.0",
     "nodemon": "^2.0.15",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.9.2",
     "typescript": "^4.5.4"
   }
 }

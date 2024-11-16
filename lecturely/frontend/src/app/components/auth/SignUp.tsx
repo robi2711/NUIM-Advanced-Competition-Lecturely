@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 
-
 export default function SignUp() {
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
@@ -56,18 +55,35 @@ export default function SignUp() {
         return isValid;
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        if (nameError || emailError || passwordError) {
-            event.preventDefault();
-            return;
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (validateInputs()) {
+            const data = new FormData(event.currentTarget);
+            const email = data.get('email') as string;
+            const password = data.get('password') as string;
+            const displayName = data.get('name') as string;
+
+            try {
+                const response = await fetch('http://localhost:5000/createUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password, displayName }),
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error creating user:', errorText);
+                    return;
+                }
+
+                const result = await response.json();
+                console.log('User created successfully:', result);
+            } catch (error) {
+                console.error('Error creating user:', error);
+            }
         }
-        const data = new FormData(event.currentTarget);
-        console.log({
-            name: data.get('name'),
-            lastName: data.get('lastName'),
-            email: data.get('email'),
-            password: data.get('password'),
-        });
     };
 
     return (
@@ -82,15 +98,15 @@ export default function SignUp() {
         >
             <Card variant="outlined"
                   sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignSelf: 'center',
-                          width: '50%',
-                          padding: 6,
-                          gap: 4,
-                          margin: 'auto',
-                          sm: '450px',
-                      }}
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignSelf: 'center',
+                      width: '50%',
+                      padding: 6,
+                      gap: 4,
+                      margin: 'auto',
+                      sm: '450px',
+                  }}
             >
                 <Typography
                     variant="h1"

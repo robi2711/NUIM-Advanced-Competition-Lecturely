@@ -14,31 +14,29 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Route to add a user to the database
-app.post('/addUser', async (req: Request, res: Response) => {
-  const { uid, email, displayName } = req.body;
+// Route to create a new user with Firebase Authentication
+app.post('/createUser', async (req: Request, res: Response) => {
+  const { email, password, displayName } = req.body;
   try {
-    await db.collection('users').doc(uid).set({
+    const userRecord = await admin.auth().createUser({
       email,
+      password,
       displayName
     });
-    res.status(200).send({ message: 'User added successfully' });
+    res.status(200).send({ message: 'User created successfully', uid: userRecord.uid });
   } catch (error) {
-    res.status(400).send({ message: 'Error adding user', error });
+    res.status(400).send({ message: 'Error creating user', error });
   }
 });
 
-app.get('/getUser/:uid', async (req: Request, res: Response) => {
-  const { uid } = req.params;
+app.post('/signIn', async (req: Request, res: Response) => {
+  const { email, password } = req.body;
   try {
-    const userDoc = await db.collection('users').doc(uid).get();
-    if (!userDoc.exists) {
-      res.status(404).send({ message: 'User not found' });
-    } else {
-      res.status(200).send(userDoc.data());
-    }
+    const userRecord = await admin.auth().getUserByEmail(email);
+    const token = await admin.auth().createCustomToken(userRecord.uid);
+    res.status(200).send({ message: 'User signed in successfully', token });
   } catch (error) {
-    res.status(400).send({ message: 'Error retrieving user', error });
+    res.status(400).send({ message: 'Error signing in user', error });
   }
 });
 
