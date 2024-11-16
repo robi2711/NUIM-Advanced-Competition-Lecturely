@@ -15,8 +15,8 @@
     "@mui/material": "^6.1.6",
     "firebase": "^11.0.1",
     "next": "15.0.2",
-    "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react": "^19.0.0-rc-02c0e824-20241028",
+    "react-dom": "^19.0.0-rc-02c0e824-20241028",
     "react-router-dom": "^6.28.0"
   },
   "devDependencies": {

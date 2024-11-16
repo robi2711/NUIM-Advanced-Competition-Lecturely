@@ -7,13 +7,14 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function SignIn() {
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 	const validateInputs = () => {
 		const email = document.getElementById('email') as HTMLInputElement;
@@ -48,7 +49,6 @@ export default function SignIn() {
 			const data = new FormData(event.currentTarget);
 			const email = data.get('email') as string;
 			const password = data.get('password') as string;
-			const router = useRouter();
 
 			try {
 				const response = await fetch('http://localhost:5000/signIn', {
@@ -67,12 +67,19 @@ export default function SignIn() {
 
 				const result = await response.json();
 				console.log('User signed in successfully:', result);
-				router.push('/dashboard');
+				setIsLoggedIn(true);
+
 			} catch (error) {
 				console.error('Error signing in user:', error);
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (isLoggedIn) {
+			window.location.href = '/Lecturely';
+		}
+	}, [isLoggedIn]);
 
 	return (
 		<Container
