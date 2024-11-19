@@ -1,20 +1,43 @@
+//TODO: Add a return to home button
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
+import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import ForgotPassword from './ForgotPassword';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import { useEffect } from 'react';
 
-export default function SignIn() {
+export default function SignIn(props: { disableCustomTheme?: boolean }) {
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		if (emailError || passwordError) {
+			event.preventDefault();
+			return;
+		}
+		const data = new FormData(event.currentTarget);
+		console.log({
+			email: data.get('email'),
+			password: data.get('password'),
+		});
+	};
 
 	const validateInputs = () => {
 		const email = document.getElementById('email') as HTMLInputElement;
@@ -43,45 +66,8 @@ export default function SignIn() {
 		return isValid;
 	};
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		if (validateInputs()) {
-			const data = new FormData(event.currentTarget);
-			const email = data.get('email') as string;
-			const password = data.get('password') as string;
-
-			try {
-				const response = await fetch('http://localhost:5000/signIn', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ email, password }),
-				});
-
-				if (!response.ok) {
-					const errorText = await response.text();
-					console.error('Error signing in user:', errorText);
-					return;
-				}
-
-				const result = await response.json();
-				console.log('User signed in successfully:', result);
-				setIsLoggedIn(true);
-
-			} catch (error) {
-				console.error('Error signing in user:', error);
-			}
-		}
-	};
-
-	useEffect(() => {
-		if (isLoggedIn) {
-			window.location.href = '/Lecturely';
-		}
-	}, [isLoggedIn]);
-
 	return (
+
 		<Container
 			id="signin"
 			sx={{
@@ -91,61 +77,69 @@ export default function SignIn() {
 				minHeight: '100vh',
 			}}
 		>
+
 			<Card variant="outlined"
-			      sx={{
-				      display: 'flex',
-				      flexDirection: 'column',
-				      alignSelf: 'center',
-				      width: '50%',
-				      padding: 6,
-				      gap: 4,
-				      margin: 'auto',
-				      sm: '450px',
-			      }}
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignSelf: 'center',
+					width: '50%',
+					padding: 6,
+					gap: 4,
+					margin: 'auto',
+					sm: '450px',
+
+				}}
 			>
 				<Typography
-					variant="h1"
-					sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+					variant="h4"
 				>
 					Sign in
 				</Typography>
 				<Box
 					component="form"
 					onSubmit={handleSubmit}
-					sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+					noValidate
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						width: '100%',
+						gap: 2,
+					}}
 				>
 					<FormControl>
 						<FormLabel htmlFor="email">Email</FormLabel>
 						<TextField
-							required
-							fullWidth
-							id="email"
-							placeholder="your@email.com"
-							name="email"
-							autoComplete="email"
-							variant="outlined"
 							error={emailError}
 							helperText={emailErrorMessage}
-							color={passwordError ? 'error' : 'primary'}
+							id="email"
+							type="email"
+							name="email"
+							placeholder="your@email.com"
+							required
+							fullWidth
+							variant="outlined"
+							color={emailError ? 'error' : 'primary'}
 						/>
 					</FormControl>
 					<FormControl>
 						<FormLabel htmlFor="password">Password</FormLabel>
 						<TextField
-							required
-							fullWidth
+							error={passwordError}
+							helperText={passwordErrorMessage}
 							name="password"
 							placeholder="••••••"
 							type="password"
 							id="password"
 							autoComplete="current-password"
+							autoFocus
+							required
+							fullWidth
 							variant="outlined"
-							error={passwordError}
-							helperText={passwordErrorMessage}
-							color={passwordError ? 'error' : 'primary'}
+							color={passwordError ? 'error' : 'error'}
 						/>
 					</FormControl>
-
+					<ForgotPassword open={open} handleClose={handleClose} />
 					<Button
 						type="submit"
 						fullWidth
@@ -154,6 +148,29 @@ export default function SignIn() {
 					>
 						Sign in
 					</Button>
+					<Link
+						component="button"
+						type="button"
+						onClick={handleClickOpen}
+						variant="body2"
+						sx={{ alignSelf: 'center' }}
+					>
+						Forgot your password?
+					</Link>
+				</Box>
+				<Divider>or</Divider>
+				<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
+					<Typography sx={{ textAlign: 'center' }}>
+						Don&apos;t have an account?{' '}
+						<Link
+							href="/SignUp"
+							variant="body2"
+							sx={{ alignSelf: 'center' }}
+						>
+							Sign up
+						</Link>
+					</Typography>
 				</Box>
 			</Card>
 		</Container>
