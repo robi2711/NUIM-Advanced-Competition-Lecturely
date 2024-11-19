@@ -1,1 +1,0 @@
-# NUIM-Advanced-Competition-Lecturely

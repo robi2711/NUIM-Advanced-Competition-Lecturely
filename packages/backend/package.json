@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Robert Stefan Gontaru <robert.gontaru@outlook.com>",
+  "homepage": "https://github.com/robi2711/NUIM-Advanced-Competition-Lecturely#readme",
+  "license": "ISC",
+  "main": "src/",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robi2711/NUIM-Advanced-Competition-Lecturely.git"
+  },
+    "scripts": {
+        "start": "ts-node src/index.ts"
+    },
+  "dependencies": {
+  },
+  "devDependencies": {
+
+    "ts-node": "^10.9.2"
+  }
+
+}
