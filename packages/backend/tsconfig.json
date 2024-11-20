@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "commonjs",
+    "module": "esnext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "composite": true,
     "outDir": "./dist"
   },
   "include": ["src/**/*.ts"],
