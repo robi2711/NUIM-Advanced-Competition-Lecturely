@@ -1,0 +1,23 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "scripts": {
+    "initial-install": "npm install",
+
+    "build": "npm run build --workspaces --if-present && npm run test && rm -rf dist && npm run lint && tsc -b",
+
+    "frontend": "lerna run dev",
+    "backend": "lerna run start",
+    "both": "lerna run dev --parallel"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^8.1.9",
+    "typescript": "^5",
+    "@types/node": "^22.9.0"
+  }
+}
