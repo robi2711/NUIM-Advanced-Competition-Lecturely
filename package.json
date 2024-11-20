@@ -2,12 +2,17 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/backend",
+    "packages/frontend"
   ],
   "scripts": {
+    "initial-install": "npm install",
+
+    "build": "npm run build --workspaces --if-present && npm run test && rm -rf dist && npm run lint && tsc -b",
+
     "frontend": "lerna run dev",
     "backend": "lerna run start",
-    "both": "lerna run dev && lerna run start"
+    "both": "lerna run dev --parallel"
   },
   "dependencies": {},
   "devDependencies": {
