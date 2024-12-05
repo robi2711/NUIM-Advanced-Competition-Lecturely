@@ -84,4 +84,3 @@ We welcome contributions! To contribute:
 ## Contact
 
 
-Project Link: [https://github.com/robi2711/NUIM-Advanced-Competition-lecturely] Lecturely
