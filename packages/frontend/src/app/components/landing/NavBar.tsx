@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
+import axios from 'axios';
 
 
 const logoStyle = {
@@ -30,6 +31,9 @@ function NavBar() {
                 behavior: 'smooth',
             });
         }
+    };
+    const handleSignIn = () => {
+        window.location.href = 'http://localhost:3001/login';
     };
 
     return (
@@ -112,15 +116,14 @@ function NavBar() {
                                     Sign in
                                 </Button>
                             </Link>
-                            <Link href="/SignUp" passHref>
-                                <Button
-                                    color="primary"
-                                    variant="contained"
-                                    size="medium"
-                                >
-                                    Sign up
-                                </Button>
-                            </Link>
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                size="medium"
+                                onClick={handleSignIn}
+                            >
+                                Sign up
+                            </Button>
                         </Box>
                     </Toolbar>
                 </Container>
