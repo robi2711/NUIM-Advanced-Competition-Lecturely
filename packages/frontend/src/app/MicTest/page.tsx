@@ -7,12 +7,19 @@ const MicTestPage: React.FC = () => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
         recognition.continuous = true;
-        recognition.interimResults = true;
         recognition.onresult = async function(event) {
-            const transcript = event.results[0][0].transcript;
+            const transcript = event.results[event.results.length-1][0].transcript;
             console.log(transcript);
         }
         recognition.start();
+        recognition.onend = () => {
+            console.log("ended");
+            recognition.start();
+        };
+        recognition.onerror = (event) => {
+            console.error(event.error);
+            recognition.start();
+        };
     };
 
     return (
@@ -23,8 +30,13 @@ const MicTestPage: React.FC = () => {
             <Button variant="contained" color="primary" onClick={handleMicTest}>
                 Start Mic Test
             </Button>
-            {/* Add more components and logic as needed */}
+            <Box sx ={{ p: 10}}>
+                <Typography>
+                    transcript goes here
+                </Typography>
+            </Box>
         </Box>
+
     );
 };
 
