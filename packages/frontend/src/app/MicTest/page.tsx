@@ -1,9 +1,28 @@
 'use client'
 import * as React from "react";
+import axios from "axios";
 import { Box, Button, Typography } from "@mui/material";
 
 const MicTestPage: React.FC = () => {
     const [transcript, setTranscript] = React.useState("");
+
+    const sendResultsToBackend = async (results: SpeechRecognitionResultList) => {
+        const resultsArray = Array.from(results)
+            .slice(0, 3)
+            .map(result => ({
+                transcript: result[0]?.transcript || ""
+            }));
+
+        try {
+            const response = await axios.post('http://localhost:3001/receivePhrase', {
+                results: resultsArray,
+            });
+
+            console.log('Backend response:', response.data);
+        } catch (error) {
+            console.error('Error sending results to backend:', error);
+        }
+    };
     const handleMicTest = () => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
@@ -11,8 +30,12 @@ const MicTestPage: React.FC = () => {
         recognition.lang = "en-US";
         recognition.continuous = true;
         recognition.onresult = async function(event) {
-            transcript = transcript + event.results[event.results.length-1][0].transcript;
-            setTranscript(transcript);
+            const fullTranscript = Array.from(event.results)
+                .map(result => result[0].transcript)
+                .join(" ");
+            setTranscript(fullTranscript);
+
+            await sendResultsToBackend(event.results);
         }
         recognition.start();
         recognition.onend = () => {
