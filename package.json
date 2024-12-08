@@ -13,11 +13,9 @@
     "both": "lerna run dev --parallel"
   },
   "dependencies": {
-
     "dotenv": "^16.4.7"
   },
   "devDependencies": {
-
     "@types/node": "^22.9.0",
     "lerna": "^8.1.9",
     "typescript": "^5"
