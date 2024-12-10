@@ -34,14 +34,14 @@ const userController: IUserController = {
         }
     },
     signIn: async (req, res) => {
+        console.log(req.body)
+        const { email, password } = req.body;
         try {
-            const { email, password } = req.body;
             const result = await cognitoUserPoolHelper.signIn({ email, password });
+            console.log(result)
             res.json(result);
         } catch (err) {
-            if (err instanceof Error) {
-                res.status(500).json({ message: err.message });
-            }
+            res.status(500).json({ message: err });
         }
     },
     getProfile: (req: IAuthenticatedRequest, res) => {

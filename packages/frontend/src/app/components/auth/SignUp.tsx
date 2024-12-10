@@ -9,9 +9,25 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
+import axios from "axios";
 
+const api = axios.create({
+    baseURL: 'http://localhost:3001',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+async function AWSSignUp(data: any){
+    await api.post('/auth/signup', {
+        email: data.get('email'),
+        password: data.get('password')
+
+    });
+}
 
 export default function SignUp() {
+
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
@@ -68,6 +84,9 @@ export default function SignUp() {
             email: data.get('email'),
             password: data.get('password'),
         });
+
+        AWSSignUp(data);
+
     };
 
     return (

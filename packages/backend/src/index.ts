@@ -1,10 +1,18 @@
+import userController from "@/controllers/userController";
+
 require('dotenv').config();
 
 import express from 'express';
 import authRoutes from "@/routes/authRoutes";
+import cors from "cors";
+import router from "@/routes/authRoutes";
 
 const app = express();
 
+app.use(cors({
+        origin: 'http://localhost:3000'
+    }
+));
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -13,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRoutes);
 
-const port = process.env.PORT || 3001;
+const port = 3001;
 app.listen(port, () => {
     console.log(`Server is listening on :${port}`);
 });

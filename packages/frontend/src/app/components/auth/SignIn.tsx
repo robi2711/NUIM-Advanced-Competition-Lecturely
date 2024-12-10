@@ -11,6 +11,21 @@ import Typography from '@mui/material/Typography';
 import ForgotPassword from './ForgotPassword';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
+import axios from 'axios';
+
+const api = axios.create({
+	baseURL: 'http://localhost:3001',
+	headers: {
+		'Content-Type': 'application/json'
+	}
+});
+
+async function AWSSignIn(data: any){
+	await api.post('/auth/signin', {
+		email: data.get('email'),
+		password: data.get('password')
+	});
+}
 
 export default function SignIn() {
 	const [emailError, setEmailError] = React.useState(false);
@@ -33,10 +48,12 @@ export default function SignIn() {
 			return;
 		}
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get('email'),
-			password: data.get('password'),
-		});
+		console.log(JSON.stringify({
+				email: data.get('email'),
+				password: data.get('password')
+		})
+		);
+		console.log(AWSSignIn(data));
 	};
 
 	const validateInputs = () => {

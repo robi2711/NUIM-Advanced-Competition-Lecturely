@@ -1,6 +1,9 @@
 
 import 'cross-fetch/polyfill';
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool } from 'amazon-cognito-identity-js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export interface IUserToken {
     accessToken: string;
@@ -12,8 +15,8 @@ class CognitoUserPoolHelper {
 
     constructor() {
         this.userPool = new CognitoUserPool({
-            UserPoolId: process.env.USER_POOL_ID || '',
-            ClientId: process.env.CLIENT_ID || '',
+            UserPoolId: process.env.COGNITO_USER_POOL_ID ||'',
+            ClientId: process.env.COGNITO_CLIENT_ID ||'',
         });
     }
 

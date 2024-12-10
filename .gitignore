@@ -95,7 +95,7 @@ dist
 .cache/
 
 # public
-.env
+packages/backend/.env
 
 # vuepress build output
 .vuepress/dist
