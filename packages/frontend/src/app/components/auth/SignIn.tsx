@@ -11,14 +11,7 @@ import Typography from '@mui/material/Typography';
 import ForgotPassword from './ForgotPassword';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import axios from 'axios';
-
-const api = axios.create({
-	baseURL: 'http://localhost:3001',
-	headers: {
-		'Content-Type': 'application/json'
-	}
-});
+import api from '../services/apiService';
 
 async function AWSSignIn(data: any){
 	await api.post('/auth/signin', {
