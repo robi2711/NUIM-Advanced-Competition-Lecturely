@@ -6,43 +6,34 @@ import { Box, Button, Typography } from "@mui/material";
 const MicTestPage: React.FC = () => {
     const [transcript, setTranscript] = React.useState("");
 
-    const sendResultsToBackend = async (results: SpeechRecognitionResultList) => {
-        const resultsArray = Array.from(results)
-            .slice(0, 3)
-            .map(result => ({
-                transcript: result[0]?.transcript || ""
-            }));
-
+    const sendPhraseToBackend = async (phrase: string) => {
         try {
-            const response = await axios.post('http://localhost:3001/receivePhrase', {
-                results: resultsArray,
-            });
-
-            console.log('Backend response:', response.data);
+            const response = await axios.post('/placeholder', { phrase });
+            console.log('Phrase sent successfully:', response.data);
         } catch (error) {
-            console.error('Error sending results to backend:', error);
+            console.error('Error sending phrase:', error);
         }
     };
+
     const handleMicTest = () => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
-        let transcript = "";
-        recognition.lang = "en-US";
-        recognition.continuous = true;
-        recognition.onresult = async function(event) {
-            const fullTranscript = Array.from(event.results)
-                .map(result => result[0].transcript)
-                .join(" ");
-            setTranscript(fullTranscript);
+        let liveTranscript = "";
 
-            await sendResultsToBackend(event.results);
+        recognition.lang = "en-GB";
+        recognition.continuous = true;
+        recognition.maxAlternatives = 3;
+
+        recognition.onresult = async function(event) {
+            const currentPhrase = event.results[event.results.length-1][0].transcript;
+            liveTranscript = liveTranscript + currentPhrase;
+            await sendPhraseToBackend(currentPhrase);
+            setTranscript(liveTranscript);
         }
+
         recognition.start();
+
         recognition.onend = () => {
-            recognition.start();
-        };
-        recognition.onerror = (event) => {
-            console.error(event.error);
             recognition.start();
         };
     };
@@ -55,7 +46,7 @@ const MicTestPage: React.FC = () => {
             <Button variant="contained" color="primary" onClick={handleMicTest}>
                 Start Mic Test
             </Button>
-            <Box sx ={{ p: 10}}>
+            <Box sx ={{p: 10}}>
                 <Typography>
                     {transcript}
                 </Typography>
