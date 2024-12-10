@@ -8,7 +8,9 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import Link from 'next/link';
+import {useState} from "react";
 
 
 const logoStyle = {
@@ -24,7 +26,18 @@ interface AppAppBarProps {
 }
 
 function NavBar() {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+    const handleUserSettingsClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleSignOut = () => {
+        window.location.href = 'http://localhost:3001/logout';
+    };
     return (
         <div>
             <AppBar
@@ -107,15 +120,32 @@ function NavBar() {
                                 </Button>
                             </Link>
                             <Divider orientation="vertical" flexItem />
-                            <Link href="/UserSettings" passHref>
-                                <Button
-                                    color="primary"
-                                    variant="text"
-                                    size="medium"
+                            <Button
+                                color="inherit"
+                                onClick={handleUserSettingsClick}
+                            >
+                                User Settings
+                            </Button>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem
+
                                 >
-                                    User Settings
-                                </Button>
-                            </Link>
+
+                                        <Button
+                                            color="error"
+                                            variant="contained"
+                                            size="medium"
+                                            onClick={handleSignOut}
+                                        >
+                                            Log Out
+                                        </Button>
+
+                                </MenuItem>
+                            </Menu>
 
                         </Box>
                     </Toolbar>
