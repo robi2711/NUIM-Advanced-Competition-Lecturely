@@ -3,8 +3,11 @@ import session from 'express-session';
 import { Issuer, Client, generators } from 'openid-client';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { ensureClientInitialized } from "@/middleware/authMiddleware";
+import { initializeClient } from "@/config/clientConfig";
 import router from "@/routes/authRoutes";
+import {getPathFromURL} from "@/helpers/authHelper";
+import authController from "@/controllers/authController";
+import {Client, Issuer} from "openid-client";
 const PORT = 3001;
 
 
@@ -13,8 +16,19 @@ dotenv.config();
 
 const app = express();
 
-app.use(ensureClientInitialized);
+(async () => {
+    try {
+        await initializeClient();
+    } catch (error) {
+        console.error('Failed to initialize client:', error);
+    }
+})();
 
+app.use(session({
+    secret: 'v',
+    resave: true,
+    saveUninitialized: false
+}));
 
 app.use(cors(
     {
@@ -23,11 +37,7 @@ app.use(cors(
 ));
 
 
-app.use(session({
-    secret: 'some secret',
-    resave: false,
-    saveUninitialized: false
-}));
+
 
 app.use(express.json());
 //TODO: Send to database
@@ -37,7 +47,7 @@ app.post('/phraseReceiver', async (req: Request, res: Response, next: NextFuncti
 });
 
 app.use('/auth', router);
-
+app.get('/Lecturely', authController.notsure);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
