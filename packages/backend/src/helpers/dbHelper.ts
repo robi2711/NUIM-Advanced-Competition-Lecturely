@@ -1,5 +1,6 @@
 import {GetCommand, PutCommand} from "@aws-sdk/lib-dynamodb";
-import {ItemData} from "@/config/dbConfig";
+import { docClient } from "@/config/dbConfig";
+import { ItemData } from "@/types/dbTypes";
 
 export const addItem = async (data: ItemData) => {
 	try {
@@ -18,13 +19,12 @@ export const addItem = async (data: ItemData) => {
 export const getItem = async (pk: string, sk: string) => {
 	try {
 		const params = {
-			TableName: 'Users',
+			TableName: 'users',
 			Key: { PK: pk, SK: sk }
 		};
 		const result = await docClient.send(new GetCommand(params));
 		return result.Item;
 	} catch (error) {
 		console.error("Error retrieving item:", error);
-		throw error;
 	}
 };

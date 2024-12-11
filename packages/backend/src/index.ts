@@ -38,52 +38,7 @@ app.use(session({
     }
 })();
 
-
-
-
-
-
-app.get('/', (req, res) => {
-	res.send('Hello World');
-});
-
-
-app.get('/add', async (req: Response, res: Response)  => {
-
-	const itemData: ItemData = {
-		PK: 'user_0002',
-		SK: 'user',
-		data: 'Raoul'
-	};
-	try {
-		await addItem(itemData);
-		res.status(200).send('Item added successfully');
-	} catch(error){
-		console.error(error);
-		res.status(500).send('Error adding item');
-	}
-});
-
-
-app.get('/get-item', async (req, res)  => {
-	const itemData: ItemData = {
-		PK: 'user_0001',
-		SK: 'user',
-		data: 'Raoul'
-	};
-	try {
-		await addItem(itemData);
-		res.status(200).send('Item added successfully');
-	} catch(error){
-		console.error(error);
-		res.status(500).send('Error adding item');
-	}
-});
-
-
-
-
-
+app.use('/db', itemRoutes);
 app.use('/auth', router);
 app.get('/Lecturely', authController.notsure);
 
