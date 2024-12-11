@@ -4,10 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { initializeClient } from "@/config/clientConfig";
 import router from "@/routes/authRoutes";
-import {getPathFromURL} from "@/helpers/authHelper";
 import authController from "@/controllers/authController";
-import {Client, Issuer} from "openid-client";
-import { addItem, getItem, ItemData } from './config/dynamo';
+import { addItem, getItem, ItemData } from './config/dynamoConfig';
 import itemRoutes from './routes/itemRoutes';
 const PORT = 3001;
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { DynamoDBDocumentClient, PutCommand, GetCommand, DeleteCommand, UpdateCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
-import { docClient } from '../config/dynamo';
+import { docClient } from '../config/dynamoConfig';
 import { Rooms } from '../types/type';
 
 export class ItemController {
