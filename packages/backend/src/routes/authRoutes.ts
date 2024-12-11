@@ -9,8 +9,9 @@ router.get('/', checkAuth, authController.default);
 router.get('/login', authController.login);
 
 router.get('/logout', authController.logout);
+
 //TODO: find the proper name for the following route
-router.get(getPathFromURL('http://localhost:3000/Lecturely') || '', authController.notsure);
+
 
 //router.get('/profile', authMiddleware, userController.getProfile);
 

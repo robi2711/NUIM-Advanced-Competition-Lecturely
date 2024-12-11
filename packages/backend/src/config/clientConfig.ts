@@ -1,9 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
 import { Client, Issuer } from 'openid-client';
 
-let client: Client;
+export let client: Client;
 
-async function initializeClient(): Promise<void> {
+export async function initializeClient(): Promise<void> {
 	try {
 		const issuer = await Issuer.discover('https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_nPakcZH5L');
 		client = new issuer.Client({
@@ -17,16 +16,3 @@ async function initializeClient(): Promise<void> {
 		throw error;
 	}
 }
-
-export const ensureClientInitialized = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		if (!client) {
-			await initializeClient();
-			console.log('Client initialized');
-		}
-		req.client = client;
-		next();
-	} catch (error) {
-		res.status(500).send('Internal Server Error');
-	}
-};
