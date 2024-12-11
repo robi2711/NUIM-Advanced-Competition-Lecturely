@@ -3,26 +3,24 @@ import { DynamoDBDocumentClient, PutCommand, GetCommand } from "@aws-sdk/lib-dyn
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Add environment variable validation
-if (!process.env.KEY || !process.env.SECRET) {
-    throw new Error('Missing required AWS credentials');
-}
 
 const client = new DynamoDBClient({
     region: "eu-west-1",
     credentials: {
-        accessKeyId: process.env.KEY,
-        secretAccessKey: process.env.SECRET
+        accessKeyId: process.env.KEY as string,
+        secretAccessKey: process.env.SECRET as string
     }
 });
 
-interface ItemData {
+export interface ItemData {
     PK: string;
     SK: string;
     data: string;
 }
 
-const docClient = DynamoDBDocumentClient.from(client);
+export const docClient = DynamoDBDocumentClient.from(client);
+
+
 
 const addItem = async (data: ItemData) => {
     try {
@@ -37,6 +35,9 @@ const addItem = async (data: ItemData) => {
         throw error;
     }
 };
+
+
+
 
 const getItem = async (pk: string, sk: string) => {
     try {

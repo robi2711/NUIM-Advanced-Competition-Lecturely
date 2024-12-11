@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 import {initializeCognitoClient} from "@/config/clientConfig";
 import router from "@/routes/authRoutes";
 import authController from "@/controllers/authController";
-import { addItem, getItem, ItemData } from './config/dynamoConfig';
-import itemRoutes from './routes/itemRoutes';
+import { addItem, getItem, ItemData } from './config/dbConfig';
+import itemRoutes from './routes/dbRoutes';
 const PORT = 3001;
 
 
@@ -15,6 +15,11 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors(
+	{
+		origin: 'http://localhost:3000'
+	}
+));
 app.use(express.json());
 
 app.use(session({
@@ -22,6 +27,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
+
 
 
 (async () => {
@@ -33,7 +39,17 @@ app.use(session({
 })();
 
 
-app.post('/add', async (req, res)  => {
+
+
+
+
+app.get('/', (req, res) => {
+	res.send('Hello World');
+});
+
+
+app.get('/add', async (req: Response, res: Response)  => {
+
 	const itemData: ItemData = {
 		PK: 'user_0002',
 		SK: 'user',
@@ -47,9 +63,6 @@ app.post('/add', async (req, res)  => {
 		res.status(500).send('Error adding item');
 	}
 });
-
-
-
 
 
 app.get('/get-item', async (req, res)  => {
@@ -67,6 +80,10 @@ app.get('/get-item', async (req, res)  => {
 	}
 });
 
+
+
+
+
 app.use('/auth', router);
 app.get('/Lecturely', authController.notsure);
 
@@ -74,11 +91,6 @@ app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
 });
 
-app.use(cors(
-    {
-        origin: 'http://localhost:3000'
-    }
-));
 
 
 
