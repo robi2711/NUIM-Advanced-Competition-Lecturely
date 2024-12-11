@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import session from 'express-session';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { initializeClient } from "@/config/clientConfig";
+import {initializeCognitoClient} from "@/config/clientConfig";
 import router from "@/routes/authRoutes";
 import authController from "@/controllers/authController";
 import { addItem, getItem, ItemData } from './config/dynamoConfig';
@@ -17,9 +17,16 @@ const app = express();
 
 app.use(express.json());
 
+app.use(session({
+	secret: 'v',
+	resave: true,
+	saveUninitialized: false
+}));
+
+
 (async () => {
     try {
-        await initializeClient();
+        await initializeCognitoClient();
     } catch (error) {
         console.error('Failed to initialize client:', error);
     }
@@ -43,11 +50,7 @@ app.post('/add', async (req, res)  => {
 
 
 
-app.use(session({
-    secret: 'v',
-    resave: true,
-    saveUninitialized: false
-}));
+
 
 app.get('/get-item', async (req, res)  => {
 	const itemData: ItemData = {

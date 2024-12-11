@@ -36,7 +36,7 @@ const authController: IUserController = {
 		req.session.destroy((err) => {
 			if (err) console.error('Session destruction error:', err);
 		});
-		const logoutUrl = `https://eu-west-1npakczh5l.auth.eu-west-1.amazoncognito.com/logout?client_id=${process.env.CLIENT_ID as string}&logout_uri=http://localhost:3000/`;
+		const logoutUrl = `https://eu-west-1npakczh5l.auth.eu-west-1.amazoncognito.com/logout?client_id=${process.env.COGNITO_CLIENT_ID as string}&logout_uri=http://localhost:3000/`;
 		res.redirect(logoutUrl);
 	},
 
