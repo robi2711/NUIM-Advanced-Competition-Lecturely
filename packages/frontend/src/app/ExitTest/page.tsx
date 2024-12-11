@@ -1,9 +1,9 @@
 'use client'
 import * as React from "react";
-import SignIn from "@/app/components/auth/SignIn";
+import ExitTest from "@/app/components/pages/ExitTest";
 
 export default function MainPage() {
 	return (
-		<SignIn/>
+		<ExitTest/>
 	);
 }

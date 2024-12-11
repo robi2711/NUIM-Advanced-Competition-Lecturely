@@ -22,7 +22,7 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
-
+.env
 # nyc test coverage
 .nyc_output
 
@@ -97,7 +97,7 @@ dist
 .cache/
 
 # public
-.env
+packages/backend/.env
 
 # vuepress build output
 .vuepress/dist
