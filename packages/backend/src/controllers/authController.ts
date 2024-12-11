@@ -7,10 +7,12 @@ interface IUserController {
 	login: express.Handler,
 	logout: express.Handler,
 	default: express.Handler,
-	additional: express.Handler,
+	notsure: express.Handler,
 }
 
 const authController: IUserController = {
+
+
 	login: async (req: CustomRequest, res: Response) => {
 		const nonce = generators.nonce();
 		const state = generators.state();
@@ -45,8 +47,30 @@ const authController: IUserController = {
 	},
 
 
-	additional: async (req, res) => {
-		res.json({ message: "additional" });
-	},
+	notsure: async (req: CustomRequest, res: Response) => {
+		try {
+			const params = req.client.callbackParams(req);
+			const tokenSet = await req.client.callback(
+				'http://localhost:3000/Lecturely',
+				params,
+				{
+					nonce: req.session.nonce,
+					state: req.session.state
+				}
+			);
+			if (tokenSet.access_token) {
+				const userInfo = await req.client.userinfo(tokenSet.access_token);
+				req.session.userInfo = userInfo;
+				console.log('User info:', userInfo);
+				res.redirect(process.env.REDIRECT_URIS as string);
+			} else {
+				console.log('No access token');
+				res.redirect(process.env.REDIRECT_URIS as string);
+			}
+		} catch (err) {
+			console.error('Callback error:', err);
+			res.redirect(process.env.REDIRECT_URIS as string);
+		}
+	}
 };
 export default authController;
