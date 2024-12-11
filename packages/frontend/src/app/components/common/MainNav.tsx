@@ -36,7 +36,7 @@ function NavBar() {
         setAnchorEl(null);
     };
     const handleSignOut = () => {
-        window.location.href = 'http://localhost:3001/logout';
+        window.location.href = 'http://localhost:3001/auth/logout';
     };
     return (
         <div>

@@ -1,17 +1,16 @@
-import { Router} from "express";
-import userController from "../controllers/userController";
-import authMiddleware from '../middleware/middleware';
-import {checkAuth} from "@/helpers/authHelper";
+import { Router } from "express";
+import {checkAuth, getPathFromURL} from "@/helpers/authHelper";
 import authController from "@/controllers/authController";
-import {ensureClientInitialized} from "@/middleware/authMiddleware";
 
 const router = Router();
 
-router.post('/', checkAuth, authController.default);
+router.get('/', checkAuth, authController.default);
 
-router.post('/login', ensureClientInitialized, authController.login);
+router.get('/login', authController.login);
 
-router.post('/logout', authController.logout);
+router.get('/logout', authController.logout);
+//TODO: find the proper name for the following route
+router.get(getPathFromURL('http://localhost:3000/Lecturely') || '', authController.notsure);
 
 //router.get('/profile', authMiddleware, userController.getProfile);
 

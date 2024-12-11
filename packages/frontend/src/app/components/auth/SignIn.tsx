@@ -14,10 +14,7 @@ import Card from "@mui/material/Card";
 import api from '../services/apiService';
 
 async function AWSSignIn(data: any){
-	await api.post('/auth/signin', {
-		email: data.get('email'),
-		password: data.get('password')
-	});
+	await api.post('/auth/signin', JSON.stringify(data));
 }
 
 export default function SignIn() {

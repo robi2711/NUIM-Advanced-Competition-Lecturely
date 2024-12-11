@@ -10,11 +10,18 @@ const PORT = 3001;
 
 dotenv.config();
 
+
 const app = express();
-app.use(cors({
+
+app.use(ensureClientInitialized);
+
+
+app.use(cors(
+    {
         origin: 'http://localhost:3000'
     }
 ));
+
 
 app.use(session({
     secret: 'some secret',
@@ -29,7 +36,8 @@ app.post('/phraseReceiver', async (req: Request, res: Response, next: NextFuncti
     res.send(req.body.phrase);
 });
 
-app.use('/auth', ensureClientInitialized, router);
+app.use('/auth', router);
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
