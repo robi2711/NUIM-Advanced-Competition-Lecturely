@@ -3,31 +3,23 @@ import session from 'express-session';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import {initializeCognitoClient} from "@/config/clientConfig";
-import router from "@/routes/authRoutes";
+import authRouter from "@/routes/authRoutes";
 import authController from "@/controllers/authController";
-import { addItem, getItem, ItemData } from './config/dbConfig';
-import itemRoutes from './routes/dbRoutes';
+import dbRouter from './routes/dbRoutes';
+
 const PORT = 3001;
-
-
 dotenv.config();
 
-
 const app = express();
-
-app.use(cors(
-	{
-		origin: 'http://localhost:3000'
-	}
-));
 app.use(express.json());
-
+app.use(cors({
+	origin: 'http://localhost:3000'})
+);
 app.use(session({
 	secret: 'v',
 	resave: true,
 	saveUninitialized: false
 }));
-
 
 
 (async () => {
@@ -38,9 +30,13 @@ app.use(session({
     }
 })();
 
-app.use('/db', itemRoutes);
-app.use('/auth', router);
+
+app.use('/db', dbRouter);
+
+app.use('/auth', authRouter);
+
 app.get('/Lecturely', authController.notsure);
+
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);

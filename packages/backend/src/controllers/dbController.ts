@@ -12,9 +12,9 @@ interface IdbController {
 const dbController: IdbController = {
     addItem: async (req: Request, res: Response)  => {
         const itemData: ItemData = {
-            PK: 'user_0002',
+            PK: 'user_0003',
             SK: 'user',
-            data: 'Raoul'
+            data: 'Robert'
         };
         try {
             await addItem(itemData);
@@ -27,7 +27,7 @@ const dbController: IdbController = {
 
     getItem: async (req: Request, res: Response)  => {
         const itemData: ItemData = {
-            PK: 'user_0002',
+            PK: 'user_0003',
             SK: 'user',
             data: ''
         };
