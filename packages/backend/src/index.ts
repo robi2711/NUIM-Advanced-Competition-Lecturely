@@ -4,9 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { initializeClient } from "@/config/clientConfig";
 import router from "@/routes/authRoutes";
-import {getPathFromURL} from "@/helpers/authHelper";
 import authController from "@/controllers/authController";
-import {Client, Issuer} from "openid-client";
 const PORT = 3001;
 
 
