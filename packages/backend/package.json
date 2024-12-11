@@ -23,7 +23,6 @@
     "build": "rm -rf dist && tsc index.ts --declaration --allowJs --outDir dist"
   },
   "dependencies": {
-    "aws-sdk": "^3",
     "amazon-cognito-identity-js": "^6.3.12",
     "cross-fetch": "^4.0.0",
     "openid-client": "^5.7.0",

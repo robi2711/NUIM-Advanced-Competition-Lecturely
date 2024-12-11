@@ -1,14 +1,16 @@
 'use client'
 import * as React from "react";
-import axios from "axios";
+import api from '@/app/components/services/apiService';
 import { Box, Button, Typography } from "@mui/material";
 
 const MicTestPage: React.FC = () => {
     const [transcript, setTranscript] = React.useState("");
 
-    const sendPhraseToBackend = async (phrase: string) => {
+    const sendPhraseToBackend = async (phrase: any) => {
         try {
-            const response = await axios.post('/placeholder', { phrase });
+            const response = await api.post('/phraseReceiver', {
+                phrase: JSON.stringify(phrase)
+            });
             console.log('Phrase sent successfully:', response.data);
         } catch (error) {
             console.error('Error sending phrase:', error);
