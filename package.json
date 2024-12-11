@@ -13,13 +13,20 @@
     "both": "lerna run dev --parallel"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.705.0",
+    "@aws-sdk/lib-dynamodb": "^3.705.0",
+    "@aws-sdk/util-dynamodb": "^3.705.0",
     "@types/aws-sdk": "^0.0.42",
-    "aws-sdk": "^2.1692.0"
+    "@types/express": "^5.0.0",
+    "aws-sdk": "^2.1692.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.1",
     "lerna": "^8.1.9",
     "nodemon": "^3.1.7",
-    "typescript": "^5"
+    "typescript": "^5.7.2"
   }
 }
