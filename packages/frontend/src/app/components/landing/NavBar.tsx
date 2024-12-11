@@ -107,22 +107,13 @@ function NavBar() {
                                 alignItems: 'center',
                             }}
                         >
-                            <Link href="/SignIn" passHref>
-                                <Button
-                                    color="primary"
-                                    variant="text"
-                                    size="medium"
-                                >
-                                    Sign in
-                                </Button>
-                            </Link>
                             <Button
                                 color="primary"
                                 variant="contained"
                                 size="medium"
                                 onClick={handleSignIn}
                             >
-                                Sign up
+                                Sign In
                             </Button>
                         </Box>
                     </Toolbar>
