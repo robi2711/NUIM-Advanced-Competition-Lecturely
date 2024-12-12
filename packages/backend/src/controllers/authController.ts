@@ -31,9 +31,9 @@ const authController: IUserController = {
 
 	notsure: async (req: CustomRequest, res: Response) => {
 
-		console.log(req.session.state);
 		try {
 			const params = client.callbackParams(req);
+			console.log('Callback params:', params);
 			const tokenSet = await client.callback(
 				'http://localhost:3000/Lecturely',
 				params,
