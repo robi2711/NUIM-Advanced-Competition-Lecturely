@@ -26,6 +26,7 @@ const authController: IUserController = {
 			state: state,
 			nonce: nonce,
 		});
+		console.log(req.session.state)
 		res.redirect(authUrl);
 	},
 
@@ -39,7 +40,7 @@ const authController: IUserController = {
 				params,
 				{
 					nonce: req.session.nonce,
-					state: req.session.state
+					state: params.state
 				}
 			);
 
