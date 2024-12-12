@@ -3,41 +3,44 @@ import session from 'express-session';
 import { Issuer, Client, generators } from 'openid-client';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { initializeClient } from "@/config/clientConfig";
-import router from "@/routes/authRoutes";
-import {getPathFromURL} from "@/helpers/authHelper";
+import {initializeCognitoClient} from "@/config/cognitoConfig";
+import authRouter from "@/routes/authRoutes";
 import authController from "@/controllers/authController";
-import {Client, Issuer} from "openid-client";
+import dbRouter from './routes/dbRoutes';
+import {getPathFromURL} from "@/helpers/authHelper";
+
 const PORT = 3001;
-
-
 dotenv.config();
 
-
 const app = express();
+app.use(express.json());
+
+app.use(cors({
+	origin: 'http://localhost:3000',
+	credentials: true
+}));
+
+app.use(session({
+	secret: 'v',
+	resave: true,
+	saveUninitialized: false,
+}));
+
 
 (async () => {
     try {
-        await initializeClient();
+        await initializeCognitoClient();
     } catch (error) {
         console.error('Failed to initialize client:', error);
     }
 })();
 
-app.use(session({
-    secret: 'v',
-    resave: true,
-    saveUninitialized: false
-}));
 
-app.use(cors(
-    {
-        origin: 'http://localhost:3000'
-    }
-));
+app.use('/db', dbRouter);
 
 
 
+app.use('/auth', authRouter);
 
 app.use(express.json());
 //TODO: Send to database
@@ -46,9 +49,11 @@ app.post('/phraseReceiver', async (req: Request, res: Response, next: NextFuncti
     res.send(req.body.phrase);
 });
 
-app.use('/auth', router);
-app.get('/Lecturely', authController.notsure);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+	console.log(`Server is running on port ${PORT}`);
 });
+
+
+
+
