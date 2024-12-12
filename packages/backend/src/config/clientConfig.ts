@@ -2,7 +2,7 @@ import { Client, Issuer } from 'openid-client';
 
 export let client: Client;
 
-export async function initializeClient(): Promise<void> {
+export async function initializeCognitoClient(): Promise<void> {
 	try {
 		const issuer = await Issuer.discover('https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_nPakcZH5L');
 		client = new issuer.Client({

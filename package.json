@@ -7,7 +7,9 @@
   ],
   "scripts": {
     "initial-install": "npm install",
+
     "build": "npm run build --workspaces --if-present && npm run test && rm -rf dist && npm run lint && tsc -b",
+
     "frontend": "lerna run dev",
     "backend": "lerna run start",
     "both": "lerna run dev --parallel"
