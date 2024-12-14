@@ -12,9 +12,8 @@ interface IdbController {
 const dbController: IdbController = {
     addItem: async (req: Request, res: Response)  => {
         const itemData: ItemData = {
-            PK: 'user_0003',
-            SK: 'user',
-            data: 'Robert'
+            TableName: req.body.TableName,
+            itemAttributes: req.body.itemAttributes,
         };
         try {
             await addItem(itemData);
@@ -27,9 +26,9 @@ const dbController: IdbController = {
 
     getItem: async (req: Request, res: Response)  => {
         const itemData: ItemData = {
-            PK: 'user_0003',
-            SK: 'user',
-            data: ''
+            PK: req.body.PK,
+            SK: req.body.SK,
+            data: req.body.data
         };
         try {
             const item =  await getItem(itemData.PK, itemData.SK);

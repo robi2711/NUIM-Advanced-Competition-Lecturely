@@ -6,10 +6,12 @@ import { Box, Button, Typography } from "@mui/material";
 const MicTestPage: React.FC = () => {
     const [transcript, setTranscript] = React.useState("");
 
-    const sendPhraseToBackend = async (phrase: any) => {
+    const sendPhraseToBackend = async (phrase: any, phraseNo: number) => {
         try {
             const response = await api.post('/phraseReceiver', {
-                phrase: JSON.stringify(phrase)
+                PK: "phrase" + phraseNo,
+                SK: "phrase",
+                data: JSON.stringify(phrase)
             });
             console.log('Phrase sent successfully:', response.data);
         } catch (error) {
@@ -29,7 +31,7 @@ const MicTestPage: React.FC = () => {
         recognition.onresult = async function(event) {
             const currentPhrase = event.results[event.results.length-1][0].transcript;
             liveTranscript = liveTranscript + currentPhrase;
-            await sendPhraseToBackend(currentPhrase);
+            await sendPhraseToBackend(currentPhrase, event.results.length);
             setTranscript(liveTranscript);
         }
 

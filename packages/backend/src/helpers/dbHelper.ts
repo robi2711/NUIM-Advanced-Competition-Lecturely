@@ -5,8 +5,8 @@ import { ItemData } from "@/types/dbTypes";
 export const addItem = async (data: ItemData) => {
 	try {
 		const params = {
-			TableName: 'users',
-			Item: data
+			TableName: data.TableName,
+			Item: data.itemAttributes
 		};
 		await docClient.send(new PutCommand(params));
 		console.log("Item added successfully");
