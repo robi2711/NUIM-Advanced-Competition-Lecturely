@@ -43,12 +43,6 @@ app.use('/db', dbRouter);
 app.use('/auth', authRouter);
 
 app.use(express.json());
-//TODO: Send to database
-app.post('/phraseReceiver', async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.phrase);
-    res.send(req.body.phrase);
-});
-
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
