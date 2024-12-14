@@ -1,4 +1,4 @@
-export interface ItemData {
+export interface UserData {
 	PK: string;
 	SK: string;
 	GSI1PK?: string;

@@ -6,11 +6,11 @@ import {createUser} from "@/helpers/dbHelper";
 
 const router: Router = express.Router();
 
-router.get('/addItem', dbController.createUser);
+router.get('/createUser', dbController.createUser);
 
-router.get('/addRoom', dbController.createRoom);
+router.get('/createRoom', dbController.createRoom);
 
-router.get('/getItem', dbController.getItem);
+router.get('/getUser', dbController.getUser);
 
 router.get('/deleteItem', dbController.deleteItem);
 

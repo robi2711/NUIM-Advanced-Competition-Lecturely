@@ -1,8 +1,8 @@
 import {GetCommand, PutCommand, DeleteCommand, } from "@aws-sdk/lib-dynamodb";
 import { docClient } from "@/config/dbConfig";
-import { ItemData, RoomData} from "@/types/dbTypes";
+import { UserData, RoomData} from "@/types/dbTypes";
 
-export const createUser = async (data: ItemData) => {
+export const createUser = async (data: UserData) => {
 	try {
 		const params = {
 			TableName: 'users',
@@ -30,16 +30,17 @@ export const createRoom = async (data: RoomData) => {
 	}
 };
 
-export const getItem = async (pk: string, sk: string, email: string, password: string) => {
+export const getUser = async (pk: string, sk: string) => {
 	try {
 		const params = {
 			TableName: 'users',
-			Key: { PK: pk, SK: sk, email: email, password: password}
+			Key: { PK: pk, SK: sk}
 		};
 		const result = await docClient.send(new GetCommand(params));
 		return result.Item;
 	} catch (error) {
-		console.error("Error retrieving item:", error);
+		console.error("Error retrieving user:", error);
+		throw error;
 	}
 };
 
