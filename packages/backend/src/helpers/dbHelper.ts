@@ -16,11 +16,11 @@ export const addItem = async (data: ItemData) => {
 	}
 };
 
-export const getItem = async (pk: string, sk: string) => {
+export const getItem = async (data:ItemData) => {
 	try {
 		const params = {
-			TableName: 'users',
-			Key: { PK: pk, SK: sk }
+			TableName: data.TableName,
+			Key: { PK: data.itemAttributes.PK, SK: data.itemAttributes.SK }
 		};
 		const result = await docClient.send(new GetCommand(params));
 		return result.Item;

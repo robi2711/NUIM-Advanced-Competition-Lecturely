@@ -7,7 +7,7 @@ const router: Router = express.Router();
 
 router.post('/addItem', dbController.addItem);
 
-router.get('/getItem', dbController.getItem);
+router.post('/getItem', dbController.getItem);
 
 router.get('/', dbController.default);
 

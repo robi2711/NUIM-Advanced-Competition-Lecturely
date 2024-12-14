@@ -3,6 +3,6 @@ export interface ItemData {
 	itemAttributes: {
 		PK: string;
 		SK: string;
-		data: any;
+		data?: any;
 	}
 }

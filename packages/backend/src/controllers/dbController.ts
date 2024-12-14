@@ -26,12 +26,11 @@ const dbController: IdbController = {
 
     getItem: async (req: Request, res: Response)  => {
         const itemData: ItemData = {
-            PK: req.body.PK,
-            SK: req.body.SK,
-            data: req.body.data
+            TableName: req.body.TableName,
+            itemAttributes: req.body.itemAttributes,
         };
         try {
-            const item =  await getItem(itemData.PK, itemData.SK);
+            const item =  await getItem(itemData);
             console.log(item);
             res.send(item);
         } catch(error){
