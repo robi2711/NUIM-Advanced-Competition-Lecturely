@@ -44,6 +44,20 @@ export const getUser = async (pk: string, sk: string) => {
 	}
 };
 
+export const getRoom = async (pk: string, sk: string) => {
+	try {
+		const params = {
+			TableName: 'users',
+			Key: { PK: pk, SK: sk}
+		};
+		const result = await docClient.send(new GetCommand(params));
+		return result.Item;
+	} catch (error) {
+		console.error("Error retrieving room:", error);
+		throw error;
+	}
+};
+
 export const deleteItem = async (pk: string, sk: string) => {
 	try {
 		const params = {

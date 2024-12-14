@@ -1,11 +1,12 @@
 import express, {Request, Response} from "express";
-import {createUser, createRoom, getUser, deleteItem} from "@/helpers/dbHelper";
+import {createUser, createRoom, getUser, getRoom, deleteItem} from "@/helpers/dbHelper";
 import {UserData,RoomData} from "@/types/dbTypes";
 
 interface IdbController {
     createUser: express.Handler,
     createRoom: express.Handler,
     getUser: express.Handler,
+    getRoom: express.Handler,
     deleteItem: express.Handler,
     default: express.Handler,
 }
@@ -13,7 +14,7 @@ interface IdbController {
 const dbController: IdbController = {
     createUser: async (req: Request, res: Response)  => {
         const userData: UserData = {
-            PK: 'user_0005',
+            PK: 'user_0008',
             SK: 'user',
             email: 'test@gmail.com',
             password: 'xyz123'
@@ -48,7 +49,7 @@ const dbController: IdbController = {
 
     getUser: async (req: Request, res: Response)  => {
         const userData: UserData = {
-            PK: 'user_0005',
+            PK: 'user_0008',
             SK: 'user',
             email: 'test@gmail.com',
             password: 'xyz123'
@@ -62,6 +63,25 @@ const dbController: IdbController = {
             res.status(500).send('Error getting item');
         }
     },
+
+    getRoom: async (req: Request, res: Response)  => {
+        const roomData: RoomData = {
+            PK: 'ROOM#',
+            SK: '#METADATA',
+            roomName: 'hydra',
+            description: 'ssda',
+            transcription: 'lorem'
+        };
+        try {
+            const item =  await getRoom(roomData.PK, roomData.SK);
+            console.log(item);
+            res.send(item);
+        } catch(error){
+            console.error(error);
+            res.status(500).send('Error getting item');
+        }
+    },
+
 
     deleteItem: async (req: Request, res: Response)  => {
         const userData: UserData = {

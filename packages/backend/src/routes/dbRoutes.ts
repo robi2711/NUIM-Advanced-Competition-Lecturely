@@ -12,6 +12,8 @@ router.get('/createRoom', dbController.createRoom);
 
 router.get('/getUser', dbController.getUser);
 
+router.get('/getRoom', dbController.getRoom);
+
 router.get('/deleteItem', dbController.deleteItem);
 
 router.get('/', dbController.default);
