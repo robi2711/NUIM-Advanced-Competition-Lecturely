@@ -27,7 +27,11 @@
     "express-session": "^1.18.1",
     "cors": "^2.8.5",
     "axios": "^1.7.9",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "@aws-sdk/client-dynamodb": "^3.705.0",
+    "@aws-sdk/lib-dynamodb": "^3.705.0",
+    "@aws-sdk/util-dynamodb": "^3.705.0",
+    "@types/aws-sdk": "^0.0.42"
   },
   "devDependencies": {
     "@types/axios": "^0.9.36",
