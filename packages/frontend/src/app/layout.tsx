@@ -15,6 +15,7 @@ export default function RootLayout({
     const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
     const theme = createTheme(getLPTheme(mode));
 
+
     return (
         <html lang="en">
         <head>

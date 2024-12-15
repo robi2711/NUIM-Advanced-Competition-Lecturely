@@ -5,8 +5,8 @@ import {useSearchParams} from "next/navigation";
 import {useEffect} from "react";
 
 const checkAuthStatus = async (code: string, state: string) => {
-    const response = await fetch(`http://localhost:3001/auth/Lecturely?code=${code}&state=${state}`, {
-        credentials: 'same-origin'
+    const response = await fetch(`http://localhost:3001/auth/callback?code=${code}&state=${state}`, {
+        credentials: 'include'
     });
     const data = await response.json();
     console.log(data);

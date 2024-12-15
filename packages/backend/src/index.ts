@@ -4,9 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import {initializeCognitoClient} from "@/config/cognitoConfig";
 import authRouter from "@/routes/authRoutes";
-import authController from "@/controllers/authController";
 import dbRouter from './routes/dbRoutes';
-import {getPathFromURL} from "@/helpers/authHelper";
 
 const PORT = 3001;
 dotenv.config();
@@ -23,6 +21,7 @@ app.use(session({
 	secret: 'v',
 	resave: true,
 	saveUninitialized: false,
+	cookie: { secure: false }
 }));
 
 
