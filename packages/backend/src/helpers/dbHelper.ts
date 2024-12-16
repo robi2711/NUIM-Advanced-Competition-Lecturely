@@ -58,7 +58,7 @@ export const getRoom = async (pk: string, sk: string) => {
 	}
 };
 
-export const deleteItem = async (pk: string, sk: string) => {
+export const deleteUser = async (pk: string, sk: string) => {
 	try {
 		const params = {
 			TableName: 'users',
@@ -66,8 +66,9 @@ export const deleteItem = async (pk: string, sk: string) => {
 			}
 
 		const result = await docClient.send(new DeleteCommand(params));
-		console.error(`item ${ pk } successfully deleted.`);
+		console.error(`item ${pk} successfully deleted.`);
 	} catch (error) {
 		console.error("Error deleting item:", error);
+		throw error;
 	}
 };

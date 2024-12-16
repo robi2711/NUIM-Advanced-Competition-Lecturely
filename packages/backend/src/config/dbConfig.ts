@@ -9,6 +9,5 @@ const client = new DynamoDBClient({
         accessKeyId: process.env.DYNAMO_KEY as string,
         secretAccessKey: process.env.DYNAMO_SECRET as string
     }
-});
-
+})
 export const docClient = DynamoDBDocumentClient.from(client);

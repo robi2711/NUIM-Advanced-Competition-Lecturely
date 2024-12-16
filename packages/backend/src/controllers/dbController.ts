@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {createUser, createRoom, getUser, getRoom, deleteItem} from "@/helpers/dbHelper";
+import {createUser, createRoom, getUser, getRoom, deleteUser} from "@/helpers/dbHelper";
 import {UserData,RoomData} from "@/types/dbTypes";
 
 interface IdbController {
@@ -7,7 +7,7 @@ interface IdbController {
     createRoom: express.Handler,
     getUser: express.Handler,
     getRoom: express.Handler,
-    deleteItem: express.Handler,
+    deleteUser: express.Handler,
     default: express.Handler,
 }
 
@@ -83,15 +83,15 @@ const dbController: IdbController = {
     },
 
 
-    deleteItem: async (req: Request, res: Response)  => {
+    deleteUser: async (req: Request, res: Response)  => {
         const userData: UserData = {
-            PK: 'user_0003',
+            PK: 'user_0000',
             SK: 'user',
             email: 'test@gmail.com',
             password: 'xyz123'
         };
         try {
-            const item =  await deleteItem(userData.PK, userData.SK);
+            const item =  await deleteUser(userData.PK, userData.SK);
             console.log(item);
             res.send(item);
             res.status(200).send('Item deleted');
