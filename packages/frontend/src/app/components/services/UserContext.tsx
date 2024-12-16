@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 interface UserInfo {
 	username: string;
@@ -14,12 +14,23 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
+	const updateUserInfo = (userInfo: UserInfo) => {
+		setUserInfo(userInfo);
+		sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+	};
+
+	useEffect(() => {
+		const storedUserInfo = sessionStorage.getItem('userInfo');
+		if (storedUserInfo) {
+			setUserInfo(JSON.parse(storedUserInfo));
+		}
+	}, []);
+
 	return (
-		<UserContext.Provider value={{ userInfo, setUserInfo }}>
+		<UserContext.Provider value={{ userInfo, setUserInfo: updateUserInfo }}>
 			{children}
 		</UserContext.Provider>
 	);

@@ -36,6 +36,7 @@ function NavBar() {
         setAnchorEl(null);
     };
     const handleSignOut = () => {
+        sessionStorage.clear();
         window.location.href = 'http://localhost:3001/auth/logout';
     };
     return (

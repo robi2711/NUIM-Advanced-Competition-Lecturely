@@ -6,7 +6,7 @@ import getLPTheme from "@/app/getLPTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import TopGradiant from "@/app/components/common/TopGradiant";
 import Footer from "@/app/components/common/Footer";
-import { UserProvider } from '@/app/components/types/UserContext';
+import { UserProvider } from '@/app/components/services/UserContext';
 
 export default function RootLayout({
                                        children,
@@ -16,7 +16,6 @@ export default function RootLayout({
     const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
     const theme = createTheme(getLPTheme(mode));
 
-
     return (
         <html lang="en">
         <head>
@@ -25,14 +24,14 @@ export default function RootLayout({
         </head>
         <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <UserProvider>
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <TopGradiant/>
-            <div style={{flex: 1}}>
-                {children}
-            </div>
-            <Footer/>
-        </ThemeProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <TopGradiant/>
+                <div style={{flex: 1}}>
+                    {children}
+                </div>
+                <Footer/>
+            </ThemeProvider>
         </UserProvider>
         </body>
         </html>
