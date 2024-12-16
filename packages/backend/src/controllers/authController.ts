@@ -8,7 +8,7 @@ interface IUserController {
 	login: express.Handler,
 	logout: express.Handler,
 	default: express.Handler,
-	notsure: express.Handler,
+	callback: express.Handler,
 }
 
 const authController: IUserController = {
@@ -19,21 +19,22 @@ const authController: IUserController = {
 
 		req.session.nonce = nonce;
 		req.session.state = state;
-
+		await new Promise(resolve => req.session.save(resolve));
 		const authUrl = client.authorizationUrl({
 			redirect_uri: 'http://localhost:3000/Lecturely',
 			scope: 'email openid',
 			state: state,
 			nonce: nonce,
 		});
+		console.log(req.session.state)
 		res.redirect(authUrl);
 	},
 
-	notsure: async (req: CustomRequest, res: Response) => {
+	callback: async (req: CustomRequest, res: Response) => {
 
-		console.log(req.session.state);
 		try {
 			const params = client.callbackParams(req);
+
 			const tokenSet = await client.callback(
 				'http://localhost:3000/Lecturely',
 				params,
@@ -43,13 +44,12 @@ const authController: IUserController = {
 				}
 			);
 
-			console.log('Callback token set:', tokenSet);
 
 			if (tokenSet.access_token) {
 				const userInfo = await client.userinfo(tokenSet.access_token);
 				req.session.userInfo = userInfo;
-				console.log('User info:', userInfo);
-				res.redirect('/');
+				req.isAuthenticated = true;
+				res.json(userInfo);
 			} else {
 				console.log('No access token');
 				res.redirect('/');
@@ -72,7 +72,6 @@ const authController: IUserController = {
 	default: async (req: CustomRequest, res: Response) =>
 	{
 	res.json({
-		isAuthenticated: req.isAuthenticated,
 		userInfo: req.session.userInfo
 	});
 	}

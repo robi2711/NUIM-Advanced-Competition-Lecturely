@@ -1,16 +1,30 @@
-'use client'
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import NavBar from '@/app/components/common/MainNav';
-
+import MainNav from "@/app/components/common/MainNav";
+import CssBaseline from "@mui/material/CssBaseline";
+import {useUser} from "@/app/components/services/UserContext";
 
 export default function ExitTest() {
+	const { userInfo } = useUser();
+
+	if (!userInfo) {
+		return null;
+	}
 
 	return (
 		<CssBaseline>
-			<NavBar />
-			<Box sx={{ bgcolor: 'background.default' }}></Box>
+		<MainNav />
+		<div>
+			{userInfo ? (
+				<div>
+					<p>Username: {userInfo.username}</p>
+					<p>Email: {userInfo.email}</p>
+					<p>Email Verified: {userInfo.email_verified ? 'Yes' : 'No'}</p>
+					<p>Sub: {userInfo.sub}</p>
+				</div>
+			) : (
+				<p>No user info available</p>
+			)}
+		</div>
 		</CssBaseline>
-);
-}
+	);
+};
