@@ -5,7 +5,6 @@ export interface UserData {
 	GSI2PK?: string;
 	email: string;
 	password: string;
-	//data: string;
 }
 
 export interface RoomData {

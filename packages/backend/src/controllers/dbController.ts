@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {createUser, createRoom, getUser, getRoom, deleteUser} from "@/helpers/dbHelper";
+import {createUser, createRoom, getUser, getRoom, updateUser, deleteUser} from "@/helpers/dbHelper";
 import {UserData,RoomData} from "@/types/dbTypes";
 
 interface IdbController {
@@ -8,6 +8,7 @@ interface IdbController {
     getUser: express.Handler,
     getRoom: express.Handler,
     deleteUser: express.Handler,
+    updateUser: express.Handler,
     default: express.Handler,
 }
 
@@ -81,6 +82,24 @@ const dbController: IdbController = {
             res.status(500).send('Error getting item');
         }
     },
+
+    updateUser: async (req: Request, res: Response) => {
+        //const { pk, sk, email, password } = req.body;
+        const userData: UserData = {
+            PK: 'user_0002',
+            SK: 'user',
+            email: 'damn@gmail.com',
+            password: 'damn123'
+        }
+        try {
+            const updatedAttributes = await updateUser(userData.PK, userData.SK, userData.email, userData.password);
+            res.status(200).send(`User updated successfully:`);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Error updating user');
+        }
+    },
+
 
 
     deleteUser: async (req: Request, res: Response)  => {
