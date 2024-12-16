@@ -2,20 +2,27 @@
 import * as React from "react";
 import LecturelyPage from "@/app/components/pages/Lecturely";
 import {useSearchParams} from "next/navigation";
-import {useEffect} from "react";
+import { useEffect } from "react";
+import { useUser } from '../components/types/UserContext';
 
-const checkAuthStatus = async (code: string, state: string) => {
-    const response = await fetch(`http://localhost:3001/auth/callback?code=${code}&state=${state}`, {
-        credentials: 'include'
-    });
-    const data = await response.json();
-    console.log(data);
-    // Store user info in your frontend state management
-
-};
 
 export default function MainPage() {
     const searchParams = useSearchParams();
+    const { setUserInfo , userInfo} = useUser();
+
+    const checkAuthStatus = async (code: string, state: string) => {
+        const response = await fetch(`http://localhost:3001/auth/callback?code=${code}&state=${state}`, {
+            credentials: 'include'
+        });
+        const data = await response.json();
+        setUserInfo({
+            username: data.username,
+            email: data.email,
+            email_verified: data.email_verified,
+            sub: data.sub
+        });
+
+    };
 
     useEffect(() => {
         const code = searchParams.get('code');
@@ -24,6 +31,8 @@ export default function MainPage() {
             checkAuthStatus(code, state);
         }
     }, [searchParams]);
+
+
     return (
         <LecturelyPage/>
     );

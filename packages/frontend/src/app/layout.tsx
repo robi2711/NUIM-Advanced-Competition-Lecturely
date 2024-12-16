@@ -6,6 +6,7 @@ import getLPTheme from "@/app/getLPTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import TopGradiant from "@/app/components/common/TopGradiant";
 import Footer from "@/app/components/common/Footer";
+import { UserProvider } from '@/app/components/types/UserContext';
 
 export default function RootLayout({
                                        children,
@@ -23,6 +24,7 @@ export default function RootLayout({
             <title>Lecturely</title>
         </head>
         <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <UserProvider>
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <TopGradiant/>
@@ -31,6 +33,7 @@ export default function RootLayout({
             </div>
             <Footer/>
         </ThemeProvider>
+        </UserProvider>
         </body>
         </html>
     )
