@@ -6,10 +6,6 @@ import {useUser} from "@/app/components/services/UserContext";
 export default function ExitTest() {
 	const { userInfo } = useUser();
 
-	if (!userInfo) {
-		return null;
-	}
-
 	return (
 		<CssBaseline>
 		<MainNav />

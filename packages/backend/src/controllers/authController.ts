@@ -7,7 +7,6 @@ import {client} from "@/config/cognitoConfig";
 interface IUserController {
 	login: express.Handler,
 	logout: express.Handler,
-	default: express.Handler,
 	callback: express.Handler,
 }
 
@@ -33,27 +32,23 @@ const authController: IUserController = {
 	callback: async (req: CustomRequest, res: Response) => {
 
 		try {
-			const params = client.callbackParams(req);
 
 			const tokenSet = await client.callback(
 				'http://localhost:3000/Lecturely',
-				params,
+				client.callbackParams(req),
 				{
 					nonce: req.session.nonce,
 					state: req.session.state
 				}
 			);
 
-
 			if (tokenSet.access_token) {
 				const userInfo = await client.userinfo(tokenSet.access_token);
 				req.session.userInfo = userInfo;
 				req.isAuthenticated = true;
 				res.json(userInfo);
-			} else {
-				console.log('No access token');
-				res.redirect('/');
 			}
+
 		} catch (err) {
 			console.error('Callback error:', err);
 			res.redirect('/');
@@ -67,13 +62,6 @@ const authController: IUserController = {
 		});
 		const logoutUrl = `https://eu-west-1npakczh5l.auth.eu-west-1.amazoncognito.com/logout?client_id=${process.env.COGNITO_CLIENT_ID as string}&logout_uri=http://localhost:3000/`;
 		res.redirect(logoutUrl);
-	},
-
-	default: async (req: CustomRequest, res: Response) =>
-	{
-	res.json({
-		userInfo: req.session.userInfo
-	});
 	}
 
 };

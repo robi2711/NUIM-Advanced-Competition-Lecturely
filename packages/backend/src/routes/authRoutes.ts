@@ -3,8 +3,6 @@ import authController from "@/controllers/authController";
 
 const router = Router();
 
-router.get('/', authController.default);
-
 router.get('/login', authController.login);
 
 router.get('/logout', authController.logout);

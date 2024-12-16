@@ -6,13 +6,28 @@ import getLPTheme from "@/app/getLPTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import TopGradiant from "@/app/components/common/TopGradiant";
 import Footer from "@/app/components/common/Footer";
-import { UserProvider } from '@/app/components/services/UserContext';
+import { UserProvider, useUser } from '@/app/components/services/UserContext';
+import { useRouter, usePathname } from 'next/navigation';
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode
-}) {
+function ProtectedLayout({ children }: { children: React.ReactNode }) {
+    const { userInfo } = useUser();
+    const router = useRouter();
+    const pathname = usePathname();
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            if (!userInfo && pathname !== '/') {
+                router.push('/');
+            }
+        }, 200);
+
+        return () => clearTimeout(timer);
+    }, [userInfo, pathname, router]);
+
+    return <>{children}</>;
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
     const theme = createTheme(getLPTheme(mode));
 
@@ -27,13 +42,15 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <TopGradiant/>
-                <div style={{flex: 1}}>
-                    {children}
-                </div>
+                <ProtectedLayout>
+                    <div style={{flex: 1}}>
+                        {children}
+                    </div>
+                </ProtectedLayout>
                 <Footer/>
             </ThemeProvider>
         </UserProvider>
         </body>
         </html>
-    )
+    );
 }
