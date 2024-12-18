@@ -1,12 +1,12 @@
 import express, {Request, Response} from "express";
-import {addItem, getItem, createUser, createRoom, getUser, getRoom, updateUser, deleteUser} from "@/helpers/dbHelper";
-import {UserData,RoomData} from "@/types/dbTypes";
+import {addItem, getItem, updateItem, deleteItem} from "@/helpers/dbHelper";
+import {ItemData} from "@/types/dbTypes";
 
 interface IdbController {
-    deleteUser: express.Handler,
+    deleteItem: express.Handler,
     addItem: express.Handler,
     getItem: express.Handler,
-    updateUser: express.Handler,
+    updateItem: express.Handler,
     default: express.Handler,
 }
 
@@ -40,16 +40,22 @@ const dbController: IdbController = {
         }
     },
 
-    updateUser: async (req: Request, res: Response) => {
-        //const { pk, sk, email, password } = req.body;
-        const userData: UserData = {
-            PK: 'user_0002',
-            SK: 'user',
-            email: 'damn@gmail.com',
-            password: 'damn123'
-        }
+    updateItem: async (req: Request, res: Response) => {
+        const updateReq: ItemData = {
+            TableName: req.body.TableName,
+            itemAttributes: {
+                PK: req.body.itemAttributes.PK,
+                SK: req.body.itemAttributes.SK,
+                data: {
+                    ExpressionAttributeValues: req.body.itemAttributes.data.ExpressionAttributeValues,
+                    UpdateExpression: req.body.itemAttributes.data.UpdateExpression,
+                },
+            },
+
+        };
         try {
-            const updatedAttributes = await updateUser(userData.PK, userData.SK, userData.email, userData.password);
+            const updatedAttributes = await updateItem(updateReq);
+            res.send(updatedAttributes)
             res.status(200).send(`User updated successfully:`);
         } catch (error) {
             console.error(error);
@@ -59,15 +65,13 @@ const dbController: IdbController = {
 
 
 
-    deleteUser: async (req: Request, res: Response)  => {
-        const userData: UserData = {
-            PK: 'user_0000',
-            SK: 'user',
-            email: 'test@gmail.com',
-            password: 'xyz123'
+    deleteItem: async (req: Request, res: Response)  => {
+        const userData: ItemData = {
+            TableName: req.body.TableName,
+            itemAttributes: req.body.itemAttributes,
         };
         try {
-            const item =  await deleteUser(userData.PK, userData.SK);
+            const item =  await deleteItem(userData);
             console.log(item);
             res.send(item);
             res.status(200).send('Item deleted');

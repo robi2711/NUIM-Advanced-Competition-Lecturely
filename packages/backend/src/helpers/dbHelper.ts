@@ -16,11 +16,14 @@ export const addItem = async (data: ItemData) => {
 	}
 };
 
-export const getItem = async (data:ItemData) => {
+export const getItem = async (data: ItemData) => {
 	try {
 		const params = {
 			TableName: data.TableName,
-			Key: { PK: data.itemAttributes.PK, SK: data.itemAttributes.SK }
+			Key: {
+				PK: data.itemAttributes.PK,
+				SK: data.itemAttributes.SK
+			}
 		};
 		const result = await docClient.send(new GetCommand(params));
 		return result.Item;
@@ -29,38 +32,40 @@ export const getItem = async (data:ItemData) => {
 	}
 };
 
-export const updateUser = async (pk: string, sk: string, email: string, password: string) => {
+export const updateItem = async (data: ItemData) => {
 	try {
 		const params = {
-			TableName: 'users',
-			Key: { PK: pk, SK: sk},
-			UpdateExpression: "set email = :email, password = :password",
-			ExpressionAttributeValues: {
-				":email": email,
-				":password": password
+			TableName: data.TableName,
+			Key: {
+				PK: data.itemAttributes.PK,
+				SK: data.itemAttributes.SK,
 			},
+			UpdateExpression: data.itemAttributes.data.UpdateExpression,
+			ExpressionAttributeValues: data.itemAttributes.data.ExpressionAttributeValues,
 			ReturnValues: "UPDATED_NEW"
 		};
 		// @ts-ignore
 		const result = await docClient.send(new UpdateCommand(params));
-		console.log("User updated successfully:", result);
+		console.log("Item updated successfully:", result);
 		return result.Attributes;
 	} catch (error) {
-		console.error("Error updating user:", error);
+		console.error("Error updating item:", error);
 		throw error;
 	}
 };
 
 
-export const deleteUser = async (pk: string, sk: string) => {
+export const deleteItem = async (data: ItemData) => {
 	try {
 		const params = {
-			TableName: 'users',
-			Key: { PK: pk, SK: sk}
+			TableName: data.TableName,
+			Key: {
+				PK: data.itemAttributes.PK,
+				SK: data.itemAttributes.SK,
 			}
-
+		};
 		const result = await docClient.send(new DeleteCommand(params));
-		console.error(`User ${pk} successfully deleted.`);
+		console.error(`User ${data.itemAttributes.PK} successfully deleted.`);
 	} catch (error) {
 		console.error("Error deleting item:", error);
 		throw error;
