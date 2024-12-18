@@ -13,7 +13,7 @@ const MicTestPage: React.FC = () => {
                 itemAttributes: {
                     PK: "phrase_" + phraseNo,
                     SK: "phrase",
-                    data: JSON.stringify(phrase)
+                    data: phrase
                 }
             });
             console.log(response.data);

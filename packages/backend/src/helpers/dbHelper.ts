@@ -1,4 +1,4 @@
-import {GetCommand, PutCommand} from "@aws-sdk/lib-dynamodb";
+import {GetCommand, PutCommand, UpdateCommand} from "@aws-sdk/lib-dynamodb";
 import { docClient } from "@/config/dbConfig";
 import { ItemData } from "@/types/dbTypes";
 
