@@ -1,4 +1,4 @@
-import {GetCommand, PutCommand, UpdateCommand} from "@aws-sdk/lib-dynamodb";
+import {GetCommand, PutCommand, DeleteCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { docClient } from "@/config/dbConfig";
 import { ItemData } from "@/types/dbTypes";
 
@@ -25,6 +25,44 @@ export const getItem = async (data:ItemData) => {
 		const result = await docClient.send(new GetCommand(params));
 		return result.Item;
 	} catch (error) {
-		console.error("Error retrieving item:", error);
+		console.error("Error retrieving user:", error);
+	}
+};
+
+export const updateUser = async (pk: string, sk: string, email: string, password: string) => {
+	try {
+		const params = {
+			TableName: 'users',
+			Key: { PK: pk, SK: sk},
+			UpdateExpression: "set email = :email, password = :password",
+			ExpressionAttributeValues: {
+				":email": email,
+				":password": password
+			},
+			ReturnValues: "UPDATED_NEW"
+		};
+		// @ts-ignore
+		const result = await docClient.send(new UpdateCommand(params));
+		console.log("User updated successfully:", result);
+		return result.Attributes;
+	} catch (error) {
+		console.error("Error updating user:", error);
+		throw error;
+	}
+};
+
+
+export const deleteUser = async (pk: string, sk: string) => {
+	try {
+		const params = {
+			TableName: 'users',
+			Key: { PK: pk, SK: sk}
+			}
+
+		const result = await docClient.send(new DeleteCommand(params));
+		console.error(`User ${pk} successfully deleted.`);
+	} catch (error) {
+		console.error("Error deleting item:", error);
+		throw error;
 	}
 };

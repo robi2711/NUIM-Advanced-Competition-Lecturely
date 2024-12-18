@@ -8,6 +8,9 @@ const router: Router = express.Router();
 router.post('/addItem', dbController.addItem);
 
 router.post('/getItem', dbController.getItem);
+router.get('/deleteUser', dbController.deleteUser);
+
+router.get('/updateUser', dbController.updateUser);
 
 router.get('/', dbController.default);
 
