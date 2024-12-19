@@ -7,7 +7,6 @@ interface IdbController {
     addItem: express.Handler,
     getItem: express.Handler,
     updateItem: express.Handler,
-    default: express.Handler,
 }
 
 const dbController: IdbController = {
@@ -80,10 +79,5 @@ const dbController: IdbController = {
         }
     },
 
-    default: async (req: Request, res: Response) => {
-        res.json({
-            sent: 'Hello World'
-        });
-    }
 };
 export default dbController;
