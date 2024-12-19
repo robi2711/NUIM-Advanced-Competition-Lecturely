@@ -11,5 +11,4 @@ const client = new DynamoDBClient({
     }
 });
 
-
 export const docClient = DynamoDBDocumentClient.from(client);
