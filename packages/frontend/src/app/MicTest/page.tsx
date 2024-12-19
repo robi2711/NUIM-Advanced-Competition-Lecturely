@@ -14,9 +14,10 @@ const MicTestPage: React.FC = () => {
                     PK: "phraseList",
                     SK: "transcript",
                     data: {
-                        UpdateExpression: `SET phraseList[phraseNo] = :phrase`,
+                        UpdateExpression: "SET phraseList = list_append(if_not_exists(phraseList, :emptyList), :phrase)",
                         ExpressionAttributeValues: {
-                            ":phrase": phrase,
+                            ":phrase": [phrase],
+                            ":emptyList": [],
                         }
                     },
                 }

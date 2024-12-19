@@ -55,11 +55,10 @@ const dbController: IdbController = {
         };
         try {
             const updatedAttributes = await updateItem(updateReq);
-            res.send(updatedAttributes)
-            res.status(200).send(`User updated successfully:`);
+            res.status(200).send(updatedAttributes);
         } catch (error) {
             console.error(error);
-            res.status(500).send('Error updating user');
+            res.status(500).send('Error updating item');
         }
     },
 
