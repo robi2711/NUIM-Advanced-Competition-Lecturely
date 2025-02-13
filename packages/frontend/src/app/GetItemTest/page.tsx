@@ -11,12 +11,12 @@ const GetItemTestPage: React.FC = () => {
             const response = await api.post('/db/getItem', {
                 TableName: 'TestTable',
                 itemAttributes: {
-                    PK: 'phrase_3',
-                    SK: 'phrase'
+                    PK: 'phraseList',
+                    SK: 'transcript'
                 }
             });
             // @ts-ignore
-            setItem(response.data.data);
+            setItem(JSON.stringify(response.data.phraseList));
         } catch (error) {
             console.error('Error getting item:', error);
         }
