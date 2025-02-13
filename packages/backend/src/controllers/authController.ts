@@ -21,11 +21,10 @@ const authController: IUserController = {
 		await new Promise(resolve => req.session.save(resolve));
 		const authUrl = client.authorizationUrl({
 			redirect_uri: 'http://localhost:3000/Lecturely',
-			scope: 'email openid',
+			scope: 'openid',
 			state: state,
 			nonce: nonce,
 		});
-		console.log(req.session.state)
 		res.redirect(authUrl);
 	},
 

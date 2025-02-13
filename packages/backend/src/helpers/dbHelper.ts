@@ -6,7 +6,11 @@ export const addItem = async (data: ItemData) => {
 	try {
 		const params = {
 			TableName: data.TableName,
-			Item: data.itemAttributes
+			Key: {
+				PK: data.itemAttributes.PK,
+				SK: data.itemAttributes.SK,
+			},
+			Item: data.itemAttributes.data
 		};
 		await docClient.send(new PutCommand(params));
 		console.log("Item added successfully");

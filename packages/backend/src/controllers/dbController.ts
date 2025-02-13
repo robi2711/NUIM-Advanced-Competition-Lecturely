@@ -11,10 +11,12 @@ interface IdbController {
 
 const dbController: IdbController = {
     addItem: async (req: Request, res: Response)  => {
+        console.log(req.body);
         const itemData: ItemData = {
             TableName: req.body.TableName,
             itemAttributes: req.body.itemAttributes,
         };
+
         try {
             await addItem(itemData);
             res.status(200).send('Item added successfully');
