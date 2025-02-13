@@ -7,6 +7,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useUser } from "@/app/components/services/UserContext";
 import { useEffect } from "react";
 import api from "@/app/components/services/apiService";
+import HomeHero from "@/app/components/home/HomeHero";
 
 export default function LecturelyPage() {
     const searchParams = useSearchParams();
@@ -15,19 +16,33 @@ export default function LecturelyPage() {
 
     const addUser = async (data: any) => {
         try {
-            const response = await api.post('/db/addItem', {
-                TableName: 'lecturely',
+            await api.post('/db/addUser', {
+                TableName: 'TestTable',
                 itemAttributes: {
                     PK: "users",
-                    SK: "sub",
+                    SK: data.sub,
                     data: {
-                            sub: data.sub,
-                            username: data.username,
-                            email: data.email
+                        username: data.given_name,
+                        email: data.email,
+                        rooms: [],
                     }
                 }
             });
-            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getUser = async (sub: string) => {
+        try {
+            const response = await api.post('/db/getItem', {
+                TableName: 'TestTable',
+                itemAttributes: {
+                    PK: "users",
+                    SK: sub,
+                }
+            });
+            return response.data;
         } catch (error) {
             console.error(error);
         }
@@ -38,15 +53,20 @@ export default function LecturelyPage() {
             credentials: 'include'
         });
         const data = await response.json();
-        console.log(data);
         setUserInfo({
             username: data.given_name,
             email: data.email,
             email_verified: data.email_verified,
             sub: data.sub
         });
-        await addUser(data);
-        router.replace('/Lecturely');
+        if (data.sub) {
+            const user = await getUser(data.sub);
+            if (!user) {
+                await addUser(data);
+            } else {
+            }
+            router.replace('/Lecturely');
+        }
     };
 
     useEffect(() => {
@@ -55,12 +75,14 @@ export default function LecturelyPage() {
         if (code && state) {
             checkAuthStatus(code, state);
         }
+
     }, [searchParams]);
 
 
     return (
         <CssBaseline>
             <NavBar />
+            <HomeHero />
             <Box sx={{ bgcolor: 'background.default' }}>
             </Box>
         </CssBaseline>

@@ -11,6 +11,8 @@ router.post('/getItem', dbController.getItem);
     
 router.get('/deleteItem', dbController.deleteItem);
 
+router.post('/addUser', dbController.addUser);
+
 router.post('/updateItem', dbController.updateItem);
 
 

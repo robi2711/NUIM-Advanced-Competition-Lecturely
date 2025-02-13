@@ -2,15 +2,31 @@ import {GetCommand, PutCommand, DeleteCommand, UpdateCommand } from "@aws-sdk/li
 import { docClient } from "@/config/dbConfig";
 import { ItemData } from "@/types/dbTypes";
 
+export const addUser = async (data: ItemData) => {
+	try {
+		const params = {
+			TableName: data.TableName,
+			Item: {
+				PK: data.itemAttributes.PK,
+				SK: data.itemAttributes.SK,
+				username: data.itemAttributes.data.username,
+				email: data.itemAttributes.data.email,
+				rooms: data.itemAttributes.data.rooms,
+			}
+		};
+		await docClient.send(new PutCommand(params));
+		console.log("Item added successfully");
+	} catch (error) {
+		console.error("Error adding item:", error);
+		throw error;
+	}
+};
+
 export const addItem = async (data: ItemData) => {
 	try {
 		const params = {
 			TableName: data.TableName,
-			Key: {
-				PK: data.itemAttributes.PK,
-				SK: data.itemAttributes.SK,
-			},
-			Item: data.itemAttributes.data
+			Item: data.itemAttributes,
 		};
 		await docClient.send(new PutCommand(params));
 		console.log("Item added successfully");

@@ -1,17 +1,17 @@
 import express, {Request, Response} from "express";
-import {addItem, getItem, updateItem, deleteItem} from "@/helpers/dbHelper";
+import {addItem, getItem, updateItem, deleteItem, addUser} from "@/helpers/dbHelper";
 import {ItemData} from "@/types/dbTypes";
 
 interface IdbController {
     deleteItem: express.Handler,
     addItem: express.Handler,
+    addUser: express.Handler,
     getItem: express.Handler,
     updateItem: express.Handler,
 }
 
 const dbController: IdbController = {
     addItem: async (req: Request, res: Response)  => {
-        console.log(req.body);
         const itemData: ItemData = {
             TableName: req.body.TableName,
             itemAttributes: req.body.itemAttributes,
@@ -26,6 +26,28 @@ const dbController: IdbController = {
         }
     },
 
+    addUser: async (req: Request, res: Response)  => {
+        const itemData: ItemData = {
+            TableName: req.body.TableName,
+            itemAttributes: {
+                PK: req.body.itemAttributes.PK,
+                SK: req.body.itemAttributes.SK,
+                data: {
+                    username: req.body.itemAttributes.data.username,
+                    email: req.body.itemAttributes.data.email,
+                    rooms: req.body.itemAttributes.data.rooms,
+                },
+            },
+        };
+        try {
+            await addUser(itemData);
+            res.status(200).send('Item added successfully');
+        } catch(error){
+            console.error(error);
+            res.status(500).send('Error adding item');
+        }
+    },
+
     getItem: async (req: Request, res: Response)  => {
         const itemData: ItemData = {
             TableName: req.body.TableName,
@@ -33,7 +55,6 @@ const dbController: IdbController = {
         };
         try {
             const item =  await getItem(itemData);
-            console.log(item);
             res.send(item);
         } catch(error){
             console.error(error);
