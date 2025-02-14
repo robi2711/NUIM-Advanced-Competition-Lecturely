@@ -19,8 +19,8 @@ export default function LecturelyPage() {
             await api.post('/db/addUser', {
                 TableName: 'TestTable',
                 itemAttributes: {
-                    PK: "users",
-                    SK: data.sub,
+                    PK: data.sub,
+                    SK: "users",
                     data: {
                         username: data.given_name,
                         email: data.email,
@@ -38,8 +38,8 @@ export default function LecturelyPage() {
             const response = await api.post('/db/getItem', {
                 TableName: 'TestTable',
                 itemAttributes: {
-                    PK: "users",
-                    SK: sub,
+                    PK: sub,
+                    SK:"users",
                 }
             });
             return response.data;
@@ -53,17 +53,27 @@ export default function LecturelyPage() {
             credentials: 'include'
         });
         const data = await response.json();
-        setUserInfo({
-            username: data.given_name,
-            email: data.email,
-            email_verified: data.email_verified,
-            sub: data.sub
-        });
+
         if (data.sub) {
-            const user = await getUser(data.sub);
+            const user : any = await getUser(data.sub);
+            const userRooms : string[] = user.rooms;
             if (!user) {
                 await addUser(data);
-            } else {
+                setUserInfo({
+                    username: data.given_name,
+                    email: data.email,
+                    email_verified: data.email_verified,
+                    sub: data.sub,
+                    rooms: []
+                });
+            } else if(user) {
+                setUserInfo({
+                    username: data.given_name,
+                    email: data.email,
+                    email_verified: data.email_verified,
+                    sub: data.sub,
+                    rooms: userRooms
+                });
             }
             router.replace('/Lecturely');
         }

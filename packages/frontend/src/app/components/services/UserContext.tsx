@@ -4,6 +4,7 @@ interface UserInfo {
 	username: string;
 	email: string;
 	email_verified: boolean;
+	rooms: string[];
 	sub: string;
 }
 

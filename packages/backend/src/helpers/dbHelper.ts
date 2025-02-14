@@ -66,7 +66,7 @@ export const updateItem = async (data: ItemData) => {
 		};
 		// @ts-ignore
 		const result = await docClient.send(new UpdateCommand(params));
-		console.log("Item updated successfully:", result);
+		//console.log("Item updated successfully:", result);
 		return result.Attributes;
 	} catch (error) {
 		console.error("Error updating item:", error);
