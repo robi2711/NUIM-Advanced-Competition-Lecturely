@@ -1,12 +1,13 @@
 'use client'
 import * as React from "react";
-import AddUserToRoom from "@/app/components/RoomManagement/AddUserToRoom";
+
 import ExitTest from "@/app/components/pages/ExitTest";
+import SignIn from "@/app/Authentication/SignIn";
 
 export default function MainPage() {
 
 
 	return (
-		<ExitTest />
+		<SignIn />
 	);
 }
