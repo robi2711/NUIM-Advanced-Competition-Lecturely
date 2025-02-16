@@ -1,0 +1,155 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Container from "@mui/material/Container";
+import TextField from '@mui/material/TextField';
+
+const roomData = [
+	{
+		title: 'CS101',
+		description: 'Introduction to Programming',
+		author: 'John Doe',
+		created: 'January 10, 2022',
+	},
+	{
+		title: 'CS102',
+		description: 'Data Structures and Algorithms',
+		author: 'Jane Smith',
+		created: 'February 15, 2022',
+	},
+	{
+		title: 'CS103',
+		description: 'Operating Systems',
+		author: 'Alice Johnson',
+		created: 'March 20, 2022',
+	},
+	{
+		title: 'CS104',
+		description: 'Database Systems',
+		author: 'Bob Brown',
+		created: 'April 25, 2022',
+	},
+	{
+		title: 'CS105',
+		description: 'Computer Networks',
+		author: 'Charlie Davis',
+		created: 'May 30, 2022',
+	},
+	{
+		title: 'CS106',
+		description: 'Software Engineering',
+		author: 'David Evans',
+		created: 'June 5, 2022',
+	},
+];
+
+const StyledCard = styled(Card)(({ theme }) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	padding: 0,
+	height: '100%',
+	backgroundColor: theme.palette.background.paper,
+	'&:hover': {
+		backgroundColor: 'transparent',
+		cursor: 'pointer',
+	},
+	'&:focus-visible': {
+		outline: '3px solid',
+		outlineColor: 'hsla(210, 98%, 48%, 0.5)',
+		outlineOffset: '2px',
+	},
+}));
+
+const StyledCardContent = styled(CardContent)({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: 4,
+	padding: 16,
+	flexGrow: 1,
+	'&:last-child': {
+		paddingBottom: 16,
+	},
+});
+
+const StyledTypography = styled(Typography)({
+	display: '-webkit-box',
+	WebkitLineClamp: 2,
+	overflow: 'hidden',
+	textOverflow: 'ellipsis',
+});
+
+interface AuthorProps {
+	author: string;
+	created: string;
+}
+
+function Author({ author, created }: AuthorProps) {
+	return (
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'row',
+				gap: 2,
+				alignItems: 'center',
+				justifyContent: 'space-between',
+				padding: '16px',
+			}}
+		>
+			<Box
+				sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+			>
+				<Avatar
+					alt={author}
+					sx={{ width: 24, height: 24 }}
+				/>
+				<Typography variant="caption">
+					{author}
+				</Typography>
+			</Box>
+			<Typography variant="caption">{created}</Typography>
+		</Box>
+	);
+}
+
+export default function MainContent() {
+	const [searchQuery, setSearchQuery] = React.useState('');
+	const filteredRoomData = roomData.filter(room => room.title.toLowerCase().includes(searchQuery.toLowerCase()));
+	const sortedRoomData = [...filteredRoomData].sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+
+	return (
+		<Box sx={{ flexGrow: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+			<Container>
+				<Box sx={{width: '40%', marginBottom: 2, marginLeft: 10}}>
+					<TextField
+						variant="outlined"
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						sx={{ width: '20%' }}
+					/>
+				</Box>
+				<Grid container spacing={2} justifyContent="center">
+					{sortedRoomData.map((room, index) => (
+						<Grid size={{ xs: 12, sm: 6, md: 3.5 }} key={index}>
+							<StyledCard>
+								<StyledCardContent>
+									<StyledTypography variant="h5">
+										{room.title}
+									</StyledTypography>
+									<Typography variant="body2" color="text.secondary">
+										{room.description}
+									</Typography>
+								</StyledCardContent>
+								<Author author={room.author} created={room.created} />
+							</StyledCard>
+						</Grid>
+					))}
+				</Grid>
+			</Container>
+		</Box>
+	);
+}

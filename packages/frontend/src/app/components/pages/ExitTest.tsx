@@ -15,7 +15,7 @@ export default function ExitTest() {
                         <p>Username: {userInfo.username}</p>
                         <p>Email: {userInfo.email}</p>
                         <p>Sub: {userInfo.sub}</p>
-                        <p>Rooms: {userInfo.rooms.length}</p>
+                        <p>Rooms: {userInfo.rooms}</p>
                     </div>
                 ) : (
                     <p>No user info available</p>
