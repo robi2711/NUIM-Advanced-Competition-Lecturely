@@ -7,12 +7,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-interface ForgotPasswordProps {
+interface CreateRoomProps {
     open: boolean;
     handleClose: () => void;
 }
 
-export default function ForgotPassword({ open, handleClose }: ForgotPasswordProps) {
+export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
     return (
         <Dialog
             open={open}
@@ -26,7 +26,7 @@ export default function ForgotPassword({ open, handleClose }: ForgotPasswordProp
                 sx: { backgroundImage: 'none' },
             }}
         >
-            <DialogTitle>Reset password</DialogTitle>
+            <DialogTitle>Create Room</DialogTitle>
             <DialogContent
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >
