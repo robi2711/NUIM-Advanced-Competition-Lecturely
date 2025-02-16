@@ -115,6 +115,25 @@ function NavBar() {
                             >
                                 Sign In
                             </Button>
+
+                            <Link href="/SignIn" passHref>
+                                <Button
+                                    color="primary"
+                                    variant="text"
+                                    size="medium"
+                                >
+                                    Sign in REAL
+                                </Button>
+                            </Link>
+                            <Link href="/SignUp" passHref>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    size="medium"
+                                >
+                                    Sign up REAL
+                                </Button>
+                            </Link>
                         </Box>
                     </Toolbar>
                 </Container>

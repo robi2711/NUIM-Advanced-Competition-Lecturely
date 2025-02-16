@@ -59,21 +59,6 @@ export default function LecturelyPage() {
             const userRooms : string[] = user.rooms;
             if (!user) {
                 await addUser(data);
-                setUserInfo({
-                    username: data.given_name,
-                    email: data.email,
-                    email_verified: data.email_verified,
-                    sub: data.sub,
-                    rooms: []
-                });
-            } else if(user) {
-                setUserInfo({
-                    username: data.given_name,
-                    email: data.email,
-                    email_verified: data.email_verified,
-                    sub: data.sub,
-                    rooms: userRooms
-                });
             }
             router.replace('/Lecturely');
         }
