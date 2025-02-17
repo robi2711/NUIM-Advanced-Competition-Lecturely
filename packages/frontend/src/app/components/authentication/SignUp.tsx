@@ -9,7 +9,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import api from "@/app/components/services/apiService"
+import api from "@/app/components/services/apiService";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
 	const [emailError, setEmailError] = React.useState(false);
@@ -18,6 +19,8 @@ export default function SignUp() {
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
 	const [nameError, setNameError] = React.useState(false);
 	const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+	const [usernameExistsError, setUsernameExistsError] = React.useState('');
+	const router = useRouter();
 
 	const validateInputs = () => {
 		const email = document.getElementById('email') as HTMLInputElement;
@@ -65,12 +68,19 @@ export default function SignUp() {
 			const displayName = data.get('name') as string;
 
 			try {
-				const response = await api.post('/auth/signUp', {
-					Email:  email,
+				const response: any = await api.post('/auth/signUp', {
+					Email: email,
 					Username: displayName,
 					Password: password
 				});
+
+				if (response.data === 'Username already exists') {
+					setUsernameExistsError('Email is already in use');
+					return;
+				}
+				router.replace('/SignIn' + '?email=' + email);
 				console.log('User created successfully:', response);
+
 			} catch (error) {
 				console.error('Error creating user:', error);
 			}
@@ -105,6 +115,11 @@ export default function SignUp() {
 				>
 					Sign up
 				</Typography>
+				{usernameExistsError && (
+					<Typography color="error" sx={{ textAlign: 'center' }}>
+						{usernameExistsError}
+					</Typography>
+				)}
 				<Box
 					component="form"
 					onSubmit={handleSubmit}

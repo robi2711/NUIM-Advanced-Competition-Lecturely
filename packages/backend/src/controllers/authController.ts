@@ -2,7 +2,7 @@ import express, {Response} from "express";
 import {generators} from "openid-client";
 import {CustomRequest} from "@/types/authTypes";
 import {client} from "@/config/cognitoConfig";
-import { signUpUser, signInUser} from "@/config/userConfig";
+import { signUpUser, signInUser, signOutUser} from "@/helpers/authHelper";
 
 
 interface IUserController {
@@ -11,6 +11,7 @@ interface IUserController {
 	callback: express.Handler,
 	signUp: express.Handler,
 	signIn: express.Handler
+	signOut: express.Handler
 }
 
 const authController: IUserController = {
@@ -53,7 +54,6 @@ const authController: IUserController = {
 
 		} catch (err) {
 			console.error('Callback error:', err);
-			res.redirect('/');
 		}
 	},
 
@@ -61,27 +61,36 @@ const authController: IUserController = {
 		const Email = req.body.Email;
 		const DisplayName = req.body.Username;
 		const Password = req.body.Password
-		console.log(Email, Password, DisplayName);
 		try {
-			await signUpUser(DisplayName, Password, Email);
-		} catch (error) {
+			const response = await signUpUser(DisplayName, Password, Email);
+			res.send(response);
+		} catch (error : any) {
 			console.error('Error signing up user IN CONTROLLER:', error);
 			res.status(500).send('Error signing up user');
 		}
-		res.redirect('/');
 	},
 
 
 	signIn: async (req: CustomRequest, res: Response) => {
 		const Email = req.body.Email;
 		const Password = req.body.Password
-		console.log(Email, Password);
 		try {
 			const response = await signInUser(Password, Email);
 			res.send(response);
 		} catch (error) {
 			console.error('Error signing in user IN CONTROLLER:', error);
 			res.status(500).send('Error signing in user');
+		}
+	},
+
+	signOut: async (req: CustomRequest, res: Response) => {
+		const AccessToken = req.body.AccessToken;
+		try {
+			const response = await signOutUser(AccessToken);
+			res.send(response);
+		} catch (error) {
+			console.error('Error signing out user IN CONTROLLER:', error);
+			res.status(500).send('Error signing out user');
 		}
 	},
 

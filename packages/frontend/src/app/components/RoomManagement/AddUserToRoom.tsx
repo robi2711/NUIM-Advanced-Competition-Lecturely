@@ -31,8 +31,11 @@ export default function AddUserToRoom() {
             setUserInfo({
                 username: userInfo.username,
                 email: userInfo.email,
-                email_verified: userInfo.email_verified,
                 sub: userInfo.sub,
+                accessToken: userInfo.accessToken,
+                idToken: userInfo.idToken,
+                refreshToken: userInfo.refreshToken,
+                tokenType: userInfo.tokenType,
                 rooms: userInfo.rooms.concat(room),
             });
         } catch (error){

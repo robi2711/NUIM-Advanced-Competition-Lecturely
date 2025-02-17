@@ -8,25 +8,33 @@ import Typography from '@mui/material/Typography';
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import api from "@/app/components/services/apiService";
-import {useRouter} from "next/navigation";
-import {useUser} from "@/app/components/services/UserContext";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@/app/components/services/UserContext";
+import { getUser, addUser } from "@/app/components/services/UserServices";
 
 export default function SignIn() {
+	const [email, setEmail] = React.useState('');
 	const [emailError, setEmailError] = React.useState(false);
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const { setUserInfo } = useUser();
 
+	React.useEffect(() => {
+		const email = searchParams.get('email');
+		if (email) {
+			setEmail(email);
+		}
+	}, [searchParams]);
 
 	const validateInputs = () => {
-		const email = document.getElementById('email') as HTMLInputElement;
 		const password = document.getElementById('password') as HTMLInputElement;
 
 		let isValid = true;
 
-		if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+		if (!email || !/\S+@\S+\.\S+/.test(email)) {
 			setEmailError(true);
 			setEmailErrorMessage('Please enter a valid email address.');
 			isValid = false;
@@ -51,29 +59,39 @@ export default function SignIn() {
 		event.preventDefault();
 		if (validateInputs()) {
 			const data = new FormData(event.currentTarget);
-			const email = data.get('email') as string;
 			const password = data.get('password') as string;
 
 			try {
-				const response : any = await api.post('/auth/signIn', {
-					Email:  email,
+				const response: any = await api.post('/auth/signIn', {
+					Email: email,
 					Password: password
 				});
+				console.log(response);
+				if(response.data === "Wrong Username or Password"){
+					setEmailError(true);
+					setEmailErrorMessage('Invalid email or password');
+					setPasswordError(true);
+					setPasswordErrorMessage('Invalid email or password');
+					return;
+				}
 				if (response.data.username) {
+					const user: any = await getUser(response.data.sub);
+					const userRooms: string[] = user.rooms;
+					if (!user) {
+						await addUser(response.data);
+					}
 					setUserInfo({
 						username: response.data.username,
 						email: response.data.email,
 						sub: response.data.sub,
-						accessToken: response.data.AccessToken,
-						idToken: response.data.IdToken,
-						refreshToken: response.data.RefreshToken,
-						tokenType: response.data.TokenType,
-						rooms: []
+						accessToken: response.data.accessToken,
+						idToken: response.data.idToken,
+						refreshToken: response.data.refreshToken,
+						tokenType: response.data.tokenType,
+						rooms: userRooms || []
 					});
-					console.log(response.data);
-					router.push('/Lecturely');
+					router.replace('/Lecturely');
 				}
-
 			} catch (error) {
 				console.error('Error signing in user:', error);
 			}
@@ -123,6 +141,8 @@ export default function SignIn() {
 							name="email"
 							autoComplete="email"
 							variant="outlined"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 							error={emailError}
 							helperText={emailErrorMessage}
 							color={passwordError ? 'error' : 'primary'}
