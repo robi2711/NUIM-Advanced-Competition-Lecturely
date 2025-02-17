@@ -5,14 +5,14 @@ import {
 	SignUpCommand, UsernameExistsException
 } from "@aws-sdk/client-cognito-identity-provider";
 
-import {client} from "@/config/userConfig";
+import {client} from "@/config/authConfig";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 export const signUpUser = async (Username: string, Password: string, Email: string) => {
 	const params = {
-		ClientId: process.env.COGNITO_CLIENT_ID2 || '',
+		ClientId: process.env.COGNITO_CLIENT_ID || '',
 		Username: Email,
 		Password: Password,
 		UserAttributes: [
@@ -38,7 +38,7 @@ export const signUpUser = async (Username: string, Password: string, Email: stri
 export const signInUser = async (Password: string, Email: string) => {
 	const params = {
 		AuthFlow: "USER_PASSWORD_AUTH" as AuthFlowType,
-		ClientId: process.env.COGNITO_CLIENT_ID2 || '',
+		ClientId: process.env.COGNITO_CLIENT_ID || '',
 		AuthParameters: {
 			USERNAME: Email,
 			PASSWORD: Password,
