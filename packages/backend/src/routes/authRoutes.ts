@@ -12,6 +12,8 @@ router.get('/callback', authController.callback);
 
 router.post('/signUp', authController.signUp);
 
+router.post('/signOut', authController.signOut);
+
 router.post('/signIn', authController.signIn)
 
 
