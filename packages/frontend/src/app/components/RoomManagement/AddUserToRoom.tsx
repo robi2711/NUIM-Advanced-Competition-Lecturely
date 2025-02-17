@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useUser } from "@/app/components/services/UserContext";
 import api from "@/app/components/services/apiService";
 import {Button} from "@mui/material";
+import Box from "@mui/material/Box";
 
 export default function AddUserToRoom() {
     const { userInfo } = useUser();
@@ -48,10 +49,8 @@ export default function AddUserToRoom() {
     };
 
     return (
-        <CssBaseline>
-            <Button variant="contained" color="primary" onClick={() => setRoom("TestRoom")}>
-             Add room to user
-            </Button>
-        </CssBaseline>
+        <Box>
+
+        </Box>
     );
 };

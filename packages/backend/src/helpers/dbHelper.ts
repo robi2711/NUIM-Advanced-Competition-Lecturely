@@ -1,10 +1,11 @@
 import {GetCommand, PutCommand, DeleteCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { docClient } from "@/config/dbConfig";
-import { ItemData } from "@/types/dbTypes";
+import { ItemData, RoomData } from "@/types/dbTypes";
+import { v4 as uuidv4 } from 'uuid';
 
 function getCurrentDate(): string {
 	const now = new Date();
-	return now.toLocaleDateString("en-US", {
+	return now.toLocaleDateString("en-UK", {
 		month: "long",
 		day: "numeric",
 		year: "numeric",
@@ -31,16 +32,16 @@ export const addUser = async (data: ItemData) => {
 	}
 };
 
-export const addRoom = async (data: ItemData) => {
+export const addRoom = async (data: RoomData) => {
 	try {
 		const params = {
 			TableName: data.TableName,
 			Item: {
-				PK: data.itemAttributes.PK,
-				SK: data.itemAttributes.SK,
-				name: data.itemAttributes.data.name,
-				description: data.itemAttributes.data.description,
-				author: data.itemAttributes.data.author,
+				PK: ,
+				SK: "room",
+				name: data.itemAttributes.name,
+				description: data.itemAttributes.description,
+				author: data.itemAttributes.author,
 				date: getCurrentDate(),
 			}
 		};
