@@ -11,6 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Link from 'next/link';
 import {useState} from "react";
+import CreateRoom from "./CreateRoomBox";
+import JoinRoom from "./JoinRoomBox";
 
 
 const logoStyle = {
@@ -20,10 +22,6 @@ const logoStyle = {
     marginRight: '8px',
 };
 
-interface AppAppBarProps {
-    mode: PaletteMode;
-    toggleColorMode: () => void;
-}
 
 function NavBar() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,9 +30,29 @@ function NavBar() {
         setAnchorEl(event.currentTarget);
     };
 
+    const [openJoinRoom, setJoinOpen] = React.useState(false);
+    const [openCreateRoom, setCreateOpen] = React.useState(false);
+
+    const handleCreateClickOpen = () => {
+        setCreateOpen(true);
+    };
+
+    const handleCreateClose = () => {
+        setCreateOpen(false);
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleJoinClickOpen = () => {
+        setJoinOpen(true);
+    };
+
+    const handleJoinClose = () => {
+        setJoinOpen(false);
+    };
+
     const handleSignOut = () => {
         sessionStorage.clear();
         window.location.href = 'http://localhost:3001/auth/logout';
@@ -101,25 +119,27 @@ function NavBar() {
                             }}
                         >
 
-                            <Link href="/CreateRoom" passHref>
+                            <CreateRoom open={openCreateRoom} handleClose={handleCreateClose} />
                                 <Button
                                     color="primary"
                                     variant="text"
                                     size="medium"
+                                    onClick={handleCreateClickOpen}
                                 >
                                     Create Room
                                 </Button>
-                            </Link>
 
-                            <Link href="/JoinRoom" passHref>
+
+                            <JoinRoom open={openJoinRoom} handleClose={handleJoinClose} />
                                 <Button
                                     color="primary"
                                     variant="outlined"
+                                    onClick={handleJoinClickOpen}
                                     size="medium"
                                 >
                                     Join Room
                                 </Button>
-                            </Link>
+
                             <Divider orientation="vertical" flexItem />
                             <Button
                                 color="inherit"
@@ -133,7 +153,6 @@ function NavBar() {
                                 onClose={handleClose}
                             >
                                 <MenuItem
-
                                 >
 
                                         <Button
