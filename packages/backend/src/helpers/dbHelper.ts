@@ -2,6 +2,15 @@ import {GetCommand, PutCommand, DeleteCommand, UpdateCommand } from "@aws-sdk/li
 import { docClient } from "@/config/dbConfig";
 import { ItemData } from "@/types/dbTypes";
 
+function getCurrentDate(): string {
+	const now = new Date();
+	return now.toLocaleDateString("en-US", {
+		month: "long",
+		day: "numeric",
+		year: "numeric",
+	});
+}
+
 export const addUser = async (data: ItemData) => {
 	try {
 		const params = {
@@ -22,14 +31,21 @@ export const addUser = async (data: ItemData) => {
 	}
 };
 
-export const addItem = async (data: ItemData) => {
+export const addRoom = async (data: ItemData) => {
 	try {
 		const params = {
 			TableName: data.TableName,
-			Item: data.itemAttributes,
+			Item: {
+				PK: data.itemAttributes.PK,
+				SK: data.itemAttributes.SK,
+				name: data.itemAttributes.data.name,
+				description: data.itemAttributes.data.description,
+				author: data.itemAttributes.data.author,
+				date: getCurrentDate(),
+			}
 		};
 		await docClient.send(new PutCommand(params));
-		console.log("Item added successfully");
+		console.log("Room added successfully");
 	} catch (error) {
 		console.error("Error adding item:", error);
 		throw error;

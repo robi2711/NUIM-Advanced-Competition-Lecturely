@@ -31,18 +31,39 @@ export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >
                 <DialogContentText>
-                    Enter your account&apos;s email address, and we&apos;ll send you a link to
-                    reset your password.
+                    Enter your room&apos;s name, author and description.
                 </DialogContentText>
                 <OutlinedInput
                     autoFocus
                     required
                     margin="dense"
-                    id="email"
-                    name="email"
-                    label="Email address"
-                    placeholder="Email address"
-                    type="email"
+                    id="name"
+                    name="name"
+                    label="Enter full name"
+                    placeholder="Room Name"
+                    type="Name"
+                    fullWidth
+                />
+                <OutlinedInput
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="author"
+                    name="author"
+                    label="Author"
+                    placeholder="Author"
+                    type="Author"
+                    fullWidth
+                />
+                <OutlinedInput
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="roomDesc"
+                    name="roomDesc"
+                    label="Room Description"
+                    placeholder="Room Description"
+                    type="roomDesc"
                     fullWidth
                 />
             </DialogContent>

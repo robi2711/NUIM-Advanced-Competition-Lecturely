@@ -4,7 +4,7 @@ import dbController from "@/controllers/dbController";
 
 const router: Router = express.Router();
 
-router.post('/addItem', dbController.addItem);
+router.post('/addRoom', dbController.addRoom);
 
 router.post('/getItem', dbController.getItem);
 

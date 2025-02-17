@@ -1,28 +1,47 @@
 import express, {Request, Response} from "express";
-import {addItem, getItem, updateItem, deleteItem, addUser} from "@/helpers/dbHelper";
-import {ItemData} from "@/types/dbTypes";
+import {addRoom, getItem, updateItem, deleteItem, addUser} from "@/helpers/dbHelper";
+import {ItemData,RoomData} from "@/types/dbTypes";
+
+function getCurrentDate(): string {
+    const now = new Date();
+    return now.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    });
+}
 
 interface IdbController {
     deleteItem: express.Handler,
-    addItem: express.Handler,
+    addRoom: express.Handler,
     addUser: express.Handler,
     getItem: express.Handler,
     updateItem: express.Handler,
 }
 
 const dbController: IdbController = {
-    addItem: async (req: Request, res: Response)  => {
-        const itemData: ItemData = {
+    addRoom: async (req: Request, res: Response)  => {
+        const roomData: RoomData = {
             TableName: req.body.TableName,
-            itemAttributes: req.body.itemAttributes,
+            itemAttributes: {
+                PK: req.body.itemAttributes.PK,
+                SK: req.body.itemAttributes.SK,
+                data: {
+                    name: req.body.itemAttributes.data.name,
+                    description: req.body.itemAttributes.data.description,
+                    author: req.body.itemAttributes.data.author,
+                    date: getCurrentDate(),
+
+                },
+            },
         };
 
         try {
-            await addItem(itemData);
-            res.status(200).send('Item added successfully');
+            await addRoom(roomData);
+            res.status(200).send('Room added successfully');
         } catch(error){
             console.error(error);
-            res.status(500).send('Error adding item');
+            res.status(500).send('Error adding room');
         }
     },
 
@@ -83,8 +102,6 @@ const dbController: IdbController = {
             res.status(500).send('Error updating item');
         }
     },
-
-
 
     deleteItem: async (req: Request, res: Response)  => {
         const userData: ItemData = {
