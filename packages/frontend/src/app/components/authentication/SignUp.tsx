@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import api from "@/app/components/services/apiService";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/app/components/services/UserContext";
 
 export default function SignUp() {
 	const [emailError, setEmailError] = React.useState(false);
@@ -21,6 +22,14 @@ export default function SignUp() {
 	const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 	const [usernameExistsError, setUsernameExistsError] = React.useState('');
 	const router = useRouter();
+	const {userInfo} = useUser();
+
+	React.useEffect(() => {
+		if(userInfo?.sub) {
+			router.replace('/Lecturely');
+		}
+
+	}, [userInfo]);
 
 	const validateInputs = () => {
 		const email = document.getElementById('email') as HTMLInputElement;

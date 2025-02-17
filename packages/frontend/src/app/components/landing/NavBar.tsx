@@ -7,7 +7,6 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
-import axios from 'axios';
 
 
 const logoStyle = {
@@ -31,9 +30,6 @@ function NavBar() {
                 behavior: 'smooth',
             });
         }
-    };
-    const handleSignIn = () => {
-        window.location.href = 'http://localhost:3001/auth/login';
     };
 
     return (
@@ -107,31 +103,22 @@ function NavBar() {
                                 alignItems: 'center',
                             }}
                         >
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                size="medium"
-                                onClick={handleSignIn}
-                            >
-                                Sign In
-                            </Button>
-
-                            <Link href="/SignIn" passHref>
+                            <Link href="/SignUp" passHref>
                                 <Button
                                     color="primary"
                                     variant="text"
                                     size="medium"
                                 >
-                                    Sign in REAL
+                                    Sign up
                                 </Button>
                             </Link>
-                            <Link href="/SignUp" passHref>
+                            <Link href="/SignIn" passHref>
                                 <Button
                                     color="primary"
                                     variant="contained"
                                     size="medium"
                                 >
-                                    Sign up REAL
+                                    Sign in
                                 </Button>
                             </Link>
                         </Box>

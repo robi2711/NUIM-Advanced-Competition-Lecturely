@@ -1,9 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import session from 'express-session';
-import { Issuer, Client, generators } from 'openid-client';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {initializeCognitoClient} from "@/config/cognitoConfig";
 import authRouter from "@/routes/authRoutes";
 import dbRouter from './routes/dbRoutes';
 
@@ -25,17 +23,8 @@ app.use(session({
 	cookie: { secure: false }
 }));
 
-
-(async () => {
-    try {
-        await initializeCognitoClient();
-    } catch (error) {
-        console.error('Failed to initialize client:', error);
-    }
-})();
-
-
 app.use('/db', dbRouter);
+
 app.use('/auth', authRouter);
 
 app.use(express.json());
