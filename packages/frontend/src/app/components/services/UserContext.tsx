@@ -3,7 +3,10 @@ import { createContext, useContext, useState, useEffect } from 'react';
 interface UserInfo {
 	username: string;
 	email: string;
-	email_verified: boolean;
+	accessToken: string,
+	idToken: string,
+	refreshToken: string,
+	tokenType: string,
 	rooms: string[];
 	sub: string;
 }

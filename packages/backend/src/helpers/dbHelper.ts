@@ -23,7 +23,7 @@ export const addUser = async (data: ItemData) => {
 };
 
 export const addItem = async (data: ItemData) => {
-	try {
+	try {	
 		const params = {
 			TableName: data.TableName,
 			Item: data.itemAttributes,

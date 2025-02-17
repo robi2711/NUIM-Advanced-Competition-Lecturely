@@ -9,10 +9,11 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import Link from 'next/link';
+import api from '@/app/components/services/apiService'
 import {useState} from "react";
 import CreateRoom from "./CreateRoomBox";
 import JoinRoom from "./JoinRoomBox";
+import {useUser} from "@/app/components/services/UserContext";
 
 
 const logoStyle = {
@@ -24,7 +25,10 @@ const logoStyle = {
 
 
 function NavBar() {
+    const { userInfo } = useUser();
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
 
     const handleUserSettingsClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -55,7 +59,11 @@ function NavBar() {
 
     const handleSignOut = () => {
         sessionStorage.clear();
-        window.location.href = 'http://localhost:3001/auth/logout';
+
+        api.post('/auth/signOut', {
+            AccessToken: userInfo?.accessToken
+        });
+        window.location.href = 'http://localhost:3000/';
     };
     return (
         <div>
