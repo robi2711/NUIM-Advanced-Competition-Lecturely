@@ -20,14 +20,17 @@ export default function SignIn() {
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const { setUserInfo } = useUser();
+	const { setUserInfo, userInfo } = useUser();
 
 	React.useEffect(() => {
+		if(userInfo?.sub) {
+			router.replace('/Lecturely');
+		}
 		const email = searchParams.get('email');
 		if (email) {
 			setEmail(email);
 		}
-	}, [searchParams]);
+	}, [searchParams, userInfo]);
 
 	const validateInputs = () => {
 		const password = document.getElementById('password') as HTMLInputElement;
