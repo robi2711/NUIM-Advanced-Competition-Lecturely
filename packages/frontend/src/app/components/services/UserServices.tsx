@@ -12,6 +12,7 @@ export const addUser = async (data: any) => {
 					username: data.username,
 					email: data.email,
 					rooms: [],
+					roomsOwned: [],
 				}
 			}
 		});
@@ -65,6 +66,47 @@ export const addRoom = async (room: string, userInfo: any, setUserInfo: any) => 
 				refreshToken: userInfo.refreshToken,
 				tokenType: userInfo.tokenType,
 				rooms: userInfo.rooms.concat(room),
+			});
+		} catch (error){
+			console.error(error)
+		}
+	}
+	else {
+		console.log("User Is not Logged In");
+	}
+};
+
+export const addRoomToAuthor = async (room: string, userInfo: any, setUserInfo: any) => {
+	if (userInfo){
+		try {
+			await api.post('/db/updateItem', {
+				TableName: 'TestTable',
+				itemAttributes: {
+					PK: userInfo.sub,
+					SK: "users",
+					data: {
+						UpdateExpression: "SET rooms = list_append(if_not_exists(roomsOwned, :emptyList), :room)",
+						ExpressionAttributeValues: {
+							":room": [room],
+							":emptyList": [],
+						}
+					},
+				}
+			});
+		} catch (error) {
+			console.error(error);
+		}
+		try {
+			setUserInfo({
+				username: userInfo.username,
+				email: userInfo.email,
+				sub: userInfo.sub,
+				accessToken: userInfo.accessToken,
+				idToken: userInfo.idToken,
+				refreshToken: userInfo.refreshToken,
+				tokenType: userInfo.tokenType,
+				roomsOwned: userInfo.roomsOwned.concat(room),
+				rooms: userInfo.rooms
 			});
 		} catch (error){
 			console.error(error)

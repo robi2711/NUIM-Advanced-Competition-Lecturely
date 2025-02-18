@@ -8,6 +8,7 @@ interface UserInfo {
 	refreshToken: string,
 	tokenType: string,
 	rooms: string[];
+	roomsOwned: string[];
 	sub: string;
 }
 

@@ -7,35 +7,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import api from "@/app/components/services/apiService";
-import {useUser} from "@/app/components/services/UserContext";
-import {addRoom} from "@/app/components/services/UserServices";
+import { addRoomToAuthor } from "@/app/components/services/UserServices";
+import { useUser } from "@/app/components/services/UserContext";
+import { useRouter } from "next/navigation";
 
 interface CreateRoomProps {
     open: boolean;
     handleClose: () => void;
 }
-const sendRoom = async (name: string, author: string, description: string) => {
-    try {
-        const response = await api.post('/db/addRoom', {
-            TableName: "TestTable",
-            itemAttributes: {
-                name: name,
-                author: author,
-                description: description
-            }
-        });
-        console.log(response.data);
-    } catch (error) {
-        console.error(error);
-    }
-};
+
 
 export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
+    const [name, setName] = React.useState('');
+    const [roomDesc, setRoomDesc] = React.useState('');
     const { userInfo } = useUser();
     const { setUserInfo } = useUser();
-    const [name, setName] = React.useState('');
-    const [author, setAuthor] = React.useState('');
-    const [roomDesc, setRoomDesc] = React.useState('');
+    const router = useRouter();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -44,13 +31,17 @@ export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
                 TableName: "TestTable",
                 itemAttributes: {
                     name: name,
-                    author: author,
+                    author: userInfo?.username,
+                    authorSub: userInfo?.sub,
                     description: roomDesc
                 }
             });
-            await addRoom(response?.PK, userInfo, setUserInfo);
-            console.log('Room created successfully:');
+            if (response) {
+                await addRoomToAuthor(response.data as string, userInfo, setUserInfo);
+            }
+
             handleClose();
+            //router.push('/rooms/' + response.data as string);
         } catch (error) {
             console.error('Error creating room:', error);
         }
@@ -85,18 +76,6 @@ export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
                     fullWidth
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                />
-                <OutlinedInput
-                    required
-                    margin="dense"
-                    id="author"
-                    name="author"
-                    label="Author"
-                    placeholder="Author"
-                    type="text"
-                    fullWidth
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
                 />
                 <OutlinedInput
                     required

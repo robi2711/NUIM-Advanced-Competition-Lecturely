@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {addRoom, getItem, updateItem, deleteItem, addUser} from "@/helpers/dbHelper";
+import {addRoom, getItem, updateItem, deleteItem, addUser, queryRoom} from "@/helpers/dbHelper";
 import {ItemData,RoomData} from "@/types/dbTypes";
 
 interface IdbController {
@@ -8,6 +8,7 @@ interface IdbController {
     addUser: express.Handler,
     getItem: express.Handler,
     updateItem: express.Handler,
+    queryRoom: express.Handler,
 }
 
 const dbController: IdbController = {
@@ -15,18 +16,18 @@ const dbController: IdbController = {
         const roomData: RoomData = {
             TableName: req.body.TableName,
             itemAttributes: {
-                name: req.body.itemAttributes.name,
+                roomName: req.body.itemAttributes.name,
                 description: req.body.itemAttributes.description,
-                author: req.body.itemAttributes.author
+                author: req.body.itemAttributes.author,
+                authorSub: req.body.itemAttributes.authorSub
             }
         };
 
         try {
-            await addRoom(roomData);
-            res.status(200).send('Room added successfully');
+            const room = await addRoom(roomData);
+            res.send(room);
         } catch(error){
             console.error(error);
-            res.status(500).send('Error adding room');
         }
     },
 
@@ -40,6 +41,7 @@ const dbController: IdbController = {
                     username: req.body.itemAttributes.data.username,
                     email: req.body.itemAttributes.data.email,
                     rooms: req.body.itemAttributes.data.rooms,
+                    roomsOwned: req.body.itemAttributes.data.roomsOwned,
                 },
             },
         };
@@ -63,6 +65,30 @@ const dbController: IdbController = {
         } catch(error){
             console.error(error);
             res.status(500).send('Error getting item');
+        }
+    },
+
+    queryRoom: async (req: Request, res: Response) => {
+        const roomData: RoomData = {
+            TableName: req.body.TableName,
+            itemAttributes: {
+                roomName: req.body.itemAttributes.roomName,
+            },
+        };
+        try {
+            const room = await queryRoom(roomData);
+            if(room){
+                if(room[0].password === req.body.itemAttributes.password){
+                    console.log("Password Correct")
+                    res.send(room[0]);
+                }
+                else{
+                    res.send("Password Incorrect")
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Error querying room');
         }
     },
 

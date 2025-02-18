@@ -15,7 +15,8 @@ export default function ExitTest() {
                         <p>Username: {userInfo.username}</p>
                         <p>Email: {userInfo.email}</p>
                         <p>Sub: {userInfo.sub}</p>
-                        <p>Rooms: {userInfo.rooms.length}</p>
+                        <p>Rooms: {userInfo.rooms}</p>
+                        <p>Rooms Owned: {userInfo.roomsOwned}</p>
                         <p>Access Token: {userInfo.accessToken}</p>
                         <p>Id Token: {userInfo.idToken}</p>
                         <p>Refresh Token: {userInfo.refreshToken}</p>

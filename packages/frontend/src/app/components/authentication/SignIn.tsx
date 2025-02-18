@@ -69,7 +69,6 @@ export default function SignIn() {
 					Email: email,
 					Password: password
 				});
-				console.log(response);
 				if(response.data === "Wrong Username or Password"){
 					setEmailError(true);
 					setEmailErrorMessage('Invalid email or password');
@@ -80,6 +79,7 @@ export default function SignIn() {
 				if (response.data.username) {
 					const user: any = await getUser(response.data.sub);
 					const userRooms: string[] = user.rooms;
+					const userRoomsOwned: string[] = user.roomsOwned;
 					if (!user) {
 						await addUser(response.data);
 					}
@@ -91,6 +91,7 @@ export default function SignIn() {
 						idToken: response.data.idToken,
 						refreshToken: response.data.refreshToken,
 						tokenType: response.data.tokenType,
+						roomsOwned: userRoomsOwned || [],
 						rooms: userRooms || []
 					});
 					router.replace('/Lecturely');
