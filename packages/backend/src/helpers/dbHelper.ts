@@ -89,7 +89,6 @@ export const queryRoom = async (data: RoomData) => {
 			},
 		};
 		const result = await docClient.send(new QueryCommand(params));
-		console.log(data.itemAttributes.roomName);
 		return result.Items;
 	} catch (error) {
 		console.error("Error querying items:", error);

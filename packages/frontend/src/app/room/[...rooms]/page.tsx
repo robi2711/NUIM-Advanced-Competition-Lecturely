@@ -1,6 +1,5 @@
 "use client"
 
-
 import * as React from 'react';
 import { CssBaseline } from '@mui/material';
 import { useParams } from 'next/navigation';
@@ -35,8 +34,7 @@ export default function Rooms() {
                     console.error(error);
                 }
             }
-        }
-
+        };
         getRoomInfo();
     }, [params]);
 
@@ -56,13 +54,11 @@ export default function Rooms() {
                     ) : (
                         <p>Loading user info...</p>
                     )}
-
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
                         <NavBar />
                     ) : (
                         <p>No room information available</p>
                     )}
-
                 </div>
             </div>
         </CssBaseline>

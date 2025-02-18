@@ -1,7 +1,7 @@
 import api from "@/app/components/services/apiService";
-import {useUser} from "@/app/components/services/UserContext";
+import {UserInfo, useUser} from "@/app/components/services/UserContext";
 
-export const addUser = async (data: any) => {
+export const addUser = async (data: { sub:string, email:string, username:string}) => {
 	try {
 		await api.post('/db/addUser', {
 			TableName: 'TestTable',
@@ -36,7 +36,7 @@ export const getUser = async (sub: string) => {
 	}
 };
 
-export const addRoom = async (room: string, userInfo: any, setUserInfo: any) => {
+export const addRoom = async (room: string, userInfo: UserInfo, setUserInfo: any) => {
 	if (userInfo){
 		try {
 			await api.post('/db/updateItem', {
@@ -86,7 +86,7 @@ export const addRoomToAuthor = async (room: string, userInfo: any, setUserInfo: 
 					PK: userInfo.sub,
 					SK: "users",
 					data: {
-						UpdateExpression: "SET rooms = list_append(if_not_exists(roomsOwned, :emptyList), :room)",
+						UpdateExpression: "SET roomsOwned = list_append(if_not_exists(roomsOwned, :emptyList), :room)",
 						ExpressionAttributeValues: {
 							":room": [room],
 							":emptyList": [],

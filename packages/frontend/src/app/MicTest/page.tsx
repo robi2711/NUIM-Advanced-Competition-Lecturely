@@ -11,8 +11,8 @@ const MicTestPage: React.FC = () => {
             const response = await api.post('/db/updateItem', {
                 TableName: 'TestTable',
                 itemAttributes: {
-                    PK: "phraseList",
-                    SK: "transcript",
+                    PK: "1739919756097736",
+                    SK: "room",
                     data: {
                         UpdateExpression: "SET phraseList = list_append(if_not_exists(phraseList, :emptyList), :phrase)",
                         ExpressionAttributeValues: {

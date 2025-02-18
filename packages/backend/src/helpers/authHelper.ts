@@ -75,7 +75,6 @@ export const getUser = async (AccessToken: string) => {
 	try {
 		const command = new GetUserCommand(params);
 		const response = await client.send(command);
-		console.log('User retrieved successfully:', response);
 		return response;
 	} catch (error) {
 		console.error('Error retrieving user in CONFIG:', error);
@@ -89,7 +88,6 @@ export const signOutUser = async (AccessToken : string) => {
 	try {
 		const command = new GlobalSignOutCommand(params);
 		const response = await client.send(command);
-		console.log('User signed out successfully:', response);
 		return response;
 	} catch (error) {
 		console.error('Error signing out user in CONFIG:', error);

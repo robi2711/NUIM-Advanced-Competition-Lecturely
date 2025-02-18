@@ -19,7 +19,6 @@ const authController: IUserController = {
 			const response = await signUpUser(DisplayName, Password, Email);
 			res.send(response);
 		} catch (error : any) {
-			console.error('Error signing up user IN CONTROLLER:', error);
 			res.status(500).send('Error signing up user');
 		}
 	},
@@ -32,7 +31,6 @@ const authController: IUserController = {
 			const response = await signInUser(Password, Email);
 			res.send(response);
 		} catch (error) {
-			console.error('Error signing in user IN CONTROLLER:', error);
 			res.status(500).send('Error signing in user');
 		}
 	},
@@ -43,7 +41,6 @@ const authController: IUserController = {
 			const response = await signOutUser(AccessToken);
 			res.send(response);
 		} catch (error) {
-			console.error('Error signing out user IN CONTROLLER:', error);
 			res.status(500).send('Error signing out user');
 		}
 	},
