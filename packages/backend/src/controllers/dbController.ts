@@ -2,15 +2,6 @@ import express, {Request, Response} from "express";
 import {addRoom, getItem, updateItem, deleteItem, addUser} from "@/helpers/dbHelper";
 import {ItemData,RoomData} from "@/types/dbTypes";
 
-function getCurrentDate(): string {
-    const now = new Date();
-    return now.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-    });
-}
-
 interface IdbController {
     deleteItem: express.Handler,
     addRoom: express.Handler,
@@ -24,16 +15,10 @@ const dbController: IdbController = {
         const roomData: RoomData = {
             TableName: req.body.TableName,
             itemAttributes: {
-                PK: req.body.itemAttributes.PK,
-                SK: req.body.itemAttributes.SK,
-                data: {
-                    name: req.body.itemAttributes.data.name,
-                    description: req.body.itemAttributes.data.description,
-                    author: req.body.itemAttributes.data.author,
-                    date: getCurrentDate(),
-
-                },
-            },
+                name: req.body.itemAttributes.name,
+                description: req.body.itemAttributes.description,
+                author: req.body.itemAttributes.author
+            }
         };
 
         try {

@@ -1,4 +1,3 @@
-// packages/frontend/src/app/components/RoomManagement/AddUserToRoom.tsx
 import * as React from 'react';
 import CssBaseline from "@mui/material/CssBaseline";
 import { useUser } from "@/app/components/services/UserContext";

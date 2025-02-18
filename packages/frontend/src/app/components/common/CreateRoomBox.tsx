@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import axios from 'axios';
+import api from "@/app/components/services/apiService";
 import { addRoomToAuthor} from "@/app/components/services/UserServices";
 import {useUser} from "@/app/components/services/UserContext";
 
@@ -14,6 +14,21 @@ interface CreateRoomProps {
     open: boolean;
     handleClose: () => void;
 }
+const sendRoom = async (name: string, author: string, description: string) => {
+    try {
+        const response = await api.post('/db/addRoom', {
+            TableName: "TestTable",
+            itemAttributes: {
+                name: name,
+                author: author,
+                description: description
+            }
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
     const [name, setName] = React.useState('');
@@ -25,9 +40,14 @@ export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            console.log(name);
-            console.log(author);
-            console.log(roomDesc);
+            const response = await api.post('/db/addRoom', {
+                TableName: "TestTable",
+                itemAttributes: {
+                    name: name,
+                    author: author,
+                    description: roomDesc
+                }
+            });
             await addRoomToAuthor(roomDesc, userInfo, setUserInfo);
             console.log('Room created successfully:');
             handleClose();
@@ -61,34 +81,30 @@ export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
                     name="name"
                     label="Enter full name"
                     placeholder="Room Name"
-                    type="text"
+                    type="Name"
                     fullWidth
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
                 />
                 <OutlinedInput
+                    autoFocus
                     required
                     margin="dense"
                     id="author"
                     name="author"
                     label="Author"
                     placeholder="Author"
-                    type="text"
+                    type="Author"
                     fullWidth
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
                 />
                 <OutlinedInput
+                    autoFocus
                     required
                     margin="dense"
                     id="roomDesc"
                     name="roomDesc"
                     label="Room Description"
                     placeholder="Room Description"
-                    type="text"
+                    type="roomDesc"
                     fullWidth
-                    value={roomDesc}
-                    onChange={(e) => setRoomDesc(e.target.value)}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
