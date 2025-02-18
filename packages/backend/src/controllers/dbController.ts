@@ -69,6 +69,7 @@ const dbController: IdbController = {
     },
 
     queryRoom: async (req: Request, res: Response) => {
+
         const roomData: RoomData = {
             TableName: req.body.TableName,
             itemAttributes: {
@@ -76,16 +77,16 @@ const dbController: IdbController = {
             },
         };
         try {
-            const room = await queryRoom(roomData);
-            if(room){
-                if(room[0].password === req.body.itemAttributes.password){
-                    console.log("Password Correct")
-                    res.send(room[0]);
-                }
-                else{
-                    res.send("Password Incorrect")
+            const rooms = await queryRoom(roomData);
+            if(rooms){
+                for (const room of rooms) {
+                    if (room.password === req.body.itemAttributes.password) {
+                        res.status(200).send(room);
+                        return;
+                    }
                 }
             }
+            console.log(rooms);
         } catch (error) {
             console.error(error);
             res.status(500).send('Error querying room');

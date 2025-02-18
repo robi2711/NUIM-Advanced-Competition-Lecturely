@@ -66,6 +66,7 @@ export const addRoom = async (room: string, userInfo: any, setUserInfo: any) => 
 				refreshToken: userInfo.refreshToken,
 				tokenType: userInfo.tokenType,
 				rooms: userInfo.rooms.concat(room),
+				roomsOwned: userInfo.roomsOwned
 			});
 		} catch (error){
 			console.error(error)

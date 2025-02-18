@@ -8,41 +8,43 @@ import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import api from "@/app/components/services/apiService";
 import { addRoom } from "@/app/components/services/UserServices";
-import {useUser} from "@/app/components/services/UserContext";
-import {useRouter} from "next/navigation";
+import { useUser } from "@/app/components/services/UserContext";
+import { useRouter } from "next/navigation";
 
 interface CreateRoomProps {
 	open: boolean;
 	handleClose: () => void;
 }
+
+interface QueryRoomResponse {
+	PK: string;
+}
+
 export default function JoinRoom({ open, handleClose }: CreateRoomProps) {
 	const [name, setName] = React.useState('');
 	const [password, setPassword] = React.useState('');
-	const { userInfo } = useUser();
-	const { setUserInfo } = useUser();
+	const { userInfo, setUserInfo } = useUser();
 	const router = useRouter();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
-			try {
-				const response = await api.post('/db/queryRoom', {
-					TableName: 'TestTable',
-					itemAttributes: {
-						roomName: name,
-						password: password,
-					}
-				});
-				return response.data;
-			} catch (error) {
-				console.error(error);
+			const response = await api.post<QueryRoomResponse>('/db/queryRoom', {
+				TableName: "TestTable",
+				itemAttributes: {
+					roomName: name,
+					password: password,
+				}
+			});
+			if (response) {
+				console.log(response.data.PK);
+				await addRoom(response.data.PK as string, userInfo, setUserInfo);
 			}
-			await addRoom(password, userInfo, setUserInfo);
-			console.log('Room joined successfully:');
+
 			handleClose();
-			//router.push('/rooms/' + response.data.PK);
+			router.push('/rooms/' + response.data.PK as string);
 		} catch (error) {
-			console.error('Error join room:', error);
+			console.error('Error creating room:', error);
 		}
 	};
 
@@ -56,7 +58,7 @@ export default function JoinRoom({ open, handleClose }: CreateRoomProps) {
 				sx: { backgroundImage: 'none', backgroundColor: 'black' },
 			}}
 		>
-			<DialogTitle>Join Room</DialogTitle>
+			<DialogTitle>Create Room</DialogTitle>
 			<DialogContent
 				sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
 			>
@@ -71,19 +73,22 @@ export default function JoinRoom({ open, handleClose }: CreateRoomProps) {
 					name="name"
 					label="Enter full name"
 					placeholder="Room Name"
-					type="Name"
+					type="text"
 					fullWidth
+					value={name}
+					onChange={(e) => setName(e.target.value)}
 				/>
 				<OutlinedInput
-					autoFocus
 					required
 					margin="dense"
 					id="password"
 					name="password"
 					label="Password"
 					placeholder="Password"
-					type="Password"
+					type="text"
 					fullWidth
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
 				/>
 			</DialogContent>
 			<DialogActions sx={{ pb: 3, px: 3 }}>

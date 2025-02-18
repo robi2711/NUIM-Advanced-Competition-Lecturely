@@ -57,11 +57,13 @@ export const addRoom = async (data: RoomData) => {
 			Item: {
 				PK: roomId,
 				SK: "room",
-				name: data.itemAttributes.roomName,
+				NameValue: data.itemAttributes.roomName,
 				description: data.itemAttributes.description,
 				author: data.itemAttributes.author,
 				authorSub: data.itemAttributes.authorSub,
 				password: password,
+				phraseList: [],
+				isActive: true,
 				date: getCurrentDate(),
 			}
 		};
@@ -74,20 +76,20 @@ export const addRoom = async (data: RoomData) => {
 };
 
 export const queryRoom = async (data: RoomData) => {
+	if (!data.itemAttributes.roomName) {
+		throw new Error("Room name is required to query a room.");
+	}
 	try {
 		const params = {
 			TableName: data.TableName,
 			IndexName: "NameValue-PK-index",
 			KeyConditionExpression: "NameValue = :NameValue",
-			ExpressionAttributeNames: {
-				"#name": "name",
-			},
 			ExpressionAttributeValues: {
 				":NameValue": data.itemAttributes.roomName,
 			},
 		};
 		const result = await docClient.send(new QueryCommand(params));
-		console.log(result.Items);
+		console.log(data.itemAttributes.roomName);
 		return result.Items;
 	} catch (error) {
 		console.error("Error querying items:", error);
