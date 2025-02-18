@@ -12,6 +12,7 @@ export const addUser = async (data: any) => {
 					username: data.username,
 					email: data.email,
 					rooms: [],
+					roomsOwned: [],
 				}
 			}
 		});

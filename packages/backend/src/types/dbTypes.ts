@@ -9,9 +9,10 @@ export interface ItemData {
 
 export interface RoomData {
 	TableName: string;
-	itemAttributes:
-		name: string;
-		author: string;
-		description: string;
+	itemAttributes: {
+		roomName: string;
+		author?: string;
+		description?: string;
+		authorSub?: string;
 	}
 }

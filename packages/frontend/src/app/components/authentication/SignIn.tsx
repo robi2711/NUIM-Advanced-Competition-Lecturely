@@ -69,7 +69,6 @@ export default function SignIn() {
 					Email: email,
 					Password: password
 				});
-				console.log(response);
 				if(response.data === "Wrong Username or Password"){
 					setEmailError(true);
 					setEmailErrorMessage('Invalid email or password');

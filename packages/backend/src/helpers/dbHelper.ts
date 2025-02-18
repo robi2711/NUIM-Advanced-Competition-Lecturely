@@ -1,7 +1,6 @@
-import {GetCommand, PutCommand, DeleteCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {GetCommand, PutCommand, DeleteCommand, UpdateCommand, QueryCommand} from "@aws-sdk/lib-dynamodb";
 import { docClient } from "@/config/dbConfig";
 import { ItemData, RoomData } from "@/types/dbTypes";
-import { v4 as uuidv4 } from 'uuid';
 
 function getCurrentDate(): string {
 	const now = new Date();
@@ -12,6 +11,22 @@ function getCurrentDate(): string {
 	});
 }
 
+function generateRoomId(): string {
+	const now = new Date();
+	const random = Math.floor(Math.random() * 1000);
+	return now.getTime() + random.toString();
+}
+
+function generatePassword(): string {
+	const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	const numChars = chars.length;
+	let password = "";
+	for (let i = 0; i < 4; i++) {
+		password += chars.charAt(Math.floor(Math.random() * numChars));
+	}
+	return password;
+}
+
 export const addUser = async (data: ItemData) => {
 	try {
 		const params = {
@@ -19,9 +34,10 @@ export const addUser = async (data: ItemData) => {
 			Item: {
 				PK: data.itemAttributes.PK,
 				SK: data.itemAttributes.SK,
-				username: data.itemAttributes.data.username,
+				name: data.itemAttributes.data.username,
 				email: data.itemAttributes.data.email,
 				rooms: data.itemAttributes.data.rooms,
+				roomsOwned: data.itemAttributes.data.roomsOwned,
 			}
 		};
 		await docClient.send(new PutCommand(params));
@@ -33,25 +49,50 @@ export const addUser = async (data: ItemData) => {
 };
 
 export const addRoom = async (data: RoomData) => {
+	const roomId = generateRoomId();
+	const password = generatePassword();
 	try {
 		const params = {
 			TableName: data.TableName,
 			Item: {
-				PK: ,
+				PK: roomId,
 				SK: "room",
-				name: data.itemAttributes.name,
+				name: data.itemAttributes.roomName,
 				description: data.itemAttributes.description,
 				author: data.itemAttributes.author,
+				authorSub: data.itemAttributes.authorSub,
+				password: password,
 				date: getCurrentDate(),
 			}
 		};
 		await docClient.send(new PutCommand(params));
-		console.log("Room added successfully");
+		return roomId;
 	} catch (error) {
 		console.error("Error adding item:", error);
 		throw error;
 	}
 };
+
+export const queryRoom = async (data: RoomData) => {
+	try {
+		const params = {
+			TableName: data.TableName,
+			IndexName: "NameValue-PK-index",
+			KeyConditionExpression: "NameValue = :NameValue",
+			ExpressionAttributeNames: {
+				"#name": "name",
+			},
+			ExpressionAttributeValues: {
+				":NameValue": data.itemAttributes.roomName,
+			},
+		};
+		const result = await docClient.send(new QueryCommand(params));
+		console.log(result.Items);
+		return result.Items;
+	} catch (error) {
+		console.error("Error querying items:", error);
+	}
+}
 
 export const getItem = async (data: ItemData) => {
 	try {
