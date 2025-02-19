@@ -9,8 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import Container from "@mui/material/Container";
 import TextField from '@mui/material/TextField';
 import api from '@/app/components/services/apiService';
-import Button from "@mui/material/Button";
 import { useUser } from "@/app/components/services/UserContext";
+import { useRouter } from 'next/navigation';
 
 interface responseData {
 	NameValue: string;
@@ -90,9 +90,20 @@ function Author({ author, created }: AuthorProps) {
 export default function MainContent() {
 	const { userInfo } = useUser();
 	const [searchQuery, setSearchQuery] = React.useState('');
-	const [roomData, setRoomData] = React.useState<Array<{ title: string; description: string; author: string; created: string }>>([]);
+	const [roomData, setRoomData] = React.useState<Array<{ title: string; description: string; author: string; created: string, href: string }>>([]);
+	const router = useRouter();
+
+	const handleCardClick = (href: string) => {
+		router.push(href);
+	};
+
+	const fetchedRooms = new Set<string>();
 
 	const getRoom = async (PK: string) => {
+		if (fetchedRooms.has(PK)) {
+			return;
+		}
+		fetchedRooms.add(PK);
 		const response = await api.post<responseData>('/db/getItem', {
 			TableName: "TestTable",
 			itemAttributes: {
@@ -106,7 +117,8 @@ export default function MainContent() {
 					title: response.data.NameValue,
 					description: response.data.description,
 					author: response.data.author,
-					created: response.data.date
+					created: response.data.date,
+					href: "/room/" + PK
 				}
 			]);
 		}
@@ -144,7 +156,7 @@ export default function MainContent() {
 				<Grid container spacing={2} justifyContent="center">
 					{sortedRoomData.map((room, index) => (
 						<Grid size={{ xs: 12, sm: 6, md: 3.5 }} key={index}>
-							<StyledCard>
+							<StyledCard onClick={() => handleCardClick(room.href)}>
 								<StyledCardContent>
 									<StyledTypography variant="h5">
 										{room.title}

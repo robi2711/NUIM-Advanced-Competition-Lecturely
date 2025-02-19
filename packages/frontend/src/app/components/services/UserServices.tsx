@@ -38,6 +38,10 @@ export const getUser = async (sub: string) => {
 
 export const addRoom = async (room: string, userInfo: any, setUserInfo: any) => {
 	if (userInfo){
+		if (userInfo.rooms.includes(room)) {
+			console.log("Room already exists in user info");
+			return;
+		}
 		try {
 			await api.post('/db/updateItem', {
 				TableName: 'TestTable',
@@ -79,6 +83,10 @@ export const addRoom = async (room: string, userInfo: any, setUserInfo: any) => 
 
 export const addRoomToAuthor = async (room: string, userInfo: any, setUserInfo: any) => {
 	if (userInfo){
+		if (userInfo.roomsOwned.includes(room)) {
+			console.log("Room already exists in user info");
+			return;
+		}
 		try {
 			await api.post('/db/updateItem', {
 				TableName: 'TestTable',

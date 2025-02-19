@@ -37,13 +37,17 @@ export default function JoinRoom({ open, handleClose }: CreateRoomProps) {
 					password: password,
 				}
 			});
-			if (userInfo && response && response.data.authorSub !== userInfo.sub) {
-				console.log(response.data.PK);
-				await addRoom(response.data.PK as string, userInfo, setUserInfo);
+			if (userInfo && response) {
+				if (response.data.authorSub !== userInfo.sub){
+					await addRoom(response.data.PK as string, userInfo, setUserInfo);
+					router.push('/room/' + response.data.PK as string);
+				} else {
+					router.push('/room/' + response.data.PK as string);
+				}
 			}
 
 			handleClose();
-			router.push('/room/' + response.data.PK as string);
+
 		} catch (error) {
 			console.error('Error creating room:', error);
 		}
