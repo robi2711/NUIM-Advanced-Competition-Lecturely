@@ -16,7 +16,7 @@ function ProtectedLayout({ children }: { children: React.ReactNode }) {
 
     React.useEffect(() => {
         const timer = setTimeout(() => {
-            if (!userInfo && pathname !== '/') {
+            if (!userInfo && (pathname !== '/' && pathname !== '/SignIn' && pathname !== '/SignUp')) {
                 router.push('/');
             }
         }, 200);

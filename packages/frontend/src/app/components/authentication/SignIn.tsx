@@ -11,6 +11,7 @@ import api from "@/app/components/services/apiService";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/app/components/services/UserContext";
 import { getUser, addUser } from "@/app/components/services/UserServices";
+import {Suspense} from "react";
 
 export default function SignIn() {
 	const [email, setEmail] = React.useState('');
@@ -130,6 +131,7 @@ export default function SignIn() {
 				>
 					Sign in
 				</Typography>
+				<Suspense fallback={<div>Loading...</div>}>
 				<Box
 					component="form"
 					onSubmit={handleSubmit}
@@ -178,6 +180,7 @@ export default function SignIn() {
 						Sign in
 					</Button>
 				</Box>
+				</Suspense>
 			</Card>
 		</Container>
 	);
