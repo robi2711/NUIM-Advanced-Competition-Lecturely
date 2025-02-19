@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import authRouter from "@/routes/authRoutes";
 import dbRouter from './routes/dbRoutes';
 
-const PORT = 3001;
+const PORT = 8080;
 dotenv.config();
 
 const app = express();
