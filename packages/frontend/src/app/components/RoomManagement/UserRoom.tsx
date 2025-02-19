@@ -29,6 +29,15 @@ const users = [
 	"Diana Prince",
 ]
 
+interface RoomInfo {
+	authorSub: string;
+	phraseList: string[];
+}
+
+interface UserRoomProps {
+	roomInfo: RoomInfo | null;
+}
+
 // Mock chat messages
 const initialMessages = [
 	{ sender: "System", message: "Welcome to the lecture!" },
@@ -36,7 +45,7 @@ const initialMessages = [
 	{ sender: "Bob Johnson", message: "Excited for today's topic!" },
 ]
 
-export default function StudentView() {
+export default function UserRoom({ roomInfo }: UserRoomProps){
 	const [messages, setMessages] = useState(initialMessages)
 	const [newMessage, setNewMessage] = useState("")
 	const [handRaised, setHandRaised] = useState(false)
@@ -59,9 +68,10 @@ export default function StudentView() {
 						<Typography variant="h4" gutterBottom>
 							Lecture Content
 						</Typography>
-						<Box sx={{ flexGrow: 1, bgcolor: 'grey.200', display: 'flex', alignItems: 'center', justifyContent: 'center' , backgroundColor:"black"}}>
+						<Box sx={{ flexGrow: 1, bgcolor: 'grey.200', display: 'flex', alignItems: 'left', justifyContent: 'left' , backgroundColor:"black"}}>
 							<Typography variant="body1">
-								Lecture video or slides would appear here
+								{roomInfo ? roomInfo.phraseList.join(' ') : 'This is where the lecture content would be displayed.'}
+
 							</Typography>
 						</Box>
 					</Paper>

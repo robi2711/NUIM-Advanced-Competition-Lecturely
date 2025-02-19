@@ -11,6 +11,7 @@ import UserRoom from "@/app/components/RoomManagement/UserRoom";
 export default function Rooms() {
     interface RoomInfo {
         authorSub: string;
+        phraseList: string[];
     }
 
     const params = useParams();
@@ -47,13 +48,13 @@ export default function Rooms() {
 
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
                         <div>
-                            <p>{params.room}</p>
+                            <p>{params.rooms}</p>
                             <RoomCode/>
                         </div>
                     ) : (
                         <div>
-                            <p>{params.rooms}</p>
-                            <UserRoom/>
+
+                            <UserRoom roomInfo={roomInfo} />
                         </div>
                     )}
             </div>
