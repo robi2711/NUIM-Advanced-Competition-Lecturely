@@ -12,6 +12,7 @@ export default function Rooms() {
     interface RoomInfo {
         authorSub: string;
         phraseList: string[];
+        password: string;
     }
 
     const params = useParams();
@@ -48,12 +49,10 @@ export default function Rooms() {
 
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
                         <div>
-                            <p>{params.rooms}</p>
-                            <RoomCode/>
+                            <RoomCode RoomInfo={roomInfo} />
                         </div>
                     ) : (
                         <div>
-
                             <UserRoom roomInfo={roomInfo} />
                         </div>
                     )}

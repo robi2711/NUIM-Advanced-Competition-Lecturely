@@ -14,12 +14,31 @@ import {
 } from "@mui/material"
 import { Person, Lock } from "@mui/icons-material"
 import LectureView from "./LectureContent"
+import {useUser} from "@/app/components/services/UserContext";
+import { useParams } from 'next/navigation';
+import * as React from "react";
+import api from "@/app/components/services/apiService";
 
+interface RoomInfo {
+    NameValue: string;
+    password: string;
+}
+interface RoomCodeProps {
+    RoomInfo: RoomInfo | null;
 
-export default function LectureLogin() {
+}
+
+export default function RoomCode({ RoomInfo }: RoomCodeProps){
+
+    const params = useParams();
+    const { userInfo } = useUser();
     const [lectureStarted, setLectureStarted] = useState(false)
-    const name = "John Doe"
-    const password = "********"
+    const [roomInfo, setRoomInfo] = React.useState<RoomInfo | null > (null);
+
+    const name = roomInfo?.NameValue;
+    const password = roomInfo?.password;
+
+
 
     if (lectureStarted) {
         return <LectureView onStopLecture={() => setLectureStarted(false)} />
@@ -39,16 +58,16 @@ export default function LectureLogin() {
                     }}
                 >
                     <Typography component="h1" variant="h4" gutterBottom>
-                        Lecture Login
+                        Lecture Information
                     </Typography>
                     <Box sx={{ mt: 2, mb: 2, width: "100%" }}>
                         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                             <Person sx={{ mr: 1, color: "text.secondary" }} />
-                            <Typography variant="subtitle1">Name: {name}</Typography>
+                            <Typography variant="subtitle1">Name: {RoomInfo?.NameValue}</Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                             <Lock sx={{ mr: 1, color: "text.secondary" }} />
-                            <Typography variant="subtitle1">Password: {password}</Typography>
+                            <Typography variant="subtitle1">Password: {RoomInfo?.password}</Typography>
                         </Box>
                     </Box>
                     <Divider sx={{ width: "100%", mb: 2 }} />
