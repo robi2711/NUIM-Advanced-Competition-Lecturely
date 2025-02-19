@@ -17,6 +17,7 @@ interface CreateRoomProps {
 }
 
 interface QueryRoomResponse {
+    authorSub: string;
 	PK: string;
 }
 
@@ -29,20 +30,20 @@ export default function JoinRoom({ open, handleClose }: CreateRoomProps) {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
-			const response = await api.post<QueryRoomResponse>('/db/queryRoom', {
+			const response = await api.post<QueryRoomResponse>('/db/queryJoinRoom', {
 				TableName: "TestTable",
 				itemAttributes: {
 					roomName: name,
 					password: password,
 				}
 			});
-			if (response) {
+			if (userInfo && response && response.data.authorSub !== userInfo.sub) {
 				console.log(response.data.PK);
 				await addRoom(response.data.PK as string, userInfo, setUserInfo);
 			}
 
 			handleClose();
-			router.push('/rooms/' + response.data.PK as string);
+			router.push('/room/' + response.data.PK as string);
 		} catch (error) {
 			console.error('Error creating room:', error);
 		}

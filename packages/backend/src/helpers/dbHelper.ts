@@ -75,7 +75,7 @@ export const addRoom = async (data: RoomData) => {
 	}
 };
 
-export const queryRoom = async (data: RoomData) => {
+export const queryJoinRoom = async (data: RoomData) => {
 	if (!data.itemAttributes.roomName) {
 		throw new Error("Room name is required to query a room.");
 	}
@@ -94,6 +94,7 @@ export const queryRoom = async (data: RoomData) => {
 		console.error("Error querying items:", error);
 	}
 }
+
 
 export const getItem = async (data: ItemData) => {
 	try {
