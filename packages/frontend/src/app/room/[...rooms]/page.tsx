@@ -13,6 +13,8 @@ export default function Rooms() {
         authorSub: string;
         phraseList: string[];
         password: string;
+        NameValue: string;
+        PK: string;
     }
 
     const params = useParams();
@@ -49,7 +51,7 @@ export default function Rooms() {
 
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
                         <div>
-                            <RoomCode RoomInfo={roomInfo} />
+                            <RoomCode roomInfo={roomInfo} />
                         </div>
                     ) : (
                         <div>

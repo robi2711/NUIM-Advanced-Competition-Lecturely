@@ -12,16 +12,68 @@ import {
 	createTheme,
 	CssBaseline,
 } from "@mui/material"
+import api from "@/app/components/services/apiService";
+import * as React from "react";
 
 
 // Mock list of users
 const users = ["Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince", "Ethan Hunt"]
 
-interface LectureViewProps {
-	onStopLecture: () => void
+
+interface RoomInfo {
+	PK: string;
 }
 
-export default function LectureView({ onStopLecture }: LectureViewProps) {
+interface LectureViewProps {
+	roomInfo: RoomInfo;
+}
+
+export default function LectureView({ roomInfo }: LectureViewProps) {
+	const [transcript, setTranscript] = React.useState("");
+	const sendPhrase = async (roomPK: string, phrase: string) => {
+		try {
+			const response = await api.post('/db/updateItem', {
+				TableName: 'TestTable',
+				itemAttributes: {
+					PK: roomPK,
+					SK: "room",
+					data: {
+						UpdateExpression: "SET phraseList = list_append(if_not_exists(phraseList, :emptyList), :phrase)",
+						ExpressionAttributeValues: {
+							":phrase": [phrase],
+							":emptyList": [],
+						}
+					},
+				}
+			});
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleTranscription = (roomInfo: RoomInfo) => {
+		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+		const recognition = new SpeechRecognition();
+		let liveTranscript = "";
+
+		recognition.lang = "en-GB";
+		recognition.continuous = true;
+		recognition.maxAlternatives = 3;
+
+		recognition.onresult = async function(event) {
+			const currentPhrase = event.results[event.results.length-1][0].transcript;
+			liveTranscript = liveTranscript + currentPhrase;
+			await sendPhrase(roomInfo.PK, currentPhrase);
+			setTranscript(liveTranscript);
+		}
+
+		recognition.start();
+
+		recognition.onend = () => {
+			recognition.start();
+		};
+	};
 	return (
 		<Box>
 			<CssBaseline />
@@ -32,7 +84,7 @@ export default function LectureView({ onStopLecture }: LectureViewProps) {
 						<Typography variant="h4" gutterBottom>
 							Lecture Content
 						</Typography>
-						<Typography variant="body1">This is where the lecture content would be displayed.</Typography>
+						<Typography variant="body1">{transcript}</Typography>
 					</Paper>
 				</Box>
 
@@ -49,8 +101,8 @@ export default function LectureView({ onStopLecture }: LectureViewProps) {
 								</ListItem>
 							))}
 						</List>
-						<Button variant="contained" color="secondary" size="large" onClick={onStopLecture} sx={{ mt: 2 }}>
-							Stop Lecture
+						<Button variant="contained" color="secondary" size="large" onClick={() => handleTranscription(roomInfo)} sx={{ mt: 2 }}>
+							Start Transcription
 						</Button>
 					</Paper>
 				</Box>

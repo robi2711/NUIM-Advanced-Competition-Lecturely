@@ -22,26 +22,17 @@ import api from "@/app/components/services/apiService";
 interface RoomInfo {
     NameValue: string;
     password: string;
+    PK: string;
 }
 interface RoomCodeProps {
-    RoomInfo: RoomInfo | null;
-
+    roomInfo: RoomInfo;
 }
 
-export default function RoomCode({ RoomInfo }: RoomCodeProps){
-
-    const params = useParams();
-    const { userInfo } = useUser();
+export default function RoomCode({ roomInfo }: RoomCodeProps){
     const [lectureStarted, setLectureStarted] = useState(false)
-    const [roomInfo, setRoomInfo] = React.useState<RoomInfo | null > (null);
-
-    const name = roomInfo?.NameValue;
-    const password = roomInfo?.password;
-
-
 
     if (lectureStarted) {
-        return <LectureView onStopLecture={() => setLectureStarted(false)} />
+        return <LectureView roomInfo={roomInfo}/>
     }
 
     return (
@@ -63,11 +54,11 @@ export default function RoomCode({ RoomInfo }: RoomCodeProps){
                     <Box sx={{ mt: 2, mb: 2, width: "100%" }}>
                         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                             <Person sx={{ mr: 1, color: "text.secondary" }} />
-                            <Typography variant="subtitle1">Name: {RoomInfo?.NameValue}</Typography>
+                            <Typography variant="subtitle1">Name: {roomInfo?.NameValue}</Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                             <Lock sx={{ mr: 1, color: "text.secondary" }} />
-                            <Typography variant="subtitle1">Password: {RoomInfo?.password}</Typography>
+                            <Typography variant="subtitle1">Password: {roomInfo?.password}</Typography>
                         </Box>
                     </Box>
                     <Divider sx={{ width: "100%", mb: 2 }} />
