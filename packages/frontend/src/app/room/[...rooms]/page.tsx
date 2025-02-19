@@ -42,11 +42,19 @@ export default function Rooms() {
 
     return (
         <CssBaseline>
+
             <div>
+
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
-                        <RoomCode/>
+                        <div>
+                            <p>{params.room}</p>
+                            <RoomCode/>
+                        </div>
                     ) : (
-                        <UserRoom />
+                        <div>
+                            <p>{params.rooms}</p>
+                            <UserRoom/>
+                        </div>
                     )}
             </div>
         </CssBaseline>
