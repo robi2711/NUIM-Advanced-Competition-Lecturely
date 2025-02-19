@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-	origin: process.env.FRONTEND_URL,
+	origin: 'https://nuim-advanced-competition-lecturely-frontend-t1om.vercel.app',
 	credentials: true
 }));
 
