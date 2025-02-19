@@ -41,6 +41,8 @@ export default function Rooms() {
             }
         };
         getRoomInfo();
+        const intervalId = setInterval(getRoomInfo, 4000);
+        return () => clearInterval(intervalId);
     }, [params]);
 
 
