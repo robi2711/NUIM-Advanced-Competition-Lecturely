@@ -8,45 +8,16 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Container from "@mui/material/Container";
 import TextField from '@mui/material/TextField';
+import api from '@/app/components/services/apiService';
+import Button from "@mui/material/Button";
+import { useUser } from "@/app/components/services/UserContext";
 
-const roomData = [
-	{
-		title: 'CS101',
-		description: 'Introduction to Programming',
-		author: 'John Doe',
-		created: 'January 10, 2022',
-	},
-	{
-		title: 'CS102',
-		description: 'Data Structures and Algorithms',
-		author: 'Jane Smith',
-		created: 'February 15, 2022',
-	},
-	{
-		title: 'CS103',
-		description: 'Operating Systems',
-		author: 'Alice Johnson',
-		created: 'March 20, 2022',
-	},
-	{
-		title: 'CS104',
-		description: 'Database Systems',
-		author: 'Bob Brown',
-		created: 'April 25, 2022',
-	},
-	{
-		title: 'CS105',
-		description: 'Computer Networks',
-		author: 'Charlie Davis',
-		created: 'May 30, 2022',
-	},
-	{
-		title: 'CS106',
-		description: 'Software Engineering',
-		author: 'David Evans',
-		created: 'June 5, 2022',
-	},
-];
+interface responseData {
+	NameValue: string;
+	description: string;
+	author: string;
+	date: string;
+}
 
 const StyledCard = styled(Card)(({ theme }) => ({
 	display: 'flex',
@@ -117,12 +88,50 @@ function Author({ author, created }: AuthorProps) {
 }
 
 export default function MainContent() {
+	const { userInfo } = useUser();
 	const [searchQuery, setSearchQuery] = React.useState('');
+	const [roomData, setRoomData] = React.useState<Array<{ title: string; description: string; author: string; created: string }>>([]);
+
+	const getRoom = async (PK: string) => {
+		const response = await api.post<responseData>('/db/getItem', {
+			TableName: "TestTable",
+			itemAttributes: {
+				PK: PK,
+				SK: "room"
+			}});
+		if (response.data !== undefined) {
+			setRoomData(prevRoomData => [
+				...prevRoomData,
+				{
+					title: response.data.NameValue,
+					description: response.data.description,
+					author: response.data.author,
+					created: response.data.date
+				}
+			]);
+		}
+		console.log(roomData);
+	}
+
+	React.useEffect(() => {
+		if (userInfo && userInfo.roomsOwned) {
+			userInfo.roomsOwned.forEach(room => {
+				getRoom("" + room);
+			});
+		}
+		if (userInfo && userInfo.rooms) {
+			userInfo.rooms.forEach(room => {
+				getRoom("" + room);
+			});
+		}
+	}, [userInfo]);
+
 	const filteredRoomData = roomData.filter(room => room.title.toLowerCase().includes(searchQuery.toLowerCase()));
 	const sortedRoomData = [...filteredRoomData].sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
 
 	return (
 		<Box sx={{ flexGrow: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
 			<Container>
 				<Box sx={{width: '40%', marginBottom: 2, marginLeft: 10}}>
 					<TextField

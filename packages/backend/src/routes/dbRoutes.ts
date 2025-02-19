@@ -14,7 +14,8 @@ router.post('/addUser', dbController.addUser);
 
 router.post('/updateItem', dbController.updateItem);
 
-router.post('/queryRoom', dbController.queryRoom);
+router.post('/queryJoinRoom', dbController.queryJoinRoom);
+
 
 
 export default router;

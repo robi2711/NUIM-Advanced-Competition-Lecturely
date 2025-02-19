@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import {useUser} from "@/app/components/services/UserContext";
 import api from "@/app/components/services/apiService";
 import RoomCode from "@/app/components/home/RoomCode";
+import UserRoom from "@/app/components/RoomManagement/UserRoom";
 
 export default function Rooms() {
     interface RoomInfo {
@@ -57,7 +58,7 @@ export default function Rooms() {
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
                         <RoomCode/>
                     ) : (
-                        <p>No room information available</p>
+                        <UserRoom />
                     )}
                 </div>
             </div>

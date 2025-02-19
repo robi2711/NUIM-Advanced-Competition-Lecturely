@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {addRoom, getItem, updateItem, deleteItem, addUser, queryRoom} from "@/helpers/dbHelper";
+import {addRoom, getItem, updateItem, deleteItem, addUser, queryJoinRoom} from "@/helpers/dbHelper";
 import {ItemData,RoomData} from "@/types/dbTypes";
 
 interface IdbController {
@@ -8,7 +8,7 @@ interface IdbController {
     addUser: express.Handler,
     getItem: express.Handler,
     updateItem: express.Handler,
-    queryRoom: express.Handler,
+    queryJoinRoom: express.Handler,
 }
 
 const dbController: IdbController = {
@@ -68,7 +68,7 @@ const dbController: IdbController = {
         }
     },
 
-    queryRoom: async (req: Request, res: Response) => {
+    queryJoinRoom: async (req: Request, res: Response) => {
 
         const roomData: RoomData = {
             TableName: req.body.TableName,
@@ -77,7 +77,7 @@ const dbController: IdbController = {
             },
         };
         try {
-            const rooms = await queryRoom(roomData);
+            const rooms = await queryJoinRoom(roomData);
             if(rooms){
                 for (const room of rooms) {
                     if (room.password === req.body.itemAttributes.password) {
