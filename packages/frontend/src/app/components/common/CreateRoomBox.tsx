@@ -41,7 +41,7 @@ export default function CreateRoom({ open, handleClose }: CreateRoomProps) {
             }
 
             handleClose();
-            router.push('/rooms/' + response.data as string);
+            router.push('/room/' + response.data as string);
         } catch (error) {
             console.error('Error creating room:', error);
         }

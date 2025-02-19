@@ -5,7 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { useParams } from 'next/navigation';
 import {useUser} from "@/app/components/services/UserContext";
 import api from "@/app/components/services/apiService";
-import RoomCode from "@/app/components/home/RoomCode";
+import RoomCode from "@/app/components/RoomManagement/RoomCode";
 import UserRoom from "@/app/components/RoomManagement/UserRoom";
 
 export default function Rooms() {
@@ -43,24 +43,11 @@ export default function Rooms() {
     return (
         <CssBaseline>
             <div>
-                <div>
-                    {userInfo && roomInfo ? (
-                        <div>
-                            <p>Username: {userInfo.username}</p>
-                            <p>Email: {userInfo.email}</p>
-                            <p>Sub: {userInfo.sub}</p>
-                            <p>Rooms: {params.rooms}</p>
-                            <p>Author Sub: {roomInfo.authorSub}</p>
-                        </div>
-                    ) : (
-                        <p>Loading user info...</p>
-                    )}
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
                         <RoomCode/>
                     ) : (
                         <UserRoom />
                     )}
-                </div>
             </div>
         </CssBaseline>
     );
