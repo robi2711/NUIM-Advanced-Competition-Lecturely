@@ -5,7 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { useParams } from 'next/navigation';
 import {useUser} from "@/app/components/services/UserContext";
 import api from "@/app/components/services/apiService";
-import NavBar from "@/app/components/common/MainNav";
+import RoomCode from "@/app/components/home/RoomCode";
 import UserRoom from "@/app/components/RoomManagement/UserRoom";
 
 export default function Rooms() {
@@ -56,7 +56,7 @@ export default function Rooms() {
                         <p>Loading user info...</p>
                     )}
                     {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
-                        <NavBar />
+                        <RoomCode/>
                     ) : (
                         <UserRoom />
                     )}

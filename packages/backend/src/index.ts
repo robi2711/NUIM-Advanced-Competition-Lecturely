@@ -24,9 +24,7 @@ app.use(session({
 }));
 
 app.use('/db', dbRouter);
-
 app.use('/auth', authRouter);
-
 app.use(express.json());
 
 app.listen(PORT, () => {
