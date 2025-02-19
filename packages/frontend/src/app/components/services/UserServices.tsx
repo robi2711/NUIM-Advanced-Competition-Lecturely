@@ -1,5 +1,5 @@
 import api from "@/app/components/services/apiService";
-import {UserInfo, useUser} from "@/app/components/services/UserContext";
+
 
 export const addUser = async (data: any) => {
 	try {

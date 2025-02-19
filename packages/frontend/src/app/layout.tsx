@@ -42,11 +42,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <TopGradiant/>
-                {/* <ProtectedLayout> */}
+                <ProtectedLayout>
                     <div style={{flex: 1}}>
                         {children}
                     </div>
-                {/* </ProtectedLayout> */}
+                </ProtectedLayout>
                 <Footer/>
             </ThemeProvider>
         </UserProvider>

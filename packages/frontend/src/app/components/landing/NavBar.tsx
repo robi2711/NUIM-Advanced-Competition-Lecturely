@@ -19,6 +19,10 @@ const logoStyle = {
 
 function NavBar() {
 
+    const printprocess = () => {
+        console.log(process.env);
+    }
+
     const scrollToSection = (sectionId: string) => {
         const sectionElement = document.getElementById(sectionId);
         const offset = 128;
@@ -67,7 +71,7 @@ function NavBar() {
                             }}
                         >
                             <MenuItem
-                                onClick={() => window.location.href = '/Lecturely'}
+                                onClick={printprocess}
                                 sx={{py: '6px', px: '12px'}}
                             >
                                 <img

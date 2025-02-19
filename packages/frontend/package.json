@@ -29,11 +29,16 @@
     "next": "15.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "@aws-sdk/client-cognito-identity-provider": "^3.749.0",
+    "dotenv": "^16.4.7",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@types/dom-speech-recognition": "^0.0.4",
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "@types/node": "^22.9.0",
+    "typescript": "^5"
   }
 }

@@ -144,7 +144,7 @@ export const deleteItem = async (data: ItemData) => {
 				SK: data.itemAttributes.SK,
 			}
 		};
-		const result = await docClient.send(new DeleteCommand(params));
+		await docClient.send(new DeleteCommand(params));
 		console.error(`User ${data.itemAttributes.PK} successfully deleted.`);
 	} catch (error) {
 		console.error("Error deleting item:", error);

@@ -1,8 +1,11 @@
 import {
 	AuthFlowType,
-	GetUserCommand, GlobalSignOutCommand,
-	InitiateAuthCommand, NotAuthorizedException,
-	SignUpCommand, UsernameExistsException
+	GetUserCommand,
+	GlobalSignOutCommand,
+	InitiateAuthCommand,
+	NotAuthorizedException,
+	SignUpCommand,
+	UsernameExistsException
 } from "@aws-sdk/client-cognito-identity-provider";
 
 import {client} from "@/config/authConfig";
@@ -25,8 +28,7 @@ export const signUpUser = async (Username: string, Password: string, Email: stri
 
 	try {
 		const command = new SignUpCommand(params);
-		const result = await client.send(command);
-		return result;
+		return await client.send(command);
 	} catch (error) {
 		if (error instanceof UsernameExistsException) {
 			return 'Username already exists';
@@ -74,8 +76,7 @@ export const getUser = async (AccessToken: string) => {
 
 	try {
 		const command = new GetUserCommand(params);
-		const response = await client.send(command);
-		return response;
+		return await client.send(command);
 	} catch (error) {
 		console.error('Error retrieving user in CONFIG:', error);
 	}
@@ -87,8 +88,7 @@ export const signOutUser = async (AccessToken : string) => {
 	}
 	try {
 		const command = new GlobalSignOutCommand(params);
-		const response = await client.send(command);
-		return response;
+		return await client.send(command);
 	} catch (error) {
 		console.error('Error signing out user in CONFIG:', error);
 	}

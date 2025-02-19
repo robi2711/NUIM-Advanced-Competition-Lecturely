@@ -8,8 +8,6 @@ import {
 	List,
 	ListItem,
 	ListItemText,
-	ThemeProvider,
-	createTheme,
 	CssBaseline,
 } from "@mui/material"
 import api from "@/app/components/services/apiService";
