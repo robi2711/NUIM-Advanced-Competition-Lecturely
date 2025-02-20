@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/app/components/services/UserContext";
 import { getUser, addUser } from "@/app/components/services/UserServices";
 import {Suspense} from "react";
+import Link from "@mui/material/Link";
 
 export default function SignIn() {
 	const [email, setEmail] = React.useState('');
@@ -180,6 +181,19 @@ export default function SignIn() {
 						Sign in
 					</Button>
 				</Box>
+					<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
+						<Typography sx={{ textAlign: 'center' }}>
+							Dont have an account?{' '}
+							<Link
+								href="/SignIn"
+								variant="body2"
+								sx={{ alignSelf: 'center' }}
+							>
+								Sign up
+							</Link>
+						</Typography>
+					</Box>
 				</Suspense>
 			</Card>
 		</Container>

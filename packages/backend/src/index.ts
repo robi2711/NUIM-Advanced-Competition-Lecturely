@@ -5,14 +5,14 @@ import dotenv from 'dotenv';
 import authRouter from "@/routes/authRoutes";
 import dbRouter from './routes/dbRoutes';
 
-const PORT = 8080;
+const PORT = 3001;
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 app.use(cors({
-	origin: 'https://nuim-advanced-competition-lecturely-frontend-t1om.vercel.app',
+	origin: 'http://localhost:3000',
 	credentials: true
 }));
 

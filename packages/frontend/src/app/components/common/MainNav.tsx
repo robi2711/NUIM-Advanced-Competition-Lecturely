@@ -62,7 +62,7 @@ function NavBar() {
         api.post('/auth/signOut', {
             AccessToken: userInfo?.accessToken
         });
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = '/';
     };
     return (
         <div>
