@@ -9,25 +9,27 @@ export default function HomeHero() {
 	const { userInfo } = useUser();
 
 	return (
-		<Box>
+		<Box sx={{ mt: 4 }}>
 			<Container
 				sx={{
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					pt: { xs: 14, sm: 18 },
-					pb: { xs: 8, sm: 12 },
+					pt: { xs: 10, sm: 18 },
+					pb: { xs: 6, sm: 12 },
 				}}
 			>
-				<Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
+				<Stack spacing={2} useFlexGap sx={{ width: { xs: '90%', sm: '70%' } }}>
 					<Typography
 						component="h1"
-						variant="h1"
+						variant="h4"
 						sx={{
 							display: 'flex',
-							flexDirection: { xs: 'column', md: 'row' },
-							alignSelf: 'center',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center',
 							textAlign: 'center',
+							fontSize: { xs: '1.5rem', sm: '2.5rem' },
 						}}
 					>
 						Welcome, {userInfo?.username}
