@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import api from '@/app/components/services/apiService';
 import { useUser } from "@/app/components/services/UserContext";
 import { useRouter } from 'next/navigation';
+import {InputAdornment} from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 
 interface responseData {
 	NameValue: string;
@@ -145,15 +147,23 @@ export default function MainContent() {
 		<Box sx={{ flexGrow: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
 			<Container>
-				<Box sx={{width: '40%', marginBottom: 2, marginLeft: 10}}>
+				<Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
 					<TextField
 						variant="outlined"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
-						sx={{ width: '20%' }}
+						sx={{ width: { xs: '80%', sm: '60%', md: '40%' } }}
+						InputProps={{
+							startAdornment: (
+								<InputAdornment position="start">
+									<SearchIcon />
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Box>
 				<Grid container spacing={2} justifyContent="center">
+
 					{sortedRoomData.map((room, index) => (
 						<Grid size={{ xs: 12, sm: 6, md: 3.5 }} key={index}>
 							<StyledCard onClick={() => handleCardClick(room.href)}>

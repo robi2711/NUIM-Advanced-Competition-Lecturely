@@ -7,6 +7,7 @@ import NavBar from './components/landing/NavBar';
 import Hero from './components/landing/Hero';
 import Features from './components/landing/Features';
 import FAQ from './components/landing/FAQ';
+import Footer from "@/app/components/common/Footer";
 
 
 export default function LandingPage() {
@@ -20,6 +21,7 @@ export default function LandingPage() {
           <Divider />
           <FAQ />
         </Box>
+          <Footer />
       </CssBaseline>
   );
 }

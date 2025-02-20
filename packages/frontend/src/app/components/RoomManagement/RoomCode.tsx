@@ -1,44 +1,31 @@
 "use client"
 
 import { useState } from "react"
-import {
-    Box,
-    Paper,
-    Typography,
-    Button,
-    ThemeProvider,
-    createTheme,
-    CssBaseline,
-    Container,
-    Divider,
-} from "@mui/material"
+import { Box, Paper, Typography, Button, CssBaseline, Container, Divider } from "@mui/material"
 import { Person, Lock } from "@mui/icons-material"
 import LectureView from "./LectureContent"
-import {useUser} from "@/app/components/services/UserContext";
-import { useParams } from 'next/navigation';
-import * as React from "react";
-import api from "@/app/components/services/apiService";
 
 interface RoomInfo {
-    NameValue: string;
-    password: string;
-    PK: string;
-}
-interface RoomCodeProps {
-    roomInfo: RoomInfo;
+    NameValue: string
+    password: string
+    PK: string
 }
 
-export default function RoomCode({ roomInfo }: RoomCodeProps){
+interface RoomCodeProps {
+    roomInfo: RoomInfo
+}
+
+export default function RoomCode({ roomInfo }: RoomCodeProps) {
     const [lectureStarted, setLectureStarted] = useState(false)
 
     if (lectureStarted) {
-        return <LectureView roomInfo={roomInfo}/>
+        return <LectureView roomInfo={roomInfo} />
     }
 
     return (
-        <Box>
+        <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center", py: 4 }}>
             <CssBaseline />
-            <Container component="main" maxWidth="xs" sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
+            <Container component="main" maxWidth="xs">
                 <Paper
                     elevation={3}
                     sx={{

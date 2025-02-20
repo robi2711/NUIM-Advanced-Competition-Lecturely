@@ -1,66 +1,65 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
+import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
+import { useTheme, useMediaQuery } from "@mui/material"
 
 export default function Hero() {
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
+
     return (
-        <Box>
-            <Container
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    pt: { xs: 14, sm: 18 },
-                    pb: { xs: 8, sm: 12 },
-                }}
-            >
-                <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
+        <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
+            <Container maxWidth="sm">
+                <Stack spacing={4} useFlexGap sx={{ width: "100%" }}>
                     <Typography
                         component="h1"
-                        variant="h1"
+                        variant={isMobile ? "h2" : "h1"}
                         sx={{
-                            display: 'flex',
-                            flexDirection: { xs: 'column', md: 'row' },
-                            alignSelf: 'center',
-                            textAlign: 'center',
+                            textAlign: "center",
+                            fontWeight: "bold",
                         }}
                     >
                         Lecture
-                        <Typography
-                            component="span"
-                            variant="h1"
-                            sx={{color: 'primary.main'}}
-                        >
+                        <Typography component="span" variant="inherit" sx={{ color: "primary.main" }}>
                             ly
                         </Typography>
                     </Typography>
                     <Typography variant="body1" textAlign="center" color="text.secondary">
-                        Access real-time transcriptions of lectures and discussions, designed for students and individuals with hearing impairments. Summarize and review your sessions effortlessly with AI-powered tools.
+                        Access real-time transcriptions of lectures and discussions, designed for students and individuals with
+                        hearing impairments. Summarize and review your sessions effortlessly with AI-powered tools.
                     </Typography>
-                    <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        alignSelf="center"
-                        spacing={1}
-                        useFlexGap
-                        sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
-                    >
+                    <Stack direction="column" spacing={2} useFlexGap sx={{ width: "100%" }}>
                         <TextField
-                            id="outlined-basic"
+                            id="email-input"
                             size="medium"
                             variant="outlined"
+                            fullWidth
                             aria-label="Enter your email address"
                             placeholder="Your email address"
+                            InputProps={{
+                                sx: { borderRadius: 2 },
+                            }}
                         />
-                        <Button variant="contained" color="primary" href='/SignUp'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            href="/SignUp"
+                            fullWidth
+                            size="large"
+                            sx={{
+                                borderRadius: 2,
+                                py: 1.5,
+                            }}
+                        >
                             Start now
                         </Button>
                     </Stack>
                 </Stack>
             </Container>
         </Box>
-    );
+    )
 }
+
