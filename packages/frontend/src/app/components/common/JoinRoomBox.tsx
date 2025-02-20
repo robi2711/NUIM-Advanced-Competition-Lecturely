@@ -63,12 +63,12 @@ export default function JoinRoom({ open, handleClose }: CreateRoomProps) {
 				sx: { backgroundImage: 'none', backgroundColor: 'black' },
 			}}
 		>
-			<DialogTitle>Create Room</DialogTitle>
+			<DialogTitle>Join Room</DialogTitle>
 			<DialogContent
 				sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
 			>
 				<DialogContentText>
-					Enter your room&apos;s name and password.
+					Enter the room&apos;s name and password.
 				</DialogContentText>
 				<OutlinedInput
 					autoFocus
