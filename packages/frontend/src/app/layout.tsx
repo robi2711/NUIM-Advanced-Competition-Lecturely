@@ -5,7 +5,6 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import getLPTheme from "@/app/getLPTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import TopGradiant from "@/app/components/common/TopGradiant";
-import Footer from "@/app/components/common/Footer";
 import { UserProvider, useUser } from '@/app/components/services/UserContext';
 import { useRouter, usePathname } from 'next/navigation';
 

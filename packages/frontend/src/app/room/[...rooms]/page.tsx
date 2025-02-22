@@ -15,11 +15,13 @@ export default function Rooms() {
         password: string;
         NameValue: string;
         PK: string;
+        isActive: boolean;
     }
 
     const params = useParams();
     const { userInfo } = useUser();
     const [roomInfo, setRoomInfo] = React.useState<RoomInfo | null > (null);
+
 
     React.useEffect(() => {
         const getRoomInfo = async () => {
@@ -41,9 +43,11 @@ export default function Rooms() {
             }
         };
         getRoomInfo();
+
         const intervalId = setInterval(getRoomInfo, 4000);
         return () => clearInterval(intervalId);
     }, [params]);
+
 
 
     return (

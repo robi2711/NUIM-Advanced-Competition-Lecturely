@@ -112,7 +112,7 @@ export default function MainContent() {
 				PK: PK,
 				SK: "room"
 			}});
-		if (response.data !== undefined) {
+		if (response.data) {
 			setRoomData(prevRoomData => [
 				...prevRoomData,
 				{

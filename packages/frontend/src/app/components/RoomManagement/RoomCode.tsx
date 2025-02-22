@@ -10,6 +10,7 @@ interface RoomInfo {
     password: string
     PK: string
     phraseList: string[]
+    isActive: boolean
 }
 
 interface RoomCodeProps {
