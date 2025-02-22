@@ -3,7 +3,7 @@
 import { Box, Paper, Typography, Button, List, ListItem, ListItemText, CssBaseline } from "@mui/material"
 import api from "@/app/components/services/apiService"
 import { useRouter } from "next/navigation"
-import {useEffect, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 
 const users = ["Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince", "Ethan Hunt"]
 
@@ -20,6 +20,7 @@ interface LectureViewProps {
 export default function LectureView({ roomInfo }: LectureViewProps) {
 	const router = useRouter()
 	const [transcript, setTranscript] = useState("")
+	const recognitionRef = useRef<SpeechRecognition | null>(null)
 
 	const sendPhrase = async (roomPK: string, phrase: string) => {
 		try {
@@ -52,6 +53,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 	const handleTranscription = (roomInfo: RoomInfo) => {
 		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 		const recognition = new SpeechRecognition()
+		recognitionRef.current = recognition
 		let liveTranscript = ""
 
 		recognition.lang = "en-GB"
@@ -73,6 +75,9 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 	}
 
 	const handleClose = () => {
+		if (recognitionRef.current) {
+			recognitionRef.current.stop()
+		}
 		router.push("/Lecturely")
 	}
 
