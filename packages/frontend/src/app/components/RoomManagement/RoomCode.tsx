@@ -9,6 +9,7 @@ interface RoomInfo {
     NameValue: string
     password: string
     PK: string
+    phraseList: string[]
 }
 
 interface RoomCodeProps {

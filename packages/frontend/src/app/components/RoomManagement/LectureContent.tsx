@@ -3,16 +3,18 @@
 import { Box, Paper, Typography, Button, List, ListItem, ListItemText, CssBaseline } from "@mui/material"
 import api from "@/app/components/services/apiService"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import {useEffect, useState} from "react"
 
 const users = ["Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince", "Ethan Hunt"]
 
 interface RoomInfo {
 	PK: string
+	phraseList: string[]
 }
 
 interface LectureViewProps {
 	roomInfo: RoomInfo
+
 }
 
 export default function LectureView({ roomInfo }: LectureViewProps) {
@@ -40,6 +42,12 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 			console.error(error)
 		}
 	}
+
+	useEffect(() => {
+		if (roomInfo.phraseList) {
+			setTranscript(roomInfo.phraseList.join(" "))
+		}
+	}, [roomInfo.phraseList])
 
 	const handleTranscription = (roomInfo: RoomInfo) => {
 		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
