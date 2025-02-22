@@ -27,7 +27,7 @@ export default function RoomCode({ roomInfo }: RoomCodeProps) {
         return <LectureView roomInfo={roomInfo} />
     }
 
-    const qrCodeValue = `https://nuim-advanced-competition-lecturely-frontend-t1om.vercel.app/Lecturely/room/${roomInfo.PK}`
+    const qrCodeValue = `https://nuim-advanced-competition-lecturely-frontend-t1om.vercel.app/room/${roomInfo.PK}`
 
     return (
         <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center", py: 4 }}>
