@@ -132,7 +132,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 							overflow: "auto",
 						}}
 					>
-						<Typography variant="body1">{transcript || "Transcription will appear here once started."}</Typography>
+						<Typography variant="body1" sx={{ color: mode === 'dark' ? 'white' : 'black'}}>{transcript || "Transcription will appear here once started."}</Typography>
 					</Box>
 				</Paper>
 			</Box>
