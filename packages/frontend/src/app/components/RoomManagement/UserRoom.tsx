@@ -26,7 +26,7 @@ interface RoomInfo {
 }
 
 interface UserRoomProps {
-	roomInfo: RoomInfo | null
+	roomInfo: RoomInfo
 }
 
 const initialMessages = [
@@ -101,7 +101,7 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 					Participants
 				</Typography>
 				<List sx={{ flexGrow: 1, overflow: "auto" }}>
-					{roomInfo ? roomInfo.participantList.map((user, index) => (
+					{roomInfo.participantList ? roomInfo.participantList.map((user, index) => (
 						<ListItem key={index}>
 							<ListItemIcon>
 								<Person />
