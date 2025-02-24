@@ -27,8 +27,13 @@ export default function SignIn() {
 	const { setUserInfo, userInfo } = useUser()
 
 	React.useEffect(() => {
+		const pk : any = searchParams.get("pk")
 		if (userInfo?.sub) {
-			router.replace("/Lecturely")
+			if (pk) {
+				router.replace(`/room/${pk}`)
+			} else {
+				router.replace("/Lecturely")
+			}
 		}
 		const email = searchParams.get("email")
 		if (email) {
@@ -98,7 +103,12 @@ export default function SignIn() {
 						roomsOwned: userRoomsOwned || [],
 						rooms: userRooms || [],
 					})
-					router.replace("/Lecturely")
+					const pk: any = searchParams.get("pk")
+					if (pk) {
+						router.replace(`/room/${pk}`)
+					} else {
+						router.replace("/Lecturely")
+					}
 				}
 			} catch (error) {
 				console.error("Error signing in user:", error)
@@ -184,4 +194,3 @@ export default function SignIn() {
 		</Container>
 	)
 }
-
