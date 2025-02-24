@@ -87,7 +87,7 @@ function NavBar() {
                     boxShadow: 0,
                     backgroundImage: "none",
                     mt: 2,
-                    bgcolor: 'transparent',
+                    bgcolor: mode === 'light' ? 'rgba(255,255,255, 0.4)' : 'rgba(0, 0, 0, 0.4)',
                 }}
             >
                 <Container maxWidth="lg">
