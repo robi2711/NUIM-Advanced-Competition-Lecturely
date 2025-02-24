@@ -4,6 +4,7 @@ import { Box, Paper, Typography, Button, List, ListItem, ListItemText, CssBaseli
 import api from "@/app/components/services/apiService"
 import { useRouter } from "next/navigation"
 import {useEffect, useState} from "react"
+import { useTheme } from "@/app/components/services/ThemeContext";
 
 interface RoomInfo {
 	PK: string
@@ -20,7 +21,8 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 	const router = useRouter()
 	const [transcript, setTranscript] = useState("")
 
-
+	const theme = useTheme();
+	const mode = theme.mode;
 	const sendPhrase = async (roomPK: string, phrase: string) => {
 		try {
 			const response = await api.post("/db/updateItem", {
@@ -100,7 +102,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 							overflow: "auto",
 						}}
 					>
-						<Typography variant="body1">{transcript || "Transcription will appear here once started."}</Typography>
+						<Typography variant="body1" sx = {{color: mode === 'dark'? "white":'black'}}>{transcript || "Transcription will appear here once started."}</Typography>
 					</Box>
 				</Paper>
 			</Box>
