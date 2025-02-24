@@ -10,7 +10,7 @@ interface RoomInfo {
 	PK: string
 	phraseList: string[]
 	isActive: boolean
-	participantsList: string[]
+	participantList: string[]
 }
 
 interface LectureViewProps {
