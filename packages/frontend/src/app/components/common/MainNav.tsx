@@ -85,10 +85,9 @@ function NavBar() {
                 position="fixed"
                 sx={{
                     boxShadow: 0,
-                    bgcolor: mode === 'light' ? 'white' : 'rgba(0, 0, 0, 0.4)',
                     backgroundImage: "none",
                     mt: 2,
-                    color: mode === 'light' ? 'black' : 'white',
+                    bgcolor: 'transparent',
                 }}
             >
                 <Container maxWidth="lg">
