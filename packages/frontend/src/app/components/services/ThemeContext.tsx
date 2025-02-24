@@ -12,7 +12,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-    const [mode, setMode] = useState('light');
+    const [mode, setMode] = useState('dark');
 
     useEffect(() => {
         const savedMode = localStorage.getItem('themeMode');
@@ -22,7 +22,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }, []);
 
     const toggleMode = () => {
-        const newMode = mode === 'light' ? 'dark' : 'dark';
+        const newMode = mode === 'light' ? 'dark' : 'light';
         setMode(newMode);
         localStorage.setItem('themeMode', newMode);
     };
