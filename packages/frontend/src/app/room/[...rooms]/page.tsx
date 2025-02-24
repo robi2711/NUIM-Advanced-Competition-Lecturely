@@ -16,6 +16,7 @@ export default function Rooms() {
         NameValue: string;
         PK: string;
         isActive: boolean;
+        participantList: string[];
     }
 
     const params = useParams();
