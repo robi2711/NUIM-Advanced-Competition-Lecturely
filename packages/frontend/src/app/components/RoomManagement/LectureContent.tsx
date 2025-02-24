@@ -144,25 +144,25 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 									Participants
 								</Typography>
 								<List sx={{ flexGrow: 1, overflow: "auto" }}>
-									{users.map((user, index) => (
+									{roomInfo.participantList ? roomInfo.participantList.map((user, index) => (
 										<ListItem key={index}>
 											<ListItemText primary={user} />
 										</ListItem>
-									))}
+									)): null}
 								</List>
-							<Button
-								variant="contained"
-								color="primary"
-								size="large"
-								onClick={() => handleTranscription(roomInfo)}
-								sx={{ mt: 2 }}
-							>
-								Start Transcription
-							</Button>
-							<Button variant="contained" color="secondary" size="large" onClick={() => handleClose()} sx={{ mt: 2 }}>
-								End Lecture
-							</Button>
-						</Paper>
+								<Button
+									variant="contained"
+									color="primary"
+									size="large"
+									onClick={() => handleTranscription(roomInfo)}
+									sx={{ mt: 2 }}
+								>
+									Start Transcription
+								</Button>
+								<Button variant="contained" color="secondary" size="large" onClick={() => handleClose()} sx={{ mt: 2 }}>
+									End Lecture
+								</Button>
+							</Paper>
 						</Box>
 					)}
 					{!roomInfo.isActive && (
