@@ -1,13 +1,14 @@
 "use client"
 
 import * as React from 'react';
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import getLPTheme from "@/app/getLPTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import TopGradiant from "@/app/components/common/TopGradiant";
 import Footer from "@/app/components/common/Footer";
 import { UserProvider, useUser } from '@/app/components/services/UserContext';
 import { useRouter, usePathname } from 'next/navigation';
+import { ThemeProvider, useTheme } from "@/app/components/services/ThemeContext";
 
 function ProtectedLayout({ children }: { children: React.ReactNode }) {
     const { userInfo } = useUser();
@@ -27,10 +28,24 @@ function ProtectedLayout({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-    const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
+function ThemedRootLayout({ children }: { children: React.ReactNode }) {
+    const { mode } = useTheme();
     const theme = createTheme(getLPTheme(mode));
 
+    return (
+        <MuiThemeProvider theme={theme}>
+            <CssBaseline/>
+            <TopGradiant/>
+            <ProtectedLayout>
+                <div style={{flex: 1}}>
+                    {children}
+                </div>
+            </ProtectedLayout>
+        </MuiThemeProvider>
+    );
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
         <head>
@@ -39,14 +54,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </head>
         <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <UserProvider>
-            <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                <TopGradiant/>
-                <ProtectedLayout>
-                    <div style={{flex: 1}}>
-                        {children}
-                    </div>
-                </ProtectedLayout>
+            <ThemeProvider>
+                <ThemedRootLayout>
+                    {children}
+                </ThemedRootLayout>
             </ThemeProvider>
         </UserProvider>
         </body>

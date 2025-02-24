@@ -1,41 +1,47 @@
-import Box from "@mui/material/Box"
-import AppBar from "@mui/material/AppBar"
-import Toolbar from "@mui/material/Toolbar"
-import Button from "@mui/material/Button"
-import Container from "@mui/material/Container"
-import Typography from "@mui/material/Typography"
-import MenuItem from "@mui/material/MenuItem"
-import Link from "next/link"
+import Box from "@mui/material/Box";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import MenuItem from "@mui/material/MenuItem";
+import Link from "next/link";
+import * as React from "react";
+import { useTheme } from "@/app/components/services/ThemeContext";
+import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
+import ModeNightRoundedIcon from '@mui/icons-material/ModeNightRounded';
 
 const logoStyle = {
     width: "30px",
     height: "auto",
     cursor: "pointer",
     marginRight: "8px",
-}
+};
 
 function NavBar() {
+    const { mode, toggleMode } = useTheme();
     const scrollToSection = (sectionId: string) => {
-        const sectionElement = document.getElementById(sectionId)
-        const offset = 128
+        const sectionElement = document.getElementById(sectionId);
+        const offset = 128;
         if (sectionElement) {
-            const targetScroll = sectionElement.offsetTop - offset
-            sectionElement.scrollIntoView({ behavior: "smooth" })
+            const targetScroll = sectionElement.offsetTop - offset;
+            sectionElement.scrollIntoView({ behavior: "smooth" });
             window.scrollTo({
                 top: targetScroll,
                 behavior: "smooth",
-            })
+            });
         }
-    }
+    };
 
     return (
         <AppBar
             position="fixed"
             sx={{
                 boxShadow: 0,
-                bgcolor: "transparent",
+                bgcolor: mode === 'light' ? 'white' : 'rgba(0, 0, 0, 0.4)',
                 backgroundImage: "none",
                 mt: 2,
+                color: mode === 'light' ? 'black' : 'white',
             }}
         >
             <Container maxWidth="lg">
@@ -45,7 +51,7 @@ function NavBar() {
                         alignItems: "center",
                         justifyContent: "space-between",
                         borderRadius: "999px",
-                        bgcolor: "rgba(0, 0, 0, 0.4)",
+                        bgcolor: mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.4)',
                         backdropFilter: "blur(24px)",
                         border: "2px solid",
                         borderColor: "divider",
@@ -80,6 +86,9 @@ function NavBar() {
                     </Box>
 
                     <Box sx={{ display: "flex", gap: { xs: 1, sm: 2 }, ml: { xs: 1, sm: 2 } }}>
+                        <Button color="inherit" onClick={toggleMode}>
+                            {mode === 'light' ? <ModeNightRoundedIcon /> : <WbSunnyRoundedIcon />}
+                        </Button>
                         <Link href="/SignUp" passHref>
                             <Button
                                 color="primary"
@@ -112,8 +121,7 @@ function NavBar() {
                 </Toolbar>
             </Container>
         </AppBar>
-    )
+    );
 }
 
-export default NavBar
-
+export default NavBar;

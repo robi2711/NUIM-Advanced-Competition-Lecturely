@@ -4,6 +4,7 @@ import { Box, Paper, Typography, Button, List, ListItem, ListItemText, CssBaseli
 import api from "@/app/components/services/apiService"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useTheme } from "@/app/components/services/ThemeContext"
 
 const users = ["Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince", "Ethan Hunt"]
 
@@ -40,6 +41,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 			console.error(error)
 		}
 	}
+	const { mode } = useTheme();
 
 	const handleTranscription = (roomInfo: RoomInfo) => {
 		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -88,7 +90,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 							overflow: "auto",
 						}}
 					>
-						<Typography variant="body1">{transcript || "Transcription will appear here once started."}</Typography>
+						<Typography variant="body1" sx={{ color: mode === 'light' ? 'black' : 'white' }}>{transcript || "Transcription will appear here once started."}</Typography>
 					</Box>
 				</Paper>
 			</Box>
