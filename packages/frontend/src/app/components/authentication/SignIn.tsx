@@ -27,7 +27,7 @@ export default function SignIn() {
 	const { setUserInfo, userInfo } = useUser()
 
 	React.useEffect(() => {
-		const pk = searchParams.get("pk")
+		const pk : any = searchParams.get("pk")
 		if (userInfo?.sub) {
 			if (pk) {
 				router.replace(`/room/${pk}`)
@@ -103,7 +103,7 @@ export default function SignIn() {
 						roomsOwned: userRoomsOwned || [],
 						rooms: userRooms || [],
 					})
-					const pk = searchParams.get("pk")
+					const pk: any = searchParams.get("pk")
 					if (pk) {
 						router.replace(`/room/${pk}`)
 					} else {
