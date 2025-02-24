@@ -45,7 +45,8 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 			console.error(error)
 		}
 	}
-	const { mode } = useTheme();
+	const theme = useTheme();
+	const mode = theme.mode;
 
 	const closeRoom = async (roomPK: string) => {
 		try {

@@ -37,7 +37,8 @@ const initialMessages = [
 ]
 
 export default function UserRoom({ roomInfo }: UserRoomProps) {
-	const mode = useTheme();
+	const theme = useTheme();
+	const mode = theme.mode;
 	const [messages, setMessages] = useState(initialMessages)
 	const [newMessage, setNewMessage] = useState("")
 	const [handRaised, setHandRaised] = useState(false)
