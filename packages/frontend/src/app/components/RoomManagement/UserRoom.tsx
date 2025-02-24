@@ -62,7 +62,7 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 					<Typography variant="h4" gutterBottom>
 						Lecture Content
 					</Typography>
-					<Box sx={{ flexGrow: 1, bgcolor: "grey.200", p: 2, overflow: "auto" }}>
+					<Box sx={{ flexGrow: 1, bgcolor: "background.paper", p: 2, overflow: "auto" }}>
 						<Typography variant="body1" sx={{ color: theme === 'light' ? 'white' : 'black' }}>
 							{roomInfo ? roomInfo.phraseList.join(" ") : "This is where the lecture content would be displayed."}
 						</Typography>

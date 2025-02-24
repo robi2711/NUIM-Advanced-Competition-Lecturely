@@ -16,7 +16,7 @@ const logoStyle = {
     height: "auto",
     cursor: "pointer",
     marginRight: "8px",
-};
+}
 
 function NavBar() {
     const { mode, toggleMode } = useTheme();
@@ -41,44 +41,43 @@ function NavBar() {
                 bgcolor: mode === 'light' ? 'white' : 'rgba(0, 0, 0, 0.4)',
                 backgroundImage: "none",
                 mt: 2,
-                color: mode === 'light' ? 'black' : 'white',
             }}
         >
             <Container maxWidth="lg">
                 <Toolbar
                     sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        borderRadius: "999px",
-                        bgcolor: mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.4)',
-                        backdropFilter: "blur(24px)",
-                        border: "2px solid",
-                        borderColor: "divider",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        borderRadius: '999px',
+                        bgcolor: 'rgba(0, 0, 0, 0.4)',
+                        backdropFilter: 'blur(24px)',
+                        border: '2px solid',
+                        borderColor: 'divider',
                         px: 2,
                     }}
                 >
-                    <Box sx={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                         <img src="/lecturely.png" style={logoStyle} alt="Lecturely" />
                         <Typography
                             variant="subtitle1"
                             color="text.primary"
                             sx={{
-                                fontSize: { xs: "0.9rem", sm: "1rem" },
-                                whiteSpace: "nowrap",
+                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                whiteSpace: 'nowrap',
                             }}
                         >
                             Lecturely
                         </Typography>
                     </Box>
 
-                    <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                        <MenuItem onClick={() => scrollToSection("features")}>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <MenuItem onClick={() => scrollToSection('features')}>
                             <Typography variant="body2" color="text.primary">
                                 Features
                             </Typography>
                         </MenuItem>
-                        <MenuItem onClick={() => scrollToSection("faq")}>
+                        <MenuItem onClick={() => scrollToSection('faq')}>
                             <Typography variant="body2" color="text.primary">
                                 FAQ
                             </Typography>
@@ -97,7 +96,7 @@ function NavBar() {
                                 sx={{
                                     minWidth: 0,
                                     px: { xs: 1, sm: 2 },
-                                    fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
                                 }}
                             >
                                 Sign up
@@ -118,6 +117,7 @@ function NavBar() {
                             </Button>
                         </Link>
                     </Box>
+
                 </Toolbar>
             </Container>
         </AppBar>
