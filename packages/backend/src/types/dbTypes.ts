@@ -15,5 +15,10 @@ export interface RoomData {
 		PK?: string;
 		description?: string;
 		authorSub?: string;
+		phraseList?: string[];
+		password?: string;
+		NameValue?: string;
+		isActive?: boolean;
+		participantList?: string[];
 	}
 }

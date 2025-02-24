@@ -17,6 +17,9 @@ import { useState } from "react"
 import CreateRoom from "./CreateRoomBox"
 import JoinRoom from "./JoinRoomBox"
 import { useUser } from "@/app/components/services/UserContext"
+import { useTheme } from "@/app/components/services/ThemeContext";
+import ModeNightRoundedIcon from "@mui/icons-material/ModeNightRounded";
+import WbSunnyRoundedIcon from "@mui/icons-material/WbSunnyRounded";
 
 const logoStyle = {
     width: "30px",
@@ -34,6 +37,7 @@ function NavBar() {
         setAnchorEl(event.currentTarget)
     }
 
+    const { toggleMode , mode} = useTheme();
     const [openJoinRoom, setJoinOpen] = React.useState(false)
     const [openCreateRoom, setCreateOpen] = React.useState(false)
 
@@ -81,9 +85,9 @@ function NavBar() {
                 position="fixed"
                 sx={{
                     boxShadow: 0,
-                    bgcolor: "transparent",
                     backgroundImage: "none",
                     mt: 2,
+                    bgcolor: 'transparent',
                 }}
             >
                 <Container maxWidth="lg">
@@ -95,7 +99,7 @@ function NavBar() {
                             justifyContent: "space-between",
                             flexShrink: 0,
                             borderRadius: "999px",
-                            bgcolor: "rgba(0, 0, 0, 0.4)",
+                            bgcolor: mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.4)',
                             backdropFilter: "blur(24px)",
                             border: "1px solid",
                             borderColor: "divider",
@@ -126,6 +130,9 @@ function NavBar() {
                                 alignItems: "center",
                             }}
                         >
+                            <Button color="inherit" onClick={toggleMode}>
+                                {mode === 'light' ? <ModeNightRoundedIcon /> : <WbSunnyRoundedIcon />}
+                            </Button>
                             <Button color="primary" variant="text" size="medium" onClick={handleCreateClickOpen}>
                                 Create
                             </Button>
@@ -173,6 +180,11 @@ function NavBar() {
                 <MenuItem onClick={handleJoinClickOpen}>
                     <Typography textAlign="center">Join</Typography>
                 </MenuItem>
+                <MenuItem>
+                    <Button color="inherit" onClick={toggleMode}>
+                        {mode === 'light' ? <ModeNightRoundedIcon /> : <WbSunnyRoundedIcon />}
+                    </Button>
+                </MenuItem>
                 <MenuItem onClick={handleSignOut}>
                     <Typography textAlign="center" color="error">
                         Log Out
@@ -193,4 +205,3 @@ function NavBar() {
 }
 
 export default NavBar
-

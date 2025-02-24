@@ -17,6 +17,7 @@ import {
 } from "@mui/material"
 import { Send, PanTool, Person } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
+import {useTheme} from "@/app/components/services/ThemeContext";
 
 interface RoomInfo {
 	authorSub: string
@@ -35,6 +36,8 @@ const initialMessages = [
 ]
 
 export default function UserRoom({ roomInfo }: UserRoomProps) {
+	const theme = useTheme();
+	const mode = theme.mode;
 	const [messages, setMessages] = useState(initialMessages)
 	const [newMessage, setNewMessage] = useState("")
 	const [handRaised, setHandRaised] = useState(false)
@@ -60,8 +63,8 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 						Lecture Content
 					</Typography>
 					<Box sx={{ flexGrow: 1, bgcolor: "background.paper", p: 2, overflow: "auto" }}>
-						<Typography variant="body1" sx={{ color: "white" }}>
-							{roomInfo ? roomInfo.phraseList.join(" ") + "asd" : "This is where the lecture content would be displayed."}
+						<Typography variant="body1" sx={{ color: mode === 'dark'? 'white' : 'black' }}>
+							{roomInfo ? roomInfo.phraseList.join(" ") : "This is where the lecture content would be displayed."}
 						</Typography>
 					</Box>
 				</Paper>
@@ -108,15 +111,6 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 					)) : null}
 				</List>
 				<Divider sx={{ my: 2 }} />
-				<Button
-					variant="contained"
-					color={handRaised ? "secondary" : "primary"}
-					startIcon={<PanTool />}
-					onClick={() => setHandRaised(!handRaised)}
-					fullWidth
-				>
-					{handRaised ? "Lower Hand" : "Raise Hand"}
-				</Button>
 				<Button
 					variant="contained"
 					color="secondary"
