@@ -8,23 +8,23 @@ import { QRCodeSVG } from "qrcode.react"
 import QRCodeRedirect from "./QRCodeRedirect"
 
 interface RoomInfo {
-    NameValue: string
-    password: string
-    PK: string
-    phraseList: string[]
-    isActive: boolean
-    participantList: string[]
+    NameValue: string;
+    password: string;
+    PK: string;
+    phraseList: string[];
+    isActive: boolean;
+    participantList: string[];
 }
 
 interface RoomCodeProps {
-    roomInfo: RoomInfo
+    roomInfo: RoomInfo;
 }
 
 export default function RoomCode({ roomInfo }: RoomCodeProps) {
-    const [lectureStarted, setLectureStarted] = useState(false)
-    const [showQRRedirect, setShowQRRedirect] = useState(false)
+    const [lectureStarted, setLectureStarted] = useState(false);
+    const [showQRRedirect, setShowQRRedirect] = useState(false);
 
-    if (lectureStarted) {
+    if (lectureStarted || !roomInfo.isActive) {
         return <LectureView roomInfo={roomInfo} />
     }
 
