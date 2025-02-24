@@ -21,7 +21,7 @@ export default function Rooms() {
 
     const params = useParams();
     const { userInfo } = useUser();
-    const [roomInfo, setRoomInfo] = React.useState<RoomInfo | null > (null);
+    const [roomInfo, setRoomInfo] = React.useState<RoomInfo | null>(null);
 
 
     React.useEffect(() => {
@@ -55,8 +55,8 @@ export default function Rooms() {
         <CssBaseline>
 
             <div>
-
-                    {userInfo && params && userInfo.sub === roomInfo?.authorSub ? (
+                {roomInfo && userInfo ? (
+                    userInfo.sub === roomInfo.authorSub ? (
                         <div>
                             <RoomCode roomInfo={roomInfo} />
                         </div>
@@ -64,7 +64,10 @@ export default function Rooms() {
                         <div>
                             <UserRoom roomInfo={roomInfo} />
                         </div>
-                    )}
+                    )
+                ) : (
+                    <div>Loading...</div>
+                )}
             </div>
         </CssBaseline>
     );

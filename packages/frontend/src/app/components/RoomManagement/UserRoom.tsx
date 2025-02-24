@@ -20,13 +20,13 @@ import { useRouter } from "next/navigation"
 import {useTheme} from "@/app/components/services/ThemeContext";
 
 interface RoomInfo {
-	authorSub: string
-	phraseList: string[]
-	participantList: string[]
+	authorSub: string;
+	phraseList: string[];
+	participantList: string[];
 }
 
 interface UserRoomProps {
-	roomInfo: RoomInfo
+	roomInfo: RoomInfo;
 }
 
 const initialMessages = [
@@ -104,7 +104,7 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 					{roomInfo.participantList ? roomInfo.participantList.map((user, index) => (
 						<ListItem key={index}>
 							<ListItemIcon>
-								<Person /> 
+								<Person />
 							</ListItemIcon>
 							<ListItemText primary={user} />
 						</ListItem>
