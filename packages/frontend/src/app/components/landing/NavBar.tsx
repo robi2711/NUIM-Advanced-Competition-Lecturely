@@ -38,7 +38,7 @@ function NavBar() {
             position="fixed"
             sx={{
                 boxShadow: 0,
-                bgcolor: mode === 'light' ? 'rgba(255,255,255, 0.4)' : 'rgba(0, 0, 0, 0.4)',
+                bgcolor: mode === 'light' ? 'rgba(255,255,255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                 backgroundImage: "none",
                 mt: 2,
             }}
