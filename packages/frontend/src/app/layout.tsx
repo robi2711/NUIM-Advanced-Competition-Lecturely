@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from 'react';
-import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material";
+import {createTheme, PaletteMode, ThemeProvider as MuiThemeProvider} from "@mui/material";
 import getLPTheme from "@/app/getLPTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import TopGradiant from "@/app/components/common/TopGradiant";
@@ -29,7 +29,8 @@ function ProtectedLayout({ children }: { children: React.ReactNode }) {
 
 function ThemedRootLayout({ children }: { children: React.ReactNode }) {
     const { mode } = useTheme();
-    const theme = createTheme(getLPTheme(mode));
+    const themeMode: PaletteMode = mode === 'dark' || mode === 'light' ? mode : 'light';
+    const theme = createTheme(getLPTheme(themeMode));
 
     return (
         <MuiThemeProvider theme={theme}>
