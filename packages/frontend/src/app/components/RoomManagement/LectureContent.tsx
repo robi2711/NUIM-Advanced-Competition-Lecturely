@@ -111,11 +111,11 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 						Participants
 					</Typography>
 					<List sx={{ flexGrow: 1, overflow: "auto" }}>
-						{roomInfo.participantList.map((user, index) => (
+						{roomInfo.participantList ? roomInfo.participantList.map((user, index) => (
 							<ListItem key={index}>
 								<ListItemText primary={user} />
 							</ListItem>
-						))}
+						)) : null}
 					</List>
 
 					<Button
