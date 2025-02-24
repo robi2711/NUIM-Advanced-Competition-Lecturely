@@ -12,7 +12,7 @@ import Card from "@mui/material/Card"
 import api from "@/app/components/services/apiService"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useUser } from "@/app/components/services/UserContext"
-import { getUser, addUser } from "@/app/components/services/UserServices"
+import {getUser, addUser, addRoom} from "@/app/components/services/UserServices"
 import { Suspense } from "react"
 import Link from "@mui/material/Link"
 
@@ -30,6 +30,7 @@ export default function SignIn() {
 		const pk : any = searchParams.get("room")
 		if (userInfo?.sub) {
 			if (pk) {
+				addRoom(pk, userInfo, setUserInfo)
 				router.replace(`/room/${pk}`)
 			} else {
 				router.replace("/Lecturely")
@@ -105,6 +106,7 @@ export default function SignIn() {
 					})
 					const pk: string | null = searchParams.get("room")
 					if (pk) {
+						addRoom(pk, userInfo, setUserInfo)
 						router.replace(`/room/${pk}`)
 					} else {
 						router.replace("/Lecturely")
