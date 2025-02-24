@@ -13,6 +13,7 @@ interface RoomInfo {
     PK: string
     phraseList: string[]
     isActive: boolean
+    participantList: string[]
 }
 
 interface RoomCodeProps {
