@@ -18,11 +18,10 @@ import {
 import { Send, PanTool, Person } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
 
-const users = ["You (Student)", "Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince"]
-
 interface RoomInfo {
 	authorSub: string
 	phraseList: string[]
+	participantList: string[]
 }
 
 interface UserRoomProps {
@@ -99,14 +98,14 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 					Participants
 				</Typography>
 				<List sx={{ flexGrow: 1, overflow: "auto" }}>
-					{users.map((user, index) => (
+					{roomInfo ? roomInfo.participantList.map((user, index) => (
 						<ListItem key={index}>
 							<ListItemIcon>
 								<Person />
 							</ListItemIcon>
 							<ListItemText primary={user} />
 						</ListItem>
-					))}
+					)) : null}
 				</List>
 				<Divider sx={{ my: 2 }} />
 				<Button

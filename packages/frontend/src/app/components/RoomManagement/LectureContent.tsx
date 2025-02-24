@@ -5,11 +5,10 @@ import api from "@/app/components/services/apiService"
 import { useRouter } from "next/navigation"
 import {useEffect, useState} from "react"
 
-const users = ["Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince", "Ethan Hunt"]
-
 interface RoomInfo {
 	PK: string
 	phraseList: string[]
+	participantList: string[]
 }
 
 interface LectureViewProps {
@@ -112,7 +111,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 						Participants
 					</Typography>
 					<List sx={{ flexGrow: 1, overflow: "auto" }}>
-						{users.map((user, index) => (
+						{roomInfo.participantList.map((user, index) => (
 							<ListItem key={index}>
 								<ListItemText primary={user} />
 							</ListItem>
