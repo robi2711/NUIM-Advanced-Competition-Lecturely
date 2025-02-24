@@ -104,7 +104,7 @@ export default function UserRoom({ roomInfo }: UserRoomProps) {
 					{roomInfo.participantList ? roomInfo.participantList.map((user, index) => (
 						<ListItem key={index}>
 							<ListItemIcon>
-								<Person />
+								<Person /> 
 							</ListItemIcon>
 							<ListItemText primary={user} />
 						</ListItem>
