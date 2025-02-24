@@ -4,14 +4,11 @@ import { Box, Paper, Typography, Button, List, ListItem, ListItemText, CssBaseli
 import api from "@/app/components/services/apiService"
 import { useRouter } from "next/navigation"
 import {useEffect, useState} from "react"
-import { useTheme } from "@/app/components/services/ThemeContext"
-
-const users = ["Alice Smith", "Bob Johnson", "Charlie Brown", "Diana Prince", "Ethan Hunt"]
 
 interface RoomInfo {
 	PK: string
 	phraseList: string[]
-	isActive: boolean
+	participantList: string[]
 }
 
 interface LectureViewProps {
@@ -36,29 +33,6 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 						ExpressionAttributeValues: {
 							":phrase": [phrase],
 							":emptyList": [],
-						},
-					},
-				},
-			})
-			console.log(response.data)
-		} catch (error) {
-			console.error(error)
-		}
-	}
-	const theme = useTheme();
-	const mode = theme.mode;
-
-	const closeRoom = async (roomPK: string) => {
-		try {
-			const response = await api.post("/db/updateItem", {
-				TableName: "TestTable",
-				itemAttributes: {
-					PK: roomPK,
-					SK: "room",
-					data: {
-						UpdateExpression: "SET isActive = :active",
-						ExpressionAttributeValues: {
-							":active": false,
 						},
 					},
 				},
@@ -93,23 +67,16 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 
 		recognition.start()
 
-		if (window.location.pathname !== `/room/${roomInfo.PK}`) {
-			recognition.stop();
-			return;
-		}
-
 		recognition.onend = () => {
-			if (window.location.pathname !== `/room/${roomInfo.PK}`) {
-				recognition.stop()
-			} else {
+			if (window.location.pathname === `/room/${roomInfo.PK}`) {
 				recognition.start()
+			} else {
+				recognition.stop()
 			}
 		}
 	}
 
 	const handleClose = () => {
-		if (roomInfo.isActive){closeRoom(roomInfo.PK);}
-
 		router.push("/Lecturely")
 	}
 
@@ -133,59 +100,38 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 							overflow: "auto",
 						}}
 					>
-						<Typography variant="body1" sx={{ color: mode === 'dark' ? 'white' : 'black'}}>{transcript || "Transcription will appear here once started."}</Typography>
+						<Typography variant="body1">{transcript || "Transcription will appear here once started."}</Typography>
 					</Box>
 				</Paper>
 			</Box>
 
+			<Box sx={{ width: { xs: "100%", md: "33.33%" }, p: 2, bgcolor: "background.paper" }}>
+				<Paper elevation={3} sx={{ height: "100%", p: 2, display: "flex", flexDirection: "column" }}>
+					<Typography variant="h5" gutterBottom>
+						Participants
+					</Typography>
+					<List sx={{ flexGrow: 1, overflow: "auto" }}>
+						{roomInfo.participantList ? roomInfo.participantList.map((user, index) => (
+							<ListItem key={index}>
+								<ListItemText primary={user} />
+							</ListItem>
+						)) : null}
+					</List>
 
-					{roomInfo.isActive &&  (
-						<Box sx={{ width: { xs: "100%", md: "33.33%" }, p: 2, bgcolor: "background.paper" }}>
-							<Paper elevation={3} sx={{ height: "100%", p: 2, display: "flex", flexDirection: "column" }}>
-								<Typography variant="h5" gutterBottom>
-									Participants
-								</Typography>
-								<List sx={{ flexGrow: 1, overflow: "auto" }}>
-									{users.map((user, index) => (
-										<ListItem key={index}>
-											<ListItemText primary={user} />
-										</ListItem>
-									))}
-								</List>
-							<Button
-								variant="contained"
-								color="primary"
-								size="large"
-								onClick={() => handleTranscription(roomInfo)}
-								sx={{ mt: 2 }}
-							>
-								Start Transcription
-							</Button>
-							<Button variant="contained" color="secondary" size="large" onClick={() => handleClose()} sx={{ mt: 2 }}>
-								End Lecture
-							</Button>
-						</Paper>
-						</Box>
-					)}
-					{!roomInfo.isActive && (
-						<Box sx={{ width: { xs: "100%", md: "33.33%" }, p: 2, bgcolor: "background.paper" }}>
-							<Paper elevation={3} sx={{ height: "100%", p: 2, display: "flex", flexDirection: "column" }}>
-								<Typography variant="h5" gutterBottom>
-									Participants
-								</Typography>
-								<List sx={{ flexGrow: 1, overflow: "auto" }}>
-									{users.map((user, index) => (
-										<ListItem key={index}>
-											<ListItemText primary={user} />
-										</ListItem>
-									))}
-								</List>
-								<Button variant="contained" color="secondary" size="large" onClick={() => handleClose()} sx={{ mt: 2 }}>
-									Close Lecture
-								</Button>
-							</Paper>
-						</Box>
-					)}
+					<Button
+						variant="contained"
+						color="primary"
+						size="large"
+						onClick={() => handleTranscription(roomInfo)}
+						sx={{ mt: 2 }}
+					>
+						Start Transcription
+					</Button>
+					<Button variant="contained" color="secondary" size="large" onClick={() => handleClose()} sx={{ mt: 2 }}>
+						End Lecture
+					</Button>
+				</Paper>
+			</Box>
 		</Box>
 	)
 }

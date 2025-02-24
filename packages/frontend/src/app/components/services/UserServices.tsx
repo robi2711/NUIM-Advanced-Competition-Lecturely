@@ -75,6 +75,24 @@ export const addRoom = async (room: string, userInfo: any, setUserInfo: any) => 
 		} catch (error){
 			console.error(error)
 		}
+		try {
+			await api.post('/db/updateItem', {
+				TableName: 'TestTable',
+				itemAttributes: {
+					PK: room,
+					SK: "room",
+					data: {
+						UpdateExpression: "SET participantList = list_append(if_not_exists(participantList, :emptyList), :user)",
+						ExpressionAttributeValues: {
+							":user": [userInfo.username],
+							":emptyList": [],
+						}
+					},
+				}
+			});
+		} catch (error) {
+			console.error(error);
+		}
 	}
 	else {
 		console.log("User Is not Logged In");
