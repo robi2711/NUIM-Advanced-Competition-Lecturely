@@ -1,19 +1,14 @@
+import express from "express";
 import { Router } from "express";
-import {checkAuth, getPathFromURL} from "@/helpers/authHelper";
 import authController from "@/controllers/authController";
 
-const router = Router();
+const router: Router = express.Router();
 
-router.get('/', checkAuth, authController.default);
+router.post('/signUp', authController.signUp);
 
-router.get('/login', authController.login);
+router.post('/signOut', authController.signOut);
 
-router.get('/logout', authController.logout);
+router.post('/signIn', authController.signIn)
 
-//TODO: find the proper name for the following route
-
-router.get(getPathFromURL('http://localhost:3000/Lecturely') || '', authController.notsure);
-
-//router.get('/profile', authMiddleware, userController.getProfile);
 
 export default router;

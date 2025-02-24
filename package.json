@@ -7,15 +7,16 @@
   ],
   "scripts": {
     "initial-install": "npm install",
-
     "build": "npm run build --workspaces --if-present && npm run test && rm -rf dist && npm run lint && tsc -b",
-
     "frontend": "lerna run dev",
     "backend": "lerna run start",
     "both": "lerna run dev --parallel"
   },
   "dependencies": {
-    "dotenv": "^16.4.7"
+    "@aws-sdk/client-cognito-identity-provider": "^3.749.0",
+    "dotenv": "^16.4.7",
+    "qrcode.react": "^4.2.0",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

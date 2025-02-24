@@ -6,14 +6,20 @@ import { Box, Button, Typography } from "@mui/material";
 const MicTestPage: React.FC = () => {
     const [transcript, setTranscript] = React.useState("");
 
-    const sendPhrase = async (phrase: any, phraseNo: number) => {
+    const sendPhrase = async (phrase: string) => {
         try {
-            const response = await api.post('/db/addItem', {
+            const response = await api.post('/db/updateItem', {
                 TableName: 'TestTable',
                 itemAttributes: {
-                    PK: "phrase_" + phraseNo,
-                    SK: "phrase",
-                    data: JSON.stringify(phrase)
+                    PK: "1739972345580813",
+                    SK: "room",
+                    data: {
+                        UpdateExpression: "SET phraseList = list_append(if_not_exists(phraseList, :emptyList), :phrase)",
+                        ExpressionAttributeValues: {
+                            ":phrase": [phrase],
+                            ":emptyList": [],
+                        }
+                    },
                 }
             });
             console.log(response.data);
@@ -34,7 +40,7 @@ const MicTestPage: React.FC = () => {
         recognition.onresult = async function(event) {
             const currentPhrase = event.results[event.results.length-1][0].transcript;
             liveTranscript = liveTranscript + currentPhrase;
-            await sendPhrase(currentPhrase, event.results.length);
+            await sendPhrase(currentPhrase);
             setTranscript(liveTranscript);
         }
 

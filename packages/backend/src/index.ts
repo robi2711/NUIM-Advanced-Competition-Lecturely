@@ -1,13 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import session from 'express-session';
-import { Issuer, Client, generators } from 'openid-client';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {initializeCognitoClient} from "@/config/cognitoConfig";
 import authRouter from "@/routes/authRoutes";
-import authController from "@/controllers/authController";
 import dbRouter from './routes/dbRoutes';
-import {getPathFromURL} from "@/helpers/authHelper";
 
 const PORT = 3001;
 dotenv.config();
@@ -24,24 +20,11 @@ app.use(session({
 	secret: 'v',
 	resave: true,
 	saveUninitialized: false,
+	cookie: { secure: false }
 }));
 
-
-(async () => {
-    try {
-        await initializeCognitoClient();
-    } catch (error) {
-        console.error('Failed to initialize client:', error);
-    }
-})();
-
-
 app.use('/db', dbRouter);
-
-
-
 app.use('/auth', authRouter);
-
 app.use(express.json());
 
 app.listen(PORT, () => {

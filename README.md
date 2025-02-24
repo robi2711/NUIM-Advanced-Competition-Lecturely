@@ -6,9 +6,9 @@
 
 - 🎤 **Real-time Speech-to-Text**: Converts the lecturer's speech into text and displays it in real-time.
 - 📱 **QR Code Room Access**: Users join lecture rooms by scanning a QR code.
-- 🔄 **Firebase Integration**: Real-time data synchronization using Firebase.
+- 🔄 **Amazon Integration**: Real-time data synchronization using Amazon.
 - 📝 **AI-Powered Summaries**: Generates concise summaries of lectures after they are completed.
-- 💾 **Firestore Storage**: Stores lecture transcripts for future reference.
+- 💾 **DynamoDB Storage**: Stores lecture transcripts for future reference.
 
 ## How It Works
 
@@ -16,14 +16,14 @@
 2. Users scan the QR code to join the room.
 3. The Master Client speaks, and their voice is converted into text using a speech-to-text algorithm.
 4. The text is stored in Firebase in real-time and distributed to connected users.
-5. Once the room is closed, the transcript is saved to Firestore, where users can access it later.
+5. Once the room is closed, the transcript is saved to Dynamo, where users can access it later.
 6. AI algorithms summarize the stored text for easy review.
 
 ## Tech Stack
 
 - **Frontend**: React, TypeScript, Material UI (MUI)
 - **Backend**: Node.js, Express.js, TypeScript
-- **Database**: Firebase Realtime Database & Firestore
+- **Database**: DynamoDB
 - **AI Summarization**: Custom AI models (details TBD)
 
 ## Installation
@@ -41,15 +41,15 @@ To set up this project locally:
     npm install
     ```
 
-3. Set up Firebase:
-   - Create a Firebase project and add your Firebase configuration to `.env`:
+3. Set up AWS Console:
+   - Create a Aws project and add your AWS configuration to `.env`:
      ```bash
-     REACT_APP_FIREBASE_API_KEY=your_api_key
-     REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
-     REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-     REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-     REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-     REACT_APP_FIREBASE_APP_ID=your_app_id
+     COGNITO_CLIENT_ID = your client id
+     COGNITO_CLIENT_SECRET = your client secret
+     COGNITO_REDIRECT_URIS = your redirect uris
+     DYNAMO_KEY= your dynamo key
+     DYNAMO_SECRET=your dynamo secret key
+     AWS_REGION=Your aws region
      ```
 
 4. Run the development server:
