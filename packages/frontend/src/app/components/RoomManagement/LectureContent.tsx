@@ -21,7 +21,7 @@ interface LectureViewProps {
 export default function LectureView({ roomInfo }: LectureViewProps) {
 	const router = useRouter()
 	const [transcript, setTranscript] = useState("")
-	
+	const [users, setUsers] = useState<string[]>([])
 	const sendPhrase = async (roomPK: string, phrase: string) => {
 		try {
 			const response = await api.post("/db/updateItem", {
