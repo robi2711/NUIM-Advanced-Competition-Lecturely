@@ -99,6 +99,7 @@ export default function LectureView({ roomInfo }: LectureViewProps) {
 		recognition.onend = () => {
 			if (window.location.pathname !== `/room/${roomInfo.PK}`) {
 				recognition.stop()
+				return;
 			} else {
 				recognition.start()
 			}

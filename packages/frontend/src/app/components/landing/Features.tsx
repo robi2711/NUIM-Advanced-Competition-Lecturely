@@ -15,24 +15,24 @@ const items = [
         icon: <ViewQuiltRoundedIcon />,
         title: 'Dashboard',
         description: 'Provides you with a full overview of your personal profile, where you can access your past lecture transcriptions, AI-generated summaries, and room history.',
-        imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-        imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+        imageLight: 'url("/DashLight.png")',
+        imageDark: 'url("/Dashboard.png")',
     },
     {
         icon: <EdgesensorHighRoundedIcon />,
         title: 'Rooms',
         description:
             'Our seamless real-time transcription system allows users to join rooms via QR code. As the speaker talks, the speech is converted into text and shared with all connected participants instantly.',
-        imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-        imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+        imageLight: 'url("/RoomLight.png")',
+        imageDark: 'url("/Room.png")',
     },
     {
         icon: <DevicesRoundedIcon />,
         title: 'Available on all platforms',
         description:
             'We offer full integration across devices including mobile, laptop, and desktop.',
-        imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-        imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
+        imageLight: 'url("/PhoneLight.png")',
+        imageDark: 'url("/Phone.png")',
     },
 ];
 
