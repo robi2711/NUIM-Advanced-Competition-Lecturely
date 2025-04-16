@@ -1,7 +1,8 @@
 import axios from "axios";
-
+import dotenv from "dotenv";
+dotenv.config();
 const api = axios.create({
-	baseURL: 'https://backend-699152928201.europe-north1.run.app' ,
+	baseURL: process.env.NEXT_PUBLIC_BACKEND_URL ,
 	headers: {
 		'Content-Type': 'application/json',
 
