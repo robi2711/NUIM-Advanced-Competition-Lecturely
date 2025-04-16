@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-	origin: "https://lecturely.vercel.app/",
+	origin: "https://lecturely.vercel.app",
 	credentials: true
 }));
 
